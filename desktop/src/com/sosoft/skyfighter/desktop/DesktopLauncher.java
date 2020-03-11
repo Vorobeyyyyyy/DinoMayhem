@@ -11,4 +11,5 @@ public class DesktopLauncher {
 		config.height = 720;
 		new LwjglApplication(new skyFighter(), config);
 	}
+	///
 }
