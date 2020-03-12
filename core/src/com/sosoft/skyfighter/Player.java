@@ -12,10 +12,10 @@ import com.badlogic.gdx.physics.box2d.*;
 public class Player {
     Sprite sprite;
     public Vector2 pos = new Vector2();
-    Body body;
+    public Body body;
 
     public Player(World world, int posX, int posY) {
-        sprite = new Sprite(new Texture("Players/MANPapich.png"));
+        sprite = new Sprite(new Texture("Players/MANpapich.png"));
 
         BodyDef def = new BodyDef();
         def.type = BodyDef.BodyType.DynamicBody;
@@ -26,14 +26,14 @@ public class Player {
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(sprite.getWidth() / 2, sprite.getHeight() / 2);
 
-        body.setFixedRotation(false);
+        body.setFixedRotation(true);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
         fixtureDef.density = 1f;
         fixtureDef.friction = 0.7f;
-        fixtureDef.restitution = 0.2f; // Make it bounce a little bit
-        Fixture fixture = body.createFixture(fixtureDef);
+        fixtureDef.restitution = 0f; // Make it bounce a little bit
+        body.createFixture(fixtureDef);
         shape.dispose();
     }
 
@@ -45,18 +45,23 @@ public class Player {
         updateMov();
     }
 
+
+
     public void updateMov() {
-        body.setLinearVelocity(0, body.getLinearVelocity().y);
+        //body.setLinearVelocity(0, body.getLinearVelocity().y);
         if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
-            //body.applyAngularImpulse(1);
             body.applyLinearImpulse(0, 70 * body.getMass(), body.getPosition().x, body.getPosition().y, true);
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.A) && body.getLinearVelocity().x < 40) {
+        if (Gdx.input.isKeyPressed(Input.Keys.A) && body.getLinearVelocity().x > -40) {
             body.applyLinearImpulse(-50 * body.getMass(), 0, body.getPosition().x, body.getPosition().y, true);
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.D) && body.getLinearVelocity().x > -40) {
+        if (Gdx.input.isKeyPressed(Input.Keys.D) && body.getLinearVelocity().x < 40) {
             body.applyLinearImpulse(50 * body.getMass(), 0, body.getPosition().x, body.getPosition().y, true);
         }
+    }
+
+    public Body getBody() {
+        return body;
     }
 
     public void draw(Batch batch) {

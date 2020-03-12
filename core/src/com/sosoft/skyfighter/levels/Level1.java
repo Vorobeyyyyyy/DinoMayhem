@@ -1,7 +1,11 @@
 package com.sosoft.skyfighter.levels;
 
+import box2dLight.Light;
+import box2dLight.PointLight;
+import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -22,6 +26,9 @@ public class Level1 implements Screen {
     Player player;
     Box2DDebugRenderer box2DDebugRenderer = new Box2DDebugRenderer();
 
+    RayHandler rayHandler;
+    Light light;
+
     @Override
     public void show() {
         tiledMap = new TmxMapLoader().load("Tilemaps/Map1.tmx");
@@ -30,11 +37,17 @@ public class Level1 implements Screen {
         world = new World(new Vector2(0, -10), false);
         player = new Player(world, 600, 600);
         TilemapCollisionParser.parseCollisionLayer(world,tiledMap.getLayers().get("collision-layer").getObjects());
+
+        rayHandler = new RayHandler(world);
+        rayHandler.setAmbientLight(0.3f,0.3f,0.3f,0.7f);
+        light = new PointLight(rayHandler, 1000, Color.BLUE, 1200, 500, 500);
+        light.attachToBody(player.getBody());
+
     }
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
+        Gdx.gl.glClearColor(0.1f, 0.5f, 0.5f, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         //camera.position.set(600, 600, 0);
         camera.position.set(player.pos, 0);
@@ -47,7 +60,11 @@ public class Level1 implements Screen {
         player.draw(renderer.getBatch());
         renderer.getBatch().end();
 
-        box2DDebugRenderer.render(world,camera.combined);
+        box2DDebugRenderer.render(world, camera.combined);
+
+        rayHandler.setCombinedMatrix(camera);
+        rayHandler.updateAndRender();
+
         doPhysicsStep(1 / 4f);
     }
 
