@@ -17,7 +17,6 @@ import java.util.Stack;
 
 public  class  skyFighter extends Game
 {
-
     @Override
     public void create() {
         setScreen(new Level1());

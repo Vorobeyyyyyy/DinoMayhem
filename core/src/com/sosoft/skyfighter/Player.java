@@ -26,29 +26,27 @@ public class Player {
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(sprite.getWidth() / 2, sprite.getHeight() / 2);
 
-        body.setFixedRotation(true);
+        body.setFixedRotation(false);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
         fixtureDef.density = 1f;
         fixtureDef.friction = 0.7f;
-        fixtureDef.restitution = 0f; // Make it bounce a little bit
+        fixtureDef.restitution = 0f;
+
         body.createFixture(fixtureDef);
         shape.dispose();
     }
 
-
-    public void update() {
+    public void update(World world) {
         pos.x = body.getPosition().x - sprite.getWidth() / 2;
         pos.y = body.getPosition().y - sprite.getHeight() / 2;
         sprite.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
-        updateMov();
+        updateMov(world);
     }
 
-
-
-    public void updateMov() {
-        //body.setLinearVelocity(0, body.getLinearVelocity().y);
+    public void updateMov(World world) {
+        body.setLinearVelocity(0, body.getLinearVelocity().y);
         if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
             body.applyLinearImpulse(0, 70 * body.getMass(), body.getPosition().x, body.getPosition().y, true);
         }
