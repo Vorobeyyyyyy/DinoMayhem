@@ -4,11 +4,15 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.sosoft.skyfighter.skyFighter;
 
+import java.awt.*;
+
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.width = 1280;
-		config.height = 720;
+		Dimension s = Toolkit.getDefaultToolkit().getScreenSize();
+		config.width = (int)s.getWidth();
+		config.height = (int)s.getHeight();
+		config.fullscreen = true;
 		new LwjglApplication(new skyFighter(), config);
 	}
 }
