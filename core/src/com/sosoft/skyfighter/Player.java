@@ -41,7 +41,7 @@ public class Player {
     public void update(World world) {
         pos.x = body.getPosition().x - sprite.getWidth() / 2;
         pos.y = body.getPosition().y - sprite.getHeight() / 2;
-        sprite.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
+        //sprite.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
         updateMov(world);
     }
 

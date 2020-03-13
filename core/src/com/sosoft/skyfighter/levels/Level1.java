@@ -3,6 +3,7 @@ package com.sosoft.skyfighter.levels;
 import box2dLight.Light;
 import box2dLight.PointLight;
 import box2dLight.RayHandler;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -32,11 +33,12 @@ public class Level1 implements Screen {
     RayHandler rayHandler;
     Light light;
 
+
     @Override
     public void show() {
         tiledMap = new TmxMapLoader().load("Tilemaps/Map1.tmx");
         renderer = new OrthogonalTiledMapRenderer(tiledMap);
-        camera = new OrthographicCamera(1920, 1080);
+        camera = new OrthographicCamera(2560, 1440);
         world = new World(new Vector2(0, -10), false);
         player = new Player(world, 600, 600);
         TilemapCollisionParser.parseCollisionLayer(world,tiledMap.getLayers().get("collision-layer").getObjects());
