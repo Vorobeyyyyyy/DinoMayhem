@@ -23,61 +23,70 @@ import com.sosoft.skyfighter.TilemapCollisionParser;
 
 import javax.xml.transform.Templates;
 
+import java.util.ArrayList;
+
+import static com.sosoft.skyfighter.levels.Constants.PPM;
+
 public class Level1 implements Screen {
 
     TiledMap tiledMap;
     OrthogonalTiledMapRenderer renderer;
-    OrthographicCamera camera;
+    LevelCamera camera;
     World world;
-    Hero player;
+    ArrayList<Hero> players = new ArrayList<Hero>();
     Box2DDebugRenderer box2DDebugRenderer = new Box2DDebugRenderer();
-
     RayHandler rayHandler;
     Light light;
+
+
 
     @Override
     public void show() {
         tiledMap = new TmxMapLoader().load("Tilemaps/Map1.tmx");
         renderer = new OrthogonalTiledMapRenderer(tiledMap);
-        camera = new OrthographicCamera(100, 100);
         world = new World(new Vector2(0, -10), false);
-        player = new Hero(world, 600, 600, null);
+        players.add(new Hero(world, 600, 600, null));
+        players.add(new Hero(world, 600, 600, Controllers.getControllers().first()));
+        camera = new LevelCamera(players);
         TilemapCollisionParser.parseCollisionLayer(world, tiledMap.getLayers().get("collision-layer").getObjects());
 
         rayHandler = new RayHandler(world);
         rayHandler.setAmbientLight(0.1f, 0.1f, 0.1f, 0.7f);
         light = new PointLight(rayHandler, 1000, Color.BLUE, 1200, 500, 500);
-        light.attachToBody(player.getBody());
+        for (Hero player : players)
+            light.attachToBody(player.body);
 
     }
 
     @Override
     public void render(float delta) {
         //UPDATE PART
-        player.update();
-        camera.position.set(player.pos, 0);
+        world.step(1 / 60f, 6, 2);
+        for (Hero player : players)
+            player.update();
+        camera.position.set(players.get(0).pos, 0);
         camera.update();
         renderer.setView(camera);
 
         //RENDER PART
         Gdx.gl.glClearColor(0.1f, 0.5f, 0.5f, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        renderer.render();
+        //renderer.render();
         renderer.getBatch().begin();
-        renderContactPoints();
-        player.draw(renderer.getBatch());
+        //renderContactPoints();
+        for (Hero player : players)
+            player.draw(renderer.getBatch());
         renderer.getBatch().end();
-        box2DDebugRenderer.render(world, camera.combined);
+        box2DDebugRenderer.render(world, camera.combined.scl(PPM));
         rayHandler.setCombinedMatrix(camera);
         //rayHandler.updateAndRender();
 
-        world.step(1 / 60f, 1, 1);
-        //doPhysicsStep(delta);
+
     }
 
     @Override
     public void resize(int width, int height) {
-
+        System.out.println(width);
     }
 
     @Override
@@ -100,25 +109,12 @@ public class Level1 implements Screen {
 
     }
 
-    float accumulator = 0;
-
-    private void doPhysicsStep(float deltaTime) {
-        // fixed time step
-        // max frame time to avoid spiral of death (on slow devices)
-        float frameTime = Math.min(deltaTime, 0.25f);
-        accumulator += frameTime;
-        while (accumulator >= 1 / 60f) {
-            world.step(1 / 60f, 1, 1);
-            accumulator -= 1 / 60f;
-        }
-    }
-
     Texture tex = new Texture("badlogic.jpg");
 
     private void renderContactPoints() {
         for (Contact contact : world.getContactList())
             for (Vector2 point : contact.getWorldManifold().getPoints())
-                renderer.getBatch().draw(tex, point.x, point.y, 20, 20);
+                renderer.getBatch().draw(tex, point.x * PPM, point.y * PPM, 20, 20);
 
     }
 

@@ -9,7 +9,10 @@ import com.badlogic.gdx.maps.objects.PolylineMapObject;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
+import static com.sosoft.skyfighter.levels.Constants.PPM;
+
 import java.util.Arrays;
+
 
 public class TilemapCollisionParser {
 
@@ -30,6 +33,8 @@ public class TilemapCollisionParser {
         vertices = Arrays.copyOf(vertices, vertices.length + 2);
         vertices[vertices.length - 2] = vertices[0];
         vertices[vertices.length - 1] = vertices[1];
+        for (int i = 0; i < vertices.length; i++)
+            vertices[i] /= PPM;
 
         ChainShape chainShape = new ChainShape();
         chainShape.createChain(vertices);
@@ -48,7 +53,8 @@ public class TilemapCollisionParser {
 
     private static void parsePolylineMapObject(World world, PolylineMapObject polylineMapObject) {
         float[] vertices = polylineMapObject.getPolyline().getTransformedVertices();
-
+        for (int i = 0; i < vertices.length; i++)
+            vertices[i] /= PPM;
         ChainShape chainShape = new ChainShape();
         chainShape.createChain(vertices);
 

@@ -12,12 +12,14 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
+import static com.sosoft.skyfighter.levels.Constants.PPM;
+
 public class Hero {
     HeroInputProcessor inputProcessor;
     Sprite sprite;
     World world;
 
-    public int maxSpeed = 70;
+    public int maxSpeed = 20;
     public Vector2 pos = new Vector2();
     public Body body;
     public HeroState state = new HeroState();
@@ -28,34 +30,37 @@ public class Hero {
 
         BodyDef def = new BodyDef();
         def.type = BodyDef.BodyType.DynamicBody;
-        def.position.set(posX, posY);
+        def.position.set(posX / PPM, posY / PPM);
 
         body = world.createBody(def);
 
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(sprite.getWidth() / 2, sprite.getHeight() / 2);
-
+        shape.setAsBox(sprite.getWidth() / 2 / PPM, sprite.getHeight() / 2 / PPM);
+        body.setGravityScale(5);
         body.setFixedRotation(true);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
         fixtureDef.density = 0.5f;
         fixtureDef.friction = 0f;
-        fixtureDef.restitution = 0f; // Make it bounce a little bit
+        fixtureDef.restitution = 0f;
         body.createFixture(fixtureDef);
         shape.dispose();
 
-        inputProcessor = new HeroInputProcessor(this);
-        Gdx.input.setInputProcessor(inputProcessor);
+
 
         if (controller != null)
             controller.addListener(new HeroControllerProcessor(this));
+        else {
+            inputProcessor = new HeroInputProcessor(this);
+            Gdx.input.setInputProcessor(inputProcessor);
+        }
     }
 
 
     public void update() {
-        pos.x = body.getPosition().x - sprite.getWidth() / 2;
-        pos.y = body.getPosition().y - sprite.getHeight() / 2;
+        pos.x = (body.getPosition().x - sprite.getWidth() / 2 / PPM) * PPM;
+        pos.y = (body.getPosition().y - sprite.getHeight() / 2 / PPM) * PPM;
         sprite.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
         isGrounded();
         updateMov();
@@ -65,7 +70,8 @@ public class Hero {
     public void updateMov() {
         //body.setLinearVelocity(0, body.getLinearVelocity().y);
         if (state.jump && state.grounded) {
-            body.applyForceToCenter(0, 4000 * body.getMass(), true);
+            body.setLinearVelocity(body.getLinearVelocity().x, 0);
+            body.applyForceToCenter(0, 2000 * body.getMass(), true);
         }
         if (state.left && body.getLinearVelocity().x > -maxSpeed) {
             body.setLinearVelocity(-maxSpeed, body.getLinearVelocity().y);
@@ -73,38 +79,23 @@ public class Hero {
         if (state.right && body.getLinearVelocity().x < maxSpeed) {
             body.setLinearVelocity(maxSpeed, body.getLinearVelocity().y);
         }
-        if (!state.left && !state.right)
+        if ((!state.left && !state.right) || (state.left && state.right))
             body.setLinearVelocity(0, body.getLinearVelocity().y);
-
     }
 
     private void isGrounded() {
-        boolean grounded = true;
         state.grounded = false;
-        System.out.println(world.getContactList().size);
         for (Contact contact : world.getContactList())
             if (contact.getFixtureA() == body.getFixtureList().first() || contact.getFixtureB() == body.getFixtureList().first()) {
-                grounded = true;
+                int counter = 0;
                 for (Vector2 point : contact.getWorldManifold().getPoints()) {
-                    if (point.y > body.getPosition().y - (sprite.getHeight() / 2 - 1))
-                        grounded = false;
-
-                    System.out.print("COLLISION Y: ");
-                    System.out.println(point.y);
-                    System.out.print("PLAYER Y:");
-                    System.out.println(body.getPosition().y - (sprite.getHeight() / 2 - 1));
-                }
-                if (grounded) {
-                    state.grounded = true;
-                    return;
+                    if (point.y * PPM < pos.y && (point.x * PPM > pos.x - 1 && point.x * PPM < pos.x + sprite.getWidth() + 1) && (point.y * PPM > pos.y - 1 & point.y * PPM < pos.y + sprite.getHeight() + 1)) {
+                        state.grounded = true;
+                        return;
+                    }
                 }
             }
     }
-
-    public Body getBody() {
-        return body;
-    }
-
 
     public void draw(Batch batch) {
         sprite.setPosition(pos.x, pos.y);
