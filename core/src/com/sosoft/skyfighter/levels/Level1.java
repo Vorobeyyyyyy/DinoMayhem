@@ -50,7 +50,6 @@ public class Level1 implements Screen {
         rayHandler.setAmbientLight(0.3f,0.3f,0.3f,0.7f);
         light = new PointLight(rayHandler, 1000, Color.BLUE, 1200, 500, 500);
         light.attachToBody(player.getBody());
-
     }
 
     @Override
