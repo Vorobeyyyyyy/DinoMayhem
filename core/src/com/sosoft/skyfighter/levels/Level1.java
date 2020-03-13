@@ -71,7 +71,7 @@ public class Level1 implements Screen {
         //RENDER PART
         Gdx.gl.glClearColor(0.1f, 0.5f, 0.5f, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        //renderer.render();
+        renderer.render();
         renderer.getBatch().begin();
         //renderContactPoints();
         for (Hero player : players)

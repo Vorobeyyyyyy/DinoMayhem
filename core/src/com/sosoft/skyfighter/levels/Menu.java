@@ -23,7 +23,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.sosoft.skyfighter.GameInput;
-import com.sosoft.skyfighter.Player;
 import com.sosoft.skyfighter.TilemapCollisionParser;
 import javafx.application.Application;
 import javafx.scene.Group;
