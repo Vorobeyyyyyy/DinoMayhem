@@ -4,16 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.sosoft.skyfighter.skyFighter;
 
@@ -81,11 +77,13 @@ public class LevelPause {
             public void clicked(InputEvent event, float x, float y) {
                 app.setScreen(new Menu(app));
             }
+
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
                 exitImageMenu.setColor(Color.GOLD);
                 exitImageMenu.addAction(parallel(moveBy(50, 0, 0.2f)));
             }
+
             @Override
             public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
                 exitImageMenu.addAction(parallel(moveBy(-50, 0, 0.2f)));
@@ -102,6 +100,7 @@ public class LevelPause {
     }
 
     public void update(float delta) {
+        Gdx.input.setInputProcessor(stage);
         stage.act(delta);
     }
 

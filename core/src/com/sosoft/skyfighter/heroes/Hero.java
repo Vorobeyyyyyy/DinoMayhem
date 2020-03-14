@@ -13,7 +13,7 @@ import static com.sosoft.skyfighter.levels.Constants.PPM;
 import static com.sosoft.skyfighter.levels.Constants.RESPAWN_TIME;
 
 public class Hero {
-    HeroInputProcessor inputProcessor;
+    HeroInputProcessor inputProcessor = null;
     Sprite sprite;
     World world;
 
@@ -56,6 +56,8 @@ public class Hero {
 
 
     public void update(float delta) {
+        if (inputProcessor != null)
+            Gdx.input.setInputProcessor(inputProcessor);
         pos.x = (body.getPosition().x - sprite.getWidth() / 2 / PPM) * PPM;
         pos.y = (body.getPosition().y - sprite.getHeight() / 2 / PPM) * PPM;
         sprite.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
