@@ -1,10 +1,7 @@
 package com.sosoft.skyfighter.heroes;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.controllers.Controller;
-import com.badlogic.gdx.controllers.ControllerManager;
-import com.badlogic.gdx.controllers.ControllerManagerStub;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -86,16 +83,18 @@ public class Hero {
 
     private void isGrounded() {
         state.grounded = false;
-        for (Contact contact : world.getContactList())
+        for (int i = 0; i < world.getContactCount(); i++) {
+            Contact contact = world.getContactList().get(i);
             if (contact.getFixtureA() == body.getFixtureList().first() || contact.getFixtureB() == body.getFixtureList().first()) {
-                int counter = 0;
-                for (Vector2 point : contact.getWorldManifold().getPoints()) {
-                    if (point.y * PPM < pos.y && (point.x * PPM > pos.x - 1 && point.x * PPM < pos.x + sprite.getWidth() + 1) && (point.y * PPM > pos.y - 1 & point.y * PPM < pos.y + sprite.getHeight() + 1)) {
-                        state.grounded = true;
-                        return;
+                for (int j = 0; j < contact.getWorldManifold().getNumberOfContactPoints(); ++j)
+                    if (contact.getWorldManifold().getPoints()[j].y * PPM < pos.y) {
+                        {
+                            state.grounded = true;
+                            return;
+                        }
                     }
-                }
             }
+        }
     }
 
     private void updateState(float delta) {
@@ -107,11 +106,11 @@ public class Hero {
             state.dead = true;
     }
 
-    public void reset()
-    {
+    public void reset() {
         state.dead = false;
         state.health = state.maxHealth;
     }
+
     public void draw(Batch batch) {
         sprite.setPosition(pos.x, pos.y);
         sprite.draw(batch);
