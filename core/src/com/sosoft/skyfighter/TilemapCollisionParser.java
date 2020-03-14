@@ -24,8 +24,6 @@ public class TilemapCollisionParser {
                 parseEllipseMapObject(world, (EllipseMapObject) mapObject);
             else if (mapObject instanceof PolylineMapObject)
                 parsePolylineMapObject(world, (PolylineMapObject) mapObject);
-
-
     }
 
     private static void parsePolygonMapObject(World world, PolygonMapObject polygonMapObject) {

@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
 import static com.sosoft.skyfighter.levels.Constants.PPM;
+import static com.sosoft.skyfighter.levels.Constants.RESPAWN_TIME;
 
 public class Hero {
     HeroInputProcessor inputProcessor;
@@ -24,7 +25,7 @@ public class Hero {
     public Body body;
     public HeroState state = new HeroState();
 
-    public Hero(World world, int posX, int posY, Controller controller) {
+    public Hero(World world, float posX, float posY, Controller controller) {
         this.world = world;
         sprite = new Sprite(new Texture("Players/MANpapich.png"));
 
@@ -48,7 +49,6 @@ public class Hero {
         shape.dispose();
 
 
-
         if (controller != null)
             controller.addListener(new HeroControllerProcessor(this));
         else {
@@ -58,10 +58,11 @@ public class Hero {
     }
 
 
-    public void update() {
+    public void update(float delta) {
         pos.x = (body.getPosition().x - sprite.getWidth() / 2 / PPM) * PPM;
         pos.y = (body.getPosition().y - sprite.getHeight() / 2 / PPM) * PPM;
         sprite.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
+        updateState(delta);
         isGrounded();
         updateMov();
     }
@@ -97,6 +98,20 @@ public class Hero {
             }
     }
 
+    private void updateState(float delta) {
+        if (state.dead)
+            state.respawnTime -= delta;
+        else
+            state.respawnTime = RESPAWN_TIME;
+        if (pos.y < -200)
+            state.dead = true;
+    }
+
+    public void reset()
+    {
+        state.dead = false;
+        state.health = state.maxHealth;
+    }
     public void draw(Batch batch) {
         sprite.setPosition(pos.x, pos.y);
         sprite.draw(batch);

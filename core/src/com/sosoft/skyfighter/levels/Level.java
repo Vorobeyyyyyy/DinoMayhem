@@ -18,6 +18,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
+import com.sosoft.skyfighter.TilemapSpawnpointParser;
 import com.sosoft.skyfighter.heroes.Hero;
 import com.sosoft.skyfighter.TilemapCollisionParser;
 
@@ -27,30 +29,29 @@ import java.util.ArrayList;
 
 import static com.sosoft.skyfighter.levels.Constants.PPM;
 
-public class Level1 implements Screen {
+public class Level implements Screen {
 
     TiledMap tiledMap;
     OrthogonalTiledMapRenderer renderer;
     LevelCamera camera;
-    World world;
     ArrayList<Hero> players = new ArrayList<Hero>();
     Box2DDebugRenderer box2DDebugRenderer = new Box2DDebugRenderer();
     RayHandler rayHandler;
     Light light;
 
+    LevelController levelController;
+
+    Level(String levelName, boolean isKeyboard, Array<Controller> controllers) {
+        tiledMap = new TmxMapLoader().load("Tilemaps/Map1.tmx");
+        levelController = new LevelController(this, isKeyboard, controllers);
+    }
 
 
     @Override
     public void show() {
-        tiledMap = new TmxMapLoader().load("Tilemaps/Map1.tmx");
         renderer = new OrthogonalTiledMapRenderer(tiledMap);
-        world = new World(new Vector2(0, -10), false);
-        players.add(new Hero(world, 600, 600, null));
-        players.add(new Hero(world, 600, 600, Controllers.getControllers().first()));
-        camera = new LevelCamera(players);
-        TilemapCollisionParser.parseCollisionLayer(world, tiledMap.getLayers().get("collision-layer").getObjects());
-
-        rayHandler = new RayHandler(world);
+        camera = new LevelCamera(players,tiledMap);
+        rayHandler = new RayHandler(levelController.world);
         rayHandler.setAmbientLight(0.1f, 0.1f, 0.1f, 0.7f);
         light = new PointLight(rayHandler, 1000, Color.BLUE, 1200, 500, 500);
         for (Hero player : players)
@@ -61,10 +62,7 @@ public class Level1 implements Screen {
     @Override
     public void render(float delta) {
         //UPDATE PART
-        world.step(1 / 60f, 6, 2);
-        for (Hero player : players)
-            player.update();
-        camera.position.set(players.get(0).pos, 0);
+        levelController.update(delta);
         camera.update();
         renderer.setView(camera);
 
@@ -77,7 +75,7 @@ public class Level1 implements Screen {
         for (Hero player : players)
             player.draw(renderer.getBatch());
         renderer.getBatch().end();
-        box2DDebugRenderer.render(world, camera.combined.scl(PPM));
+        box2DDebugRenderer.render(levelController.world, camera.combined.scl(PPM));
         rayHandler.setCombinedMatrix(camera);
         //rayHandler.updateAndRender();
 
@@ -86,7 +84,7 @@ public class Level1 implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        System.out.println(width);
+
     }
 
     @Override
@@ -111,11 +109,5 @@ public class Level1 implements Screen {
 
     Texture tex = new Texture("badlogic.jpg");
 
-    private void renderContactPoints() {
-        for (Contact contact : world.getContactList())
-            for (Vector2 point : contact.getWorldManifold().getPoints())
-                renderer.getBatch().draw(tex, point.x * PPM, point.y * PPM, 20, 20);
-
-    }
 
 }
