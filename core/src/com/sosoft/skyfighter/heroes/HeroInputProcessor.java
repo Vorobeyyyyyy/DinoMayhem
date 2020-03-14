@@ -1,7 +1,9 @@
 package com.sosoft.skyfighter.heroes;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.math.Vector2;
 
 public class HeroInputProcessor extends InputAdapter {
     Hero hero;
@@ -20,7 +22,6 @@ public class HeroInputProcessor extends InputAdapter {
 
     @Override
     public boolean keyDown(int keycode) {
-
         if (keycode == JUMP_KEY)
             hero.state.jump = true;
         if (keycode == LEFT_KEY)
@@ -60,6 +61,11 @@ public class HeroInputProcessor extends InputAdapter {
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
-        return super.mouseMoved(screenX, screenY);
+//        MouseForce = new Vector2(screenX, screenY).sub(oldMousePos);
+//        oldMousePos.set(screenX, screenY);
+//        mouseHasMoved = true;
+//        Gdx.app.log("Cord: ", "X: " + oldMousePos.x + " Y: " + oldMousePos.y);
+        return true;
+        //return super.mouseMoved(screenX, screenY);
     }
 }

@@ -7,12 +7,37 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.scenes.scene2d.*;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.FocusListener;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.sosoft.skyfighter.*;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.Screen;
+import box2dLight.PointLight;
+import box2dLight.RayHandler;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -35,6 +60,8 @@ public class Menu implements Screen {
     private Image mainPanel;
     private Image nameGame;
     private Image mainMenu;
+
+    private Music menuMusic;
 
     private TextButton playButton;
     private TextButton exitButton;
@@ -76,8 +103,24 @@ public class Menu implements Screen {
 
         Texture tempTxt4 = new Texture("Menu\\MainMenu.png");
         mainMenu = new Image(tempTxt4);
-        mainMenu.setSize(500, 350);
-        mainMenu.setPosition(-500, Gdx.graphics.getHeight() - mainMenu.getHeight() / 1.2f);
+        mainMenu.setSize(400, 280);
+        mainMenu.setPosition(-450, Gdx.graphics.getHeight() - mainMenu.getHeight() / 1.2f);
+
+        mainMenu.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                app.setScreen(new Level(app, "Tilemaps/Map1.tmx", true, Controllers.getControllers()));
+            }
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                mainMenu.setColor(Color.GOLD);
+                mainMenu.addAction(parallel(moveBy(50, 0, 0.2f)));
+            }
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                mainMenu.addAction(parallel(moveBy(-50, 0, 0.2f)));
+            }
+        });
 
         stage.addActor(mainArt1);
         stage.addActor(mainPanel);
@@ -97,17 +140,22 @@ public class Menu implements Screen {
 //        btn_StartStyle.down = skin.getDrawable("2");
 //        btn_StartStyle.checked = skin.getDrawable("Zoom");
 
+
+        menuMusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Hyper - Spoiler.mp3"));
+        menuMusic.setVolume(0.3f);
+        menuMusic.setLooping(true);
+        menuMusic.play();
+
+
         mainPanel.addAction(alpha(0.7f));
         mainPanel.addAction(parallel(moveBy(500, 0, 0.4f)));
 
         nameGame.addAction(sequence(alpha(0), scaleTo(.1f, .1f),
-                parallel(fadeIn(2f, Interpolation.pow2),
-                        scaleTo(2f, 2f, 1.5f, Interpolation.pow5), moveTo(stage.getWidth() * 0.65f, stage.getHeight() * 0.8f))));
+                parallel(fadeIn(1f, Interpolation.pow2),
+                        scaleTo(2f, 2f, 1.5f, Interpolation.swing), moveTo(stage.getWidth() * 0.65f, stage.getHeight() * 0.8f))));
 
         mainMenu.addAction(sequence(alpha(0), fadeIn(0.3f),
                 parallel(moveBy(500, 0, 0.2f))));
-
-
     }
 
     public void update(float delta) {
@@ -116,7 +164,7 @@ public class Menu implements Screen {
 
     private void initButtons() {
         font = new BitmapFont();
-        font.setColor(new Color(Color.BLUE));
+        font.setColor(Color.BLUE);
         skin = new Skin();
         btn_StartStyle = new TextButtonStyle();
         btn_StartStyle.font = font;
@@ -124,10 +172,35 @@ public class Menu implements Screen {
         playButton.setPosition(0, Gdx.graphics.getHeight() - 300);
         playButton.setSize(500, 200);
         playButton.addAction(sequence(alpha(0), parallel(fadeIn(.5f), moveBy(0, -20, .5f, Interpolation.pow5Out))));
+//        playButton.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent event, Actor actor) {
+//                app.setScreen(new Level(app, "Tilemaps/Map1.tmx", true, Controllers.getControllers()));
+//            }
+//        });
+//        playButton.addListener(new FocusListener() {
+//            @Override
+//            public boolean handle(Event event) {
+//                playButton.addAction(parallel(moveBy(100, 0, 0.2f)));
+//                return super.handle(event);
+//            }
+//        });
+//        playButton.addListener(new ClickListener() {
+//            @Override
+//            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+//                playButton.setColor(Color.GOLD);
+//                playButton.addAction(parallel(moveBy(50, 0, 0.2f)));
+//            }
+//            @Override
+//            public void exit ( InputEvent event, float x, float y, int pointer, Actor toActor) {
+//                playButton.addAction(parallel(moveBy(-50, 0, 0.2f)));
+//            }
+//        });
         playButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                app.setScreen(new Level(app, "Tilemaps/Map1.tmx", true, Controllers.getControllers()));
+                menuMusic.pause();
+                app.setScreen(new Level(app,"Tilemaps/Map1.tmx",true, Controllers.getControllers()));
             }
         });
 
@@ -155,8 +228,6 @@ public class Menu implements Screen {
 
         stage.draw();
 
-        batch.begin();
-        batch.end();
     }
 
     @Override

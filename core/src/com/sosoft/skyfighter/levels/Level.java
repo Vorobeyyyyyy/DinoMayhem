@@ -1,5 +1,7 @@
 package com.sosoft.skyfighter.levels;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -10,27 +12,23 @@ import com.sosoft.skyfighter.skyFighter;
 
 import java.util.ArrayList;
 
-;
-
 public class Level implements Screen {
-
-
     private final skyFighter app;
     private boolean isPaused;
+    private LevelPause levelPause;
 
     TiledMap tiledMap;
     ArrayList<Hero> players = new ArrayList<Hero>();
     LevelController levelController;
     LevelDrawer levelDrawer;
 
-
     Level(skyFighter app, String levelName, boolean isKeyboard, Array<Controller> controllers) {
         this.app = app;
+        levelPause = new LevelPause(app);
         tiledMap = new TmxMapLoader().load("Tilemaps/Map1.tmx");
         levelController = new LevelController(this, isKeyboard, controllers);
         levelDrawer = new LevelDrawer(this, tiledMap, true);
     }
-
 
     @Override
     public void show() {
@@ -38,11 +36,13 @@ public class Level implements Screen {
 
     @Override
     public void render(float delta) {
-        if (!isPaused) {
+        levelDrawer.updateAndRender();
+        if (!isPaused)
             levelController.update(delta);
-            levelDrawer.updateAndRender();
-        }
-
+        else
+            levelPause.Draw(delta);
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
+            isPaused = !isPaused;
     }
 
     @Override
