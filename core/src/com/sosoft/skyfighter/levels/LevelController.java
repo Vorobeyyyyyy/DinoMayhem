@@ -1,6 +1,5 @@
 package com.sosoft.skyfighter.levels;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.math.RandomXS128;
 import com.badlogic.gdx.math.Vector2;
@@ -56,5 +55,10 @@ public class LevelController {
                 hero.reset();
             }
 
+    }
+
+    public void dispose()
+    {
+        world.dispose();
     }
 }

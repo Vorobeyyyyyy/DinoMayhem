@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -31,8 +30,10 @@ public class Menu implements Screen {
     public SpriteBatch batch;
     private Stage stage;
 
-    private ShapeRenderer shapeRenderer;
-    private float progress;
+    Texture tempTxt1;
+    Texture tempTxt2;
+    Texture tempTxt3;
+    Texture tempTxt4;
 
     private Image mainArt1;
     private Image mainPanel;
@@ -44,7 +45,6 @@ public class Menu implements Screen {
     private TextButton playButton;
     private TextButton exitButton;
 
-    TextButton btn_Start;
 
     Button bt;
 
@@ -56,30 +56,27 @@ public class Menu implements Screen {
 
     public Menu(final skyFighter mainWindow) {
         app = mainWindow;
-        progress = 0f;
-        shapeRenderer = new ShapeRenderer();
+
         batch = new SpriteBatch();
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
 
-        //Random rnd = new Random(System.currentTimeMillis());
-        //Texture tempTxt1 = new Texture("Menu\\MainArt" + String.valueOf(1 + rnd.nextInt(3)) + ".jpg");
-        Texture tempTxt1 = new Texture("Menu\\MainArt5.jpg");
+        tempTxt1 = new Texture("Menu\\MainArt5.jpg");
         mainArt1 = new Image(tempTxt1);
         mainArt1.setPosition(0, 0);
         mainArt1.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-        Texture tempTxt2 = new Texture("Menu\\BlackRec.png");
+        tempTxt2 = new Texture("Menu\\BlackRec.png");
         mainPanel = new Image(tempTxt2);
         mainPanel.setPosition(-500, 0);
         mainPanel.setSize(500, Gdx.graphics.getHeight());
 
-        Texture tempTxt3 = new Texture("Menu\\NameGame.png");
+        tempTxt3 = new Texture("Menu\\NameGame.png");
         nameGame = new Image(tempTxt3);
         nameGame.setSize(400, 300);
         nameGame.setOrigin(nameGame.getWidth() * 0.7f, nameGame.getHeight());
 
-        Texture tempTxt4 = new Texture("Menu\\MainMenu.png");
+        tempTxt4 = new Texture("Menu\\MainMenu.png");
         mainMenu = new Image(tempTxt4);
         mainMenu.setSize(400, 280);
         mainMenu.setPosition(-450, Gdx.graphics.getHeight() - mainMenu.getHeight() / 1.2f);
@@ -90,11 +87,13 @@ public class Menu implements Screen {
                 menuMusic.pause();
                 app.setScreen(new Level(app, "Tilemaps/Map1.tmx", true, Controllers.getControllers()));
             }
+
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
                 mainMenu.setColor(Color.GOLD);
                 mainMenu.addAction(parallel(moveBy(50, 0, 0.2f)));
             }
+
             @Override
             public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
                 mainMenu.setColor(Color.WHITE);
@@ -111,14 +110,6 @@ public class Menu implements Screen {
     @Override
     public void show() {
         initButtons();
-//        font = new BitmapFont();
-//        font.setColor(new Color(Color.BLUE));
-//        skin = new Skin();
-//        btn_StartStyle = new TextButtonStyle();
-//        btn_StartStyle.font = font;
-//        btn_StartStyle.up = skin.getDrawable("1");
-//        btn_StartStyle.down = skin.getDrawable("2");
-//        btn_StartStyle.checked = skin.getDrawable("Zoom");
 
 
         menuMusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Hyper - Spoiler.mp3"));
@@ -152,31 +143,7 @@ public class Menu implements Screen {
         playButton.setPosition(0, Gdx.graphics.getHeight() - 300);
         playButton.setSize(500, 200);
         playButton.addAction(sequence(alpha(0), parallel(fadeIn(.5f), moveBy(0, -20, .5f, Interpolation.pow5Out))));
-//        playButton.addListener(new FocusListener() {
-//            @Override
-//            public boolean handle(Event event) {
-//                playButton.addAction(parallel(moveBy(100, 0, 0.2f)));
-//                return super.handle(event);
-//            }
-//        });
-//        playButton.addListener(new ClickListener() {
-//            @Override
-//            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-//                playButton.setColor(Color.GOLD);
-//                playButton.addAction(parallel(moveBy(50, 0, 0.2f)));
-//            }
-//            @Override
-//            public void exit ( InputEvent event, float x, float y, int pointer, Actor toActor) {
-//                playButton.addAction(parallel(moveBy(-50, 0, 0.2f)));
-//            }
-//        });
-//        playButton.addListener(new ChangeListener() {
-//            @Override
-//            public void changed(ChangeEvent event, Actor actor) {
-//                menuMusic.pause();
-//                app.setScreen(new Level(app,"Tilemaps/Map1.tmx",true, Controllers.getControllers()));
-//            }
-//        });
+
 
         exitButton = new TextButton("Exit", btn_StartStyle);
         exitButton.setPosition(0, 0);
@@ -220,12 +187,18 @@ public class Menu implements Screen {
 
     @Override
     public void hide() {
-
+        dispose();
     }
 
     @Override
     public void dispose() {
-
         stage.dispose();
+        font.dispose();
+        skin.dispose();
+        menuMusic.dispose();
+        tempTxt1.dispose();
+        tempTxt2.dispose();
+        tempTxt3.dispose();
+        tempTxt4.dispose();
     }
 }

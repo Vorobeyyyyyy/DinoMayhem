@@ -15,8 +15,8 @@ import java.util.ArrayList;
 public class Level implements Screen {
     private final skyFighter app;
     private boolean isPaused;
-    private LevelPause levelPause;
 
+    private LevelPause levelPause;
     TiledMap tiledMap;
     ArrayList<Hero> players = new ArrayList<Hero>();
     LevelController levelController;
@@ -62,11 +62,12 @@ public class Level implements Screen {
 
     @Override
     public void hide() {
-
+        dispose();
     }
 
     @Override
     public void dispose() {
-
+        tiledMap.dispose();
+        levelPause.dispose();
     }
 }
