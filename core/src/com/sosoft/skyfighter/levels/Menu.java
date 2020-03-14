@@ -172,12 +172,6 @@ public class Menu implements Screen {
         playButton.setPosition(0, Gdx.graphics.getHeight() - 300);
         playButton.setSize(500, 200);
         playButton.addAction(sequence(alpha(0), parallel(fadeIn(.5f), moveBy(0, -20, .5f, Interpolation.pow5Out))));
-//        playButton.addListener(new ChangeListener() {
-//            @Override
-//            public void changed(ChangeEvent event, Actor actor) {
-//                app.setScreen(new Level(app, "Tilemaps/Map1.tmx", true, Controllers.getControllers()));
-//            }
-//        });
 //        playButton.addListener(new FocusListener() {
 //            @Override
 //            public boolean handle(Event event) {
@@ -196,13 +190,13 @@ public class Menu implements Screen {
 //                playButton.addAction(parallel(moveBy(-50, 0, 0.2f)));
 //            }
 //        });
-        playButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                menuMusic.pause();
-                app.setScreen(new Level(app,"Tilemaps/Map1.tmx",true, Controllers.getControllers()));
-            }
-        });
+//        playButton.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent event, Actor actor) {
+//                menuMusic.pause();
+//                app.setScreen(new Level(app,"Tilemaps/Map1.tmx",true, Controllers.getControllers()));
+//            }
+//        });
 
         exitButton = new TextButton("Exit", btn_StartStyle);
         exitButton.setPosition(0, 0);
