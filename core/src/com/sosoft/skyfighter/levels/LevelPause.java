@@ -21,16 +21,12 @@ public class LevelPause {
     private Stage stage;
 
     Texture tempTxt1;
-    Texture tempTxt2;
     Texture tempTxt3;
     Texture tempTxt4;
     Texture tempTxt5;
     Texture tempTxt6;
 
     private Image mainArt1Pause;
-    private Image mainPanelPause;
-    private Image nameGame;
-    private Image mainMenu;
     private Image pauseMenu;
 
     private Image continueImage;
@@ -39,11 +35,7 @@ public class LevelPause {
 
     private Music menuMusic;
 
-    private TextButton playButton;
-    private TextButton exitButton;
-
-    public LevelPause(final skyFighter mainWindow) {
-
+    public LevelPause(final skyFighter mainWindow,final Level level) {
         app = mainWindow;
         batch = new SpriteBatch();
         stage = new Stage();
@@ -55,33 +47,61 @@ public class LevelPause {
         mainArt1Pause.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         mainArt1Pause.addAction(alpha(0.75f));
 
-        tempTxt2 = new Texture("Menu\\MainPanelPause.png");
-        mainPanelPause = new Image(tempTxt2);
-        mainPanelPause.setPosition(Gdx.graphics.getWidth() / 2 - 300, 100);
-        mainPanelPause.setSize(600, Gdx.graphics.getHeight() - 200);
-        mainPanelPause.addAction(alpha(0.5f));
-
         tempTxt3 = new Texture("Menu\\PauseMenu.png");
         pauseMenu = new Image(tempTxt3);
-        pauseMenu.setSize(600, 300);
+        pauseMenu.setSize(Gdx.graphics.getWidth()/3.2f, Gdx.graphics.getHeight()/3.6f);
         pauseMenu.setPosition(Gdx.graphics.getWidth() / 2 - pauseMenu.getWidth() / 2, Gdx.graphics.getHeight() - pauseMenu.getHeight() - 75);
 
         tempTxt4 = new Texture("Menu\\ContinueImage.png");
         continueImage = new Image(tempTxt4);
-        continueImage.setSize(400, 150);
+        continueImage.setSize(Gdx.graphics.getWidth()/4.8f, Gdx.graphics.getHeight()/7.2f);
         continueImage.setPosition(Gdx.graphics.getWidth() / 2 - continueImage.getWidth() / 2, Gdx.graphics.getHeight() - 2 * continueImage.getHeight() - 100);
+        continueImage.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                level.isPaused = false;
+            }
+
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                continueImage.setColor(Color.GOLD);
+                continueImage.addAction(sizeBy(10f, 10f, 0.3f));
+            }
+
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                continueImage.setColor(Color.WHITE);
+                continueImage.addAction(sizeBy(-10f, -10f, 0.3f));
+            }
+        });
 
         tempTxt5 = new Texture("Menu\\SettingsImage.png");
         settingsImage = new Image(tempTxt5);
-        settingsImage.setSize(400, 150);
+        settingsImage.setSize(Gdx.graphics.getWidth()/4.8f, Gdx.graphics.getHeight()/7.2f);
         settingsImage.setPosition(Gdx.graphics.getWidth() / 2 - settingsImage.getWidth() / 2, Gdx.graphics.getHeight() - 3 * settingsImage.getHeight() - 100);
+        settingsImage.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+            }
+
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                settingsImage.setColor(Color.GOLD);
+                settingsImage.addAction(sizeBy(10f, 10f, 0.3f));
+            }
+
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                settingsImage.setColor(Color.WHITE);
+                settingsImage.addAction(sizeBy(-10f, -10f, 0.3f));
+            }
+        });
 
 
         tempTxt6 = new Texture("Menu\\ExitToTheMenuImage.png");
         exitImageMenu = new Image(tempTxt6);
-        exitImageMenu.setSize(400, 150);
+        exitImageMenu.setSize(Gdx.graphics.getWidth()/4.8f, Gdx.graphics.getHeight()/7.2f);
         exitImageMenu.setPosition(Gdx.graphics.getWidth() / 2 - exitImageMenu.getWidth() / 2, Gdx.graphics.getHeight() - 4 * exitImageMenu.getHeight() - 100);
-
         exitImageMenu.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -91,20 +111,18 @@ public class LevelPause {
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
                 exitImageMenu.setColor(Color.GOLD);
-                exitImageMenu.addAction(parallel(moveBy(50, 0, 0.2f)));
+                exitImageMenu.addAction(sizeBy(10f, 10f, 0.3f));
             }
 
             @Override
             public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-                exitImageMenu.addAction(parallel(moveBy(-50, 0, 0.2f)));
+                exitImageMenu.setColor(Color.WHITE);
+                exitImageMenu.addAction(sizeBy(-10f, -10f, 0.3f));
             }
         });
 
-
         stage.addActor(mainArt1Pause);
-        stage.addActor(mainPanelPause);
         stage.addActor(pauseMenu);
-
         stage.addActor(continueImage);
         stage.addActor(settingsImage);
         stage.addActor(exitImageMenu);
@@ -125,7 +143,6 @@ public class LevelPause {
         batch.dispose();
         stage.dispose();
         tempTxt1.dispose();
-        tempTxt2.dispose();
         tempTxt3.dispose();
         tempTxt4.dispose();
         tempTxt5.dispose();

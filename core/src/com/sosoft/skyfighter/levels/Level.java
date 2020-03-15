@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class Level implements Screen {
     private final skyFighter app;
-    private boolean isPaused;
+    public boolean isPaused;
 
     private LevelPause levelPause;
     TiledMap tiledMap;
@@ -24,7 +24,7 @@ public class Level implements Screen {
 
     Level(skyFighter app, String levelName, boolean isKeyboard, Array<Controller> controllers) {
         this.app = app;
-        levelPause = new LevelPause(app);
+        levelPause = new LevelPause(app, this);
         tiledMap = new TmxMapLoader().load("Tilemaps/Map1.tmx");
         levelController = new LevelController(this, isKeyboard, controllers);
         levelDrawer = new LevelDrawer(this, tiledMap, true);

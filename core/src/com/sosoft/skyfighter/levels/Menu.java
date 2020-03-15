@@ -27,37 +27,34 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
 public class Menu implements Screen {
     private final skyFighter app;
-    public SpriteBatch batch;
+
     private Stage stage;
 
     Texture tempTxt1;
     Texture tempTxt2;
     Texture tempTxt3;
     Texture tempTxt4;
+    Texture tempTxt5;
+    Texture tempTxt6;
+    Texture tempTxt7;
+    Texture tempTxt8;
 
     private Image mainArt1;
     private Image mainPanel;
     private Image nameGame;
     private Image mainMenu;
 
+    private Image settingsImage;
+    private Image playImage;
+    private Image playOnlineImage;
+    private Image exitImage;
+
     private Music menuMusic;
-
-    private TextButton playButton;
-    private TextButton exitButton;
-
-
-    Button bt;
-
-    TextButtonStyle btn_StartStyle;
-    BitmapFont font;
-    Skin skin;
-    TextureAtlas ntb_StartAtlas;
 
 
     public Menu(final skyFighter mainWindow) {
         app = mainWindow;
 
-        batch = new SpriteBatch();
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
 
@@ -68,20 +65,31 @@ public class Menu implements Screen {
 
         tempTxt2 = new Texture("Menu\\BlackRec.png");
         mainPanel = new Image(tempTxt2);
-        mainPanel.setPosition(-500, 0);
-        mainPanel.setSize(500, Gdx.graphics.getHeight());
+        mainPanel.setPosition(-Gdx.graphics.getWidth()/3.8f, 0);
+        mainPanel.setSize(Gdx.graphics.getWidth()/3.8f, Gdx.graphics.getHeight());
+        mainPanel.addAction(sequence(alpha(0.7f), parallel(moveBy(Gdx.graphics.getWidth()/3.8f, 0, 0.4f))));
 
         tempTxt3 = new Texture("Menu\\NameGame.png");
         nameGame = new Image(tempTxt3);
-        nameGame.setSize(400, 300);
+        nameGame.setSize(Gdx.graphics.getWidth()/4.8f, nameGame.getHeight()/3.6f);
         nameGame.setOrigin(nameGame.getWidth() * 0.7f, nameGame.getHeight());
+        nameGame.addAction(sequence(alpha(0), scaleTo(.1f, .1f),
+                parallel(fadeIn(1f, Interpolation.pow2),
+                        scaleTo(2f, 2f, 1.5f, Interpolation.swing),
+                        moveTo(stage.getWidth() * 0.65f, stage.getHeight() * 0.8f))));
 
         tempTxt4 = new Texture("Menu\\MainMenu.png");
         mainMenu = new Image(tempTxt4);
-        mainMenu.setSize(400, 280);
-        mainMenu.setPosition(-450, Gdx.graphics.getHeight() - mainMenu.getHeight() / 1.2f);
+        mainMenu.setSize(Gdx.graphics.getWidth()/3.8f, Gdx.graphics.getHeight()/3.9f);
+        mainMenu.setPosition(-Gdx.graphics.getWidth()/3.2f, 0.75f * Gdx.graphics.getHeight());
+        mainMenu.addAction(moveBy(Gdx.graphics.getWidth()/3.2f, 0, 0.4f));
 
-        mainMenu.addListener(new ClickListener() {
+        tempTxt5 = new Texture("Menu\\PlayImage.png");
+        playImage = new Image(tempTxt5);
+        playImage.setSize(Gdx.graphics.getWidth()/3.8f, Gdx.graphics.getHeight()/7.2f);
+        playImage.setPosition(-Gdx.graphics.getWidth()/3.2f, 0.75f * Gdx.graphics.getHeight() );
+        playImage.addAction(moveBy(Gdx.graphics.getWidth()/3.2f, 0, 0.4f));
+        playImage.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 menuMusic.pause();
@@ -90,14 +98,84 @@ public class Menu implements Screen {
 
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                mainMenu.setColor(Color.GOLD);
-                mainMenu.addAction(parallel(moveBy(50, 0, 0.2f)));
+                playImage.setColor(Color.GOLD);
+                playImage.addAction(sizeBy(10f, 10f, 0.3f));
             }
 
             @Override
             public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-                mainMenu.setColor(Color.WHITE);
-                mainMenu.addAction(parallel(moveBy(-50, 0, 0.2f)));
+                playImage.setColor(Color.WHITE);
+                playImage.addAction(sizeBy(-10f, -10f, 0.3f));
+            }
+        });
+
+        tempTxt6 = new Texture("Menu\\PlayOnlineImage.png");
+        playOnlineImage = new Image(tempTxt6);
+        playOnlineImage.setSize(Gdx.graphics.getWidth()/3.8f, Gdx.graphics.getHeight()/7.2f);
+        playOnlineImage.setPosition(-Gdx.graphics.getWidth()/3.2f, 0.75f * Gdx.graphics.getHeight() -  playImage.getHeight());
+        playOnlineImage.addAction(moveBy(Gdx.graphics.getWidth()/3.2f, 0, 0.4f));
+        playOnlineImage.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+            }
+
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                playOnlineImage.setColor(Color.GOLD);
+                playOnlineImage.addAction(sizeBy(10f, 10f, 0.3f));
+            }
+
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                playOnlineImage.setColor(Color.WHITE);
+                playOnlineImage.addAction(sizeBy(-10f, -10f, 0.3f));
+            }
+        });
+
+        tempTxt7 = new Texture("Menu\\SettingsImage.png");
+        settingsImage = new Image(tempTxt7);
+        settingsImage.setSize(Gdx.graphics.getWidth()/3.8f, Gdx.graphics.getHeight()/7.2f);
+        settingsImage.setPosition(-Gdx.graphics.getWidth()/3.2f, 0.75f * Gdx.graphics.getHeight() - 2 * playImage.getHeight());
+        settingsImage.addAction(moveBy(Gdx.graphics.getWidth()/3.2f, 0, 0.4f));
+        settingsImage.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+            }
+
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                settingsImage.setColor(Color.GOLD);
+                settingsImage.addAction(sizeBy(10f, 10f, 0.3f));
+            }
+
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                settingsImage.setColor(Color.WHITE);
+                settingsImage.addAction(sizeBy(-10f, -10f, 0.3f));
+            }
+        });
+
+        tempTxt8 = new Texture("Menu\\ExitImage.png");
+        exitImage = new Image(tempTxt8);
+        exitImage.setSize(Gdx.graphics.getWidth()/3.8f, Gdx.graphics.getHeight()/7.2f);
+        exitImage.setPosition(-Gdx.graphics.getWidth()/3.2f, 0);
+        exitImage.addAction(moveBy(Gdx.graphics.getWidth()/3.2f, 0, 0.4f));
+        exitImage.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Gdx.app.exit();
+            }
+
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                exitImage.setColor(Color.GOLD);
+                exitImage.addAction(sizeBy(10f, 10f, 0.3f));
+            }
+
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                exitImage.setColor(Color.WHITE);
+                exitImage.addAction(sizeBy(-10f, -10f, 0.3f));
             }
         });
 
@@ -105,58 +183,22 @@ public class Menu implements Screen {
         stage.addActor(mainPanel);
         stage.addActor(nameGame);
         stage.addActor(mainMenu);
+        stage.addActor(playImage);
+        stage.addActor(playOnlineImage);
+        stage.addActor(settingsImage);
+        stage.addActor(exitImage);
     }
 
     @Override
     public void show() {
-        initButtons();
-
-
-        menuMusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Hyper - Spoiler.mp3"));
-        menuMusic.setVolume(0.0f);
+        menuMusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Hyper.mp3"));
+        menuMusic.setVolume(0.4f);
         menuMusic.setLooping(true);
         menuMusic.play();
-
-
-        mainPanel.addAction(alpha(0.7f));
-        mainPanel.addAction(parallel(moveBy(500, 0, 0.4f)));
-
-        nameGame.addAction(sequence(alpha(0), scaleTo(.1f, .1f),
-                parallel(fadeIn(1f, Interpolation.pow2),
-                        scaleTo(2f, 2f, 1.5f, Interpolation.swing), moveTo(stage.getWidth() * 0.65f, stage.getHeight() * 0.8f))));
-
-        mainMenu.addAction(sequence(alpha(0), fadeIn(0.3f),
-                parallel(moveBy(500, 0, 0.2f))));
     }
 
     public void update(float delta) {
         stage.act(delta);
-    }
-
-    private void initButtons() {
-        font = new BitmapFont();
-        font.setColor(Color.BLUE);
-        skin = new Skin();
-        btn_StartStyle = new TextButtonStyle();
-        btn_StartStyle.font = font;
-        playButton = new TextButton("Play", btn_StartStyle);
-        playButton.setPosition(0, Gdx.graphics.getHeight() - 300);
-        playButton.setSize(500, 200);
-        playButton.addAction(sequence(alpha(0), parallel(fadeIn(.5f), moveBy(0, -20, .5f, Interpolation.pow5Out))));
-
-
-        exitButton = new TextButton("Exit", btn_StartStyle);
-        exitButton.setPosition(0, 0);
-        exitButton.setSize(500, 200);
-        exitButton.addAction(sequence(alpha(0), parallel(fadeIn(.5f), moveBy(0, -20, .5f, Interpolation.pow5Out))));
-        exitButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Gdx.app.exit();
-            }
-        });
-        stage.addActor(playButton);
-        stage.addActor(exitButton);
     }
 
     @Override
@@ -167,7 +209,6 @@ public class Menu implements Screen {
         update(delta);
 
         stage.draw();
-
     }
 
     @Override
@@ -193,12 +234,14 @@ public class Menu implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
-        font.dispose();
-        skin.dispose();
         menuMusic.dispose();
         tempTxt1.dispose();
         tempTxt2.dispose();
         tempTxt3.dispose();
         tempTxt4.dispose();
+        tempTxt5.dispose();
+        tempTxt6.dispose();
+        tempTxt7.dispose();
+        tempTxt8.dispose();
     }
 }

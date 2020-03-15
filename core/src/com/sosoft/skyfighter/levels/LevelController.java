@@ -54,7 +54,6 @@ public class LevelController {
                 hero.body.setTransform(x, y, 0);
                 hero.reset();
             }
-
     }
 
     public void dispose()
