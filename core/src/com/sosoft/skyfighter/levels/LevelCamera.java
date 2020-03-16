@@ -4,20 +4,19 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.sosoft.skyfighter.heroes.Hero;
-
-import java.util.ArrayList;
 
 import static com.sosoft.skyfighter.levels.Constants.CAMERASLOW;
 import static com.sosoft.skyfighter.levels.Constants.MINCAMERAZOOM;
 
 public class LevelCamera extends OrthographicCamera {
 
-    ArrayList<Hero> heroes = new ArrayList<Hero>();
-    int mapWidth;
-    int mapHeight;
+    Array<Hero> heroes = new Array<Hero>();
+    public int mapWidth;
+    public int mapHeight;
 
-    LevelCamera(ArrayList<Hero> heroes, TiledMap tiledMap) {
+    LevelCamera(Array<Hero> heroes, TiledMap tiledMap) {
         this.heroes = heroes;
         mapWidth = tiledMap.getProperties().get("width", Integer.class) * tiledMap.getProperties().get("tilewidth", Integer.class);
         mapHeight = tiledMap.getProperties().get("height", Integer.class) * tiledMap.getProperties().get("tileheight", Integer.class);
