@@ -88,7 +88,6 @@ public class Bullet {
                 pos.x > hero.levelController.level.levelDrawer.camera.mapWidth + 400 ||
                 pos.y > hero.levelController.level.levelDrawer.camera.mapHeight + 400) {
             endOfLife = true;
-            System.out.println("END!");
         }
     }
 
