@@ -7,7 +7,9 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.sosoft.skyfighter.TilemapCollisionParser;
 import com.sosoft.skyfighter.TilemapSpawnpointParser;
+import com.sosoft.skyfighter.heroes.Bullet;
 import com.sosoft.skyfighter.heroes.Hero;
+import com.sosoft.skyfighter.heroes.heroes.Soilder;
 
 import static com.sosoft.skyfighter.levels.Constants.PPM;
 
@@ -15,7 +17,7 @@ public class LevelController {
 
     Array<Vector2> spawnPoints = new Array<Vector2>();
 
-    Level level;
+    public Level level;
     public World world;
     RandomXS128 random = new RandomXS128();
 
@@ -31,17 +33,21 @@ public class LevelController {
         world.step(1 / 60f, 6, 2);
         for (Hero hero : level.players)
             hero.update(delta);
+        for (Bullet bullet : level.bullets)
+            bullet.update(delta);
         respawnHeroes();
+        deleteBullets();
     }
 
     public void spawnHeroes(boolean isKeyboard, Array<Controller> controllers) {
+        int i = 1;
         if (isKeyboard) {
             int n = random.nextInt(spawnPoints.size);
-            level.players.add(new Hero(world, spawnPoints.get(n).x, spawnPoints.get(n).y, null));
+            level.players.add(new Soilder(this, spawnPoints.get(n).x, spawnPoints.get(n).y, null, i++));
         }
         for (Controller controller : controllers) {
             int n = random.nextInt(spawnPoints.size);
-            level.players.add(new Hero(world, spawnPoints.get(n).x, spawnPoints.get(n).y, null));
+            level.players.add(new Soilder(this, spawnPoints.get(n).x, spawnPoints.get(n).y, controller, i++));
         }
         level.players.get(0);
     }
@@ -57,8 +63,18 @@ public class LevelController {
 
     }
 
-    public void dispose()
-    {
+    public void deleteBullets() {
+        for (int i = 0; i < level.bullets.size; i++) {
+            Bullet bullet = level.bullets.get(i);
+            if (bullet.endOfLife) {
+                world.destroyBody(bullet.body);
+                bullet.dispose();
+                level.bullets.removeIndex(i);
+            }
+        }
+    }
+
+    public void dispose() {
         world.dispose();
     }
 }

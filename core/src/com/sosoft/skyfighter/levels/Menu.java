@@ -86,6 +86,7 @@ public class Menu implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 menuMusic.pause();
                 app.setScreen(new Level(app, "Tilemaps/Map1.tmx", true, Controllers.getControllers()));
+                //app.setScreen(new SettingsScreen());
             }
 
             @Override

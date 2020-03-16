@@ -7,41 +7,49 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
+import com.sosoft.skyfighter.levels.LevelController;
 
 import static com.sosoft.skyfighter.levels.Constants.PPM;
 import static com.sosoft.skyfighter.levels.Constants.RESPAWN_TIME;
+import static java.lang.Math.pow;
 
 public class Hero {
-    HeroInputProcessor inputProcessor = null;
-    Sprite sprite;
-    World world;
-
-    public int maxSpeed = 20;
+    public HeroInputProcessor inputProcessor = null;
+    public Sprite sprite;
+    public LevelController levelController;
+    public World world;
+    public Texture texture;
     public Vector2 pos = new Vector2();
+    public Vector2 centerPos = new Vector2();
     public Body body;
     public HeroState state = new HeroState();
+    public int number;
 
-    public Hero(World world, float posX, float posY, Controller controller) {
-        this.world = world;
-        sprite = new Sprite(new Texture("Players/MANpapich.png"));
-
+    public Hero(LevelController levelController, float posX, float posY, Controller controller, int number) {
+        world = levelController.world;
+        this.levelController = levelController;
+        this.number = number;
+        texture = new Texture("Heroes/MANpapich.png");
+        sprite = new Sprite(texture);
         BodyDef def = new BodyDef();
         def.type = BodyDef.BodyType.DynamicBody;
         def.position.set(posX / PPM, posY / PPM);
-
-        body = world.createBody(def);
+        def.gravityScale = 5f;
+        def.fixedRotation = true;
 
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(sprite.getWidth() / 2 / PPM, sprite.getHeight() / 2 / PPM);
-        body.setGravityScale(5);
-        body.setFixedRotation(true);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
-        fixtureDef.density = 0.5f;
+        fixtureDef.density = 0f;
         fixtureDef.friction = 0f;
         fixtureDef.restitution = 0f;
+        fixtureDef.filter.categoryBits = (short) pow(2, number);
+        fixtureDef.filter.maskBits = 0xFF;
+        body = world.createBody(def);
         body.createFixture(fixtureDef);
         shape.dispose();
 
@@ -60,31 +68,59 @@ public class Hero {
             Gdx.input.setInputProcessor(inputProcessor);
         pos.x = (body.getPosition().x - sprite.getWidth() / 2 / PPM) * PPM;
         pos.y = (body.getPosition().y - sprite.getHeight() / 2 / PPM) * PPM;
+        centerPos.x = body.getPosition().x * PPM;
+        centerPos.y = body.getPosition().y * PPM;
+
         sprite.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
         updateState(delta);
-        isGrounded();
         updateMov();
     }
 
 
     public void updateMov() {
-        //body.setLinearVelocity(0, body.getLinearVelocity().y);
         if (state.jump && state.grounded) {
             body.setLinearVelocity(body.getLinearVelocity().x, 0);
-            body.applyForceToCenter(0, 2000 * body.getMass(), true);
+            body.applyForceToCenter(0, 100 * state.jumpHeight * body.getMass(), true);
         }
-        if (state.left && body.getLinearVelocity().x > -maxSpeed) {
-            body.setLinearVelocity(-maxSpeed, body.getLinearVelocity().y);
+        if (state.grounded)
+            body.setLinearVelocity(body.getLinearVelocity().x * 0.9f, body.getLinearVelocity().y);
+        if (!(state.left && state.right)) {
+            if (state.left && body.getLinearVelocity().x > -state.maxSpeed)
+                body.applyForceToCenter(-state.maxSpeed * body.getMass() * 10, 0, false);
+
+            if (state.right && body.getLinearVelocity().x < state.maxSpeed)
+                body.applyForceToCenter(state.maxSpeed * body.getMass() * 10, 0, false);
         }
-        if (state.right && body.getLinearVelocity().x < maxSpeed) {
-            body.setLinearVelocity(maxSpeed, body.getLinearVelocity().y);
-        }
-        if ((!state.left && !state.right) || (state.left && state.right))
-            body.setLinearVelocity(0, body.getLinearVelocity().y);
+
+    }
+
+    public void updateAbilities(float delta) {
+        if (state.firstAbilityCurrentCooldown <= 0) {
+            if (state.firstAbility) {
+                firstAbility();
+                state.firstAbilityCurrentCooldown = state.firstAbilityCooldown;
+            }
+        } else
+            state.firstAbilityCurrentCooldown -= delta;
+
+        if (state.secondAbilityCurrentCooldown <= 0) {
+            if (state.secondAbility) {
+                secondAbility();
+                state.secondAbilityCurrentCooldown = state.secondAbilityCooldown;
+            }
+        } else
+            state.secondAbilityCurrentCooldown -= delta;
+
+        if (state.thirdAbilityCurrentCooldown <= 0) {
+            if (state.thirdAbility) {
+                thirdAbility();
+                state.thirdAbilityCurrentCooldown = state.thirdAbilityCooldown;
+            }
+        } else
+            state.thirdAbilityCurrentCooldown -= delta;
     }
 
     private void isGrounded() {
-        state.grounded = false;
         for (int i = 0; i < world.getContactCount(); i++) {
             Contact contact = world.getContactList().get(i);
             if (contact.getFixtureA() == body.getFixtureList().first() || contact.getFixtureB() == body.getFixtureList().first()) {
@@ -97,15 +133,29 @@ public class Hero {
                     }
             }
         }
+        state.grounded = false;
     }
 
-    private void updateState(float delta) {
-        if (state.dead)
-            state.respawnTime -= delta;
-        else
-            state.respawnTime = RESPAWN_TIME;
+    public void updateState(float delta) {
         if (pos.y < -200)
             state.dead = true;
+        if (state.dead)
+            state.respawnTime -= delta;
+        else {
+            state.respawnTime = RESPAWN_TIME;
+            if (inputProcessor != null)
+                updateAimAngle();
+            isGrounded();
+            updateAbilities(delta);
+        }
+    }
+
+    private void updateAimAngle() {
+        int screenX = Gdx.input.getX();
+        int screenY = Gdx.input.getY();
+        Vector3 pos = new Vector3(screenX, screenY, 0);
+        levelController.level.levelDrawer.camera.unproject(pos);
+        state.aimAngle = new Vector2(pos.x - centerPos.x, pos.y - centerPos.y).angle();
     }
 
     public void reset() {
@@ -118,4 +168,22 @@ public class Hero {
         sprite.draw(batch);
     }
 
+    public void firstAbility() {
+    }
+
+    ;
+
+    public void secondAbility() {
+    }
+
+    ;
+
+    public void thirdAbility() {
+    }
+
+    ;
+
+    public void dispose() {
+        texture.dispose();
+    }
 }

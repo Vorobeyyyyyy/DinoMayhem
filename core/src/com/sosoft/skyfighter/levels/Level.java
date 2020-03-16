@@ -7,20 +7,22 @@ import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.utils.Array;
+import com.sosoft.skyfighter.heroes.Bullet;
 import com.sosoft.skyfighter.heroes.Hero;
 import com.sosoft.skyfighter.skyFighter;
 
-import java.util.ArrayList;
 
 public class Level implements Screen {
     private final skyFighter app;
     private boolean isPaused;
 
     private LevelPause levelPause;
-    TiledMap tiledMap;
-    ArrayList<Hero> players = new ArrayList<Hero>();
-    LevelController levelController;
-    LevelDrawer levelDrawer;
+    public TiledMap tiledMap;
+    public Array<Hero> players = new Array<Hero>();
+    public Array<Bullet> bullets = new Array<Bullet>();
+
+    public LevelController levelController;
+    public LevelDrawer levelDrawer;
 
     Level(skyFighter app, String levelName, boolean isKeyboard, Array<Controller> controllers) {
         this.app = app;
@@ -69,5 +71,11 @@ public class Level implements Screen {
     public void dispose() {
         tiledMap.dispose();
         levelPause.dispose();
+        levelController.dispose();
+        levelDrawer.dispose();
+        for(Hero hero: players)
+            hero.dispose();
+
+
     }
 }

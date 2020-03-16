@@ -5,16 +5,19 @@ public class HeroState {
     public float maxSpeed;
     public int maxHealth;
     public float jumpHeight;
-    //
+    public float firstAbilityCooldown;
+    public float secondAbilityCooldown;
+    public float thirdAbilityCooldown;
 
-    public float aimAngle;
+    //COOLDOWNS
     public float respawnTime;
+    public float firstAbilityCurrentCooldown;
+    public float secondAbilityCurrentCooldown;
+    public float thirdAbilityCurrentCooldown;
 
 
-    public int health;
-    public boolean dead;
-    boolean grounded;
     // Input states
+    public float aimAngle;
     public boolean jump;
     public boolean left;
     public boolean right;
@@ -23,6 +26,11 @@ public class HeroState {
     public boolean secondAbility;
     public boolean thirdAbility;
 
+    // OTHER
+    public int health;
     public int score;
     public int lives;
+    public boolean dead;
+    boolean grounded;
+    boolean groundedChanged;
 }

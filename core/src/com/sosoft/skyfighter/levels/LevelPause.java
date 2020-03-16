@@ -1,7 +1,6 @@
 package com.sosoft.skyfighter.levels;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -37,7 +36,6 @@ public class LevelPause {
     private Image settingsImage;
     private Image exitImageMenu;
 
-    private Music menuMusic;
 
     private TextButton playButton;
     private TextButton exitButton;

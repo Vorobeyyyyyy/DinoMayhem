@@ -1,12 +1,10 @@
 package com.sosoft.skyfighter.heroes;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerAdapter;
 import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.controllers.mappings.Xbox;
-import org.graalvm.compiler.core.common.type.ArithmeticOpTable;
+import com.badlogic.gdx.math.Vector2;
 
 public class HeroControllerProcessor extends ControllerAdapter {
     Hero hero;
@@ -97,10 +95,6 @@ public class HeroControllerProcessor extends ControllerAdapter {
 
     @Override
     public boolean axisMoved(Controller controller, int axisIndex, float value) {
-        System.out.println(axisIndex);
-        System.out.println(value);
-
-
         switch (axisIndex) {
             case 0:
                 if (value > 0.6f)
@@ -119,8 +113,10 @@ public class HeroControllerProcessor extends ControllerAdapter {
                     hero.state.left = false;
                 break;
             case 2:
+                hero.state.aimAngle = new Vector2(controller.getAxis(3), -value).angle();
                 break;
             case 3:
+                hero.state.aimAngle = new Vector2(value, -controller.getAxis(2)).angle();
                 break;
             case 4:
                 break;
