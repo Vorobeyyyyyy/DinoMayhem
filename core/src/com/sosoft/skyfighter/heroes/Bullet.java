@@ -13,13 +13,21 @@ public class Bullet {
     public final static float INFDISTANCE = -1f;
     public final static float INFTIME = -1f;
 
-    float speed;
+
+    // CHARACTERISTICS
+    public int damage;
+    public float speed;
+    public float maxDistance;
+    public float maxTimeAlive;
+    public boolean canBounce;
+    public float accyuracy;
+    public String spriteName;
+    public float scale;
+
+    float timeAlive;
+    float distance;
     Vector2 pos;
     Vector2 startPos;
-    float maxDistance;
-    float distance;
-    float timeAlive;
-    float maxTimeAlive;
     public Body body;
     Texture texture;
     Sprite sprite;
@@ -27,11 +35,13 @@ public class Bullet {
     public boolean endOfLife;
     Hero hero;
 
-    public Bullet(World world, float speed, Vector2 pos, Hero hero, float maxDistance, float maxTimeAlive, String spriteName, float scale) {
-        this.world = world;
-        startPos = pos;
-        this.speed = speed;
-        this.maxTimeAlive = maxTimeAlive;
+    public Bullet(Hero hero) {
+        this.hero = hero;
+    }
+
+    public void init() {
+        this.world = hero.world;
+        startPos = hero.centerPos;
         if (maxDistance != INFDISTANCE)
             this.maxDistance = maxDistance * maxDistance;
         else
@@ -41,11 +51,10 @@ public class Bullet {
         sprite.setOriginCenter();
         sprite.setScale(scale);
         timeAlive = 0f;
-        this.hero = hero;
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(pos.x / PPM, pos.y / PPM);
+        bodyDef.position.set(startPos.x / PPM, startPos.y / PPM);
         bodyDef.bullet = true;
         bodyDef.fixedRotation = false;
         bodyDef.gravityScale = 0;
@@ -57,15 +66,19 @@ public class Bullet {
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.density = 1f;
-        fixtureDef.restitution = 1f;
+        if (canBounce)
+            fixtureDef.restitution = 0.9f;
+        else
+            fixtureDef.restitution = 0f;
         fixtureDef.shape = circleShape;
         fixtureDef.filter.maskBits = (short) (0xFFFF ^ (short) pow(2, hero.number));
         circleShape.dispose();
 
         body = world.createBody(bodyDef);
         body.createFixture(fixtureDef);
-        //body.applyForceToCenter(new Vector2(speed, speed).setAngle(direction), true);
+        body.setUserData(this);
     }
+
 
     public void update(float delta) {
         pos = body.getPosition().scl(PPM);
@@ -89,6 +102,10 @@ public class Bullet {
                 pos.y > hero.levelController.level.levelDrawer.camera.mapHeight + 400) {
             endOfLife = true;
         }
+    }
+
+    private void doWhenEnd() {
+
     }
 
     public void dispose() {

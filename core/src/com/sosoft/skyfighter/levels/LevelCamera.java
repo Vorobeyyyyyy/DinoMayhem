@@ -32,16 +32,16 @@ public class LevelCamera extends OrthographicCamera {
                 posAim = new Vector2(0, 0);
         for (Hero hero : heroes)
             if (!hero.state.dead) {
-                if (hero.pos.x < minPos.x)
-                    minPos.x = hero.pos.x;
-                if (hero.pos.x > maxPos.x)
-                    maxPos.x = hero.pos.x;
-                if (hero.pos.y < minPos.y)
-                    minPos.y = hero.pos.y;
-                if (hero.pos.y > maxPos.y)
-                    maxPos.y = hero.pos.y;
-                posAim.x += hero.pos.x;
-                posAim.y += hero.pos.y;
+                if (hero.centerPos.x < minPos.x)
+                    minPos.x = hero.centerPos.x;
+                if (hero.centerPos.x > maxPos.x)
+                    maxPos.x = hero.centerPos.x;
+                if (hero.centerPos.y < minPos.y)
+                    minPos.y = hero.centerPos.y;
+                if (hero.centerPos.y > maxPos.y)
+                    maxPos.y = hero.centerPos.y;
+                posAim.x += hero.centerPos.x;
+                posAim.y += hero.centerPos.y;
                 heroCount++;
             }
         if (heroCount != 0) {

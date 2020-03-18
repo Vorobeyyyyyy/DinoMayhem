@@ -19,11 +19,14 @@ public class LevelController {
 
     public Level level;
     public World world;
+    public LevelContactListener levelContactListener;
     RandomXS128 random = new RandomXS128();
 
     LevelController(Level level, boolean isKeyboard, Array<Controller> controllers) {
         this.level = level;
         world = new World(new Vector2(0, -10), false);
+        levelContactListener = new LevelContactListener();
+        world.setContactListener(levelContactListener);
         TilemapCollisionParser.parseCollisionLayer(world, level.tiledMap.getLayers().get("collision-layer").getObjects());
         TilemapSpawnpointParser.ParseSpawnpoints(spawnPoints, level.tiledMap);
         spawnHeroes(isKeyboard, controllers);

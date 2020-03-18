@@ -51,6 +51,7 @@ public class Hero {
         fixtureDef.filter.maskBits = 0xFF;
         body = world.createBody(def);
         body.createFixture(fixtureDef);
+        body.setUserData(this);
         shape.dispose();
 
 

@@ -80,6 +80,7 @@ public class LevelDrawer {
     public void dispose() {
         texture.dispose();
         renderer.dispose();
+        tex.dispose();
         box2DDebugRenderer.dispose();
     }
 }
