@@ -27,7 +27,7 @@ public class Interface {
             this.x = x;
             this.y = y;
 
-            //EntityManager.addToUpdate(this);
+
         }
 
         public void update() {
@@ -40,7 +40,7 @@ public class Interface {
             bFont.setColor(1, 1, 1, 1 - transparency);
 
             if(transparency >= 1) {
-                //EntityManager.setToDestroy(this);
+
             }
         }
 
