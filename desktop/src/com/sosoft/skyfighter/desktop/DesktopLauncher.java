@@ -16,3 +16,5 @@ public class DesktopLauncher {
 		new LwjglApplication(new skyFighter(), config);
 	}
 }
+
+//ctrl + shift + k
