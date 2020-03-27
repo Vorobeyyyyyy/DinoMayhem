@@ -15,7 +15,6 @@ public class HeroState {
     public float secondAbilityCurrentCooldown;
     public float thirdAbilityCurrentCooldown;
 
-
     // Input states
     public float aimAngle;
     public boolean jump;

@@ -9,6 +9,8 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.Array;
+import com.sosoft.skyfighter.Animation;
 import com.sosoft.skyfighter.levels.LevelController;
 
 import static com.sosoft.skyfighter.levels.Constants.PPM;
@@ -26,12 +28,13 @@ public class Hero {
     public Body body;
     public HeroState state = new HeroState();
     public int number;
+    public HeroAnimation heroAnim;
 
     public Hero(LevelController levelController, float posX, float posY, Controller controller, int number) {
         world = levelController.world;
         this.levelController = levelController;
         this.number = number;
-        texture = new Texture("Heroes/MANpapich.png");
+        texture = new Texture("Heroes/Agent/Idle_0.png");
         sprite = new Sprite(texture);
         BodyDef def = new BodyDef();
         def.type = BodyDef.BodyType.DynamicBody;
@@ -54,7 +57,6 @@ public class Hero {
         body.setUserData(this);
         shape.dispose();
 
-
         if (controller != null)
             controller.addListener(new HeroControllerProcessor(this));
         else {
@@ -62,7 +64,6 @@ public class Hero {
             Gdx.input.setInputProcessor(inputProcessor);
         }
     }
-
 
     public void update(float delta) {
         if (inputProcessor != null)
@@ -93,6 +94,15 @@ public class Hero {
                 body.applyForceToCenter(state.maxSpeed * body.getMass() * 10, 0, false);
         }
 
+    }
+
+    public void updateAnimation() {
+        if(state.grounded) {
+
+        }
+        if(state.right) {
+
+        }
     }
 
     public void updateAbilities(float delta) {

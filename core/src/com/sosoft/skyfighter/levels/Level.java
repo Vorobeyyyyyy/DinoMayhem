@@ -75,7 +75,5 @@ public class Level implements Screen {
         levelDrawer.dispose();
         for(Hero hero: players)
             hero.dispose();
-
-
     }
 }

@@ -21,6 +21,7 @@ public class Animation {
         currentFrame = 0;
         currentFrameTime = 0;
     }
+
     public Animation(float cycleTime, int count, Array<Texture> frames) {
         frameCount = count;
         this.frames = frames;
@@ -28,6 +29,7 @@ public class Animation {
         currentFrame = 0;
         currentFrameTime = 0;
     }
+
     public void Update(float deltaTime) {
         currentFrameTime += deltaTime;
         if(currentFrameTime > maxFrameTime) {
@@ -38,6 +40,7 @@ public class Animation {
             currentFrame = 0;
         }
     }
+
     public Texture getFrame() {
         return frames.get(currentFrame);
     }
