@@ -23,6 +23,7 @@ public class LevelDrawer {
     Level level;
     Texture texture;
     Sprite sprite;
+    LevelInterface levelInterface;
 
     LevelDrawer(Level level, TiledMap tiledMap, boolean debug) {
         renderer = new OrthogonalTiledMapRenderer(tiledMap);
@@ -39,6 +40,7 @@ public class LevelDrawer {
     private void update() {
         camera.update();
         renderer.setView(camera);
+        levelInterface.update();
     }
 
     public void updateAndRender() {
@@ -59,6 +61,7 @@ public class LevelDrawer {
                 sprite.draw(renderer.getBatch());
             }
         }
+        levelInterface.draw(renderer.getBatch());
         renderer.getBatch().end();
         if (debug)
             box2DDebugRenderer.render(level.levelController.world, camera.combined.scl(PPM));

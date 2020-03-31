@@ -8,19 +8,26 @@ import com.sosoft.skyfighter.heroes.Bullet;
 import com.sosoft.skyfighter.heroes.Hero;
 
 public class LevelContactListener implements ContactListener {
+    Level level;
+
+    LevelContactListener(Level level) {
+        this.level = level;
+    }
+
     @Override
     public void beginContact(Contact contact) {
         Object objectA = contact.getFixtureA().getBody().getUserData();
         Object objectB = contact.getFixtureB().getBody().getUserData();
-        if (objectA instanceof Hero && objectB instanceof Bullet)
-            ((Hero) objectA).state.health -= ((Bullet)objectB).damage;
+        if (objectA instanceof Hero && objectB instanceof Bullet) {
+
+            ((Hero) objectA).state.health -= ((Bullet) objectB).damage;
+        }
         if (objectB instanceof Hero && objectA instanceof Bullet)
             ((Hero) objectB).state.health -= ((Bullet)objectA).damage;
         if (objectA instanceof Bullet)
             ((Bullet) objectA).endOfLife = true;
         if (objectB instanceof  Bullet)
-            ((Bullet)objectB).endOfLife = true;
-
+            ((Bullet) objectB).endOfLife = true;
     }
 
     @Override

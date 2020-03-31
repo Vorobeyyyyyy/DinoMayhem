@@ -25,7 +25,7 @@ public class LevelController {
     LevelController(Level level, boolean isKeyboard, Array<Controller> controllers) {
         this.level = level;
         world = new World(new Vector2(0, -10), false);
-        levelContactListener = new LevelContactListener();
+        levelContactListener = new LevelContactListener(level);
         world.setContactListener(levelContactListener);
         TilemapCollisionParser.parseCollisionLayer(world, level.tiledMap.getLayers().get("collision-layer").getObjects());
         TilemapSpawnpointParser.ParseSpawnpoints(spawnPoints, level.tiledMap);
