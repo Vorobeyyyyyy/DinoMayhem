@@ -8,24 +8,37 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.sosoft.skyfighter.heroes.Hero;
 import sun.jvm.hotspot.HelloWorld;
 
 import java.util.Objects;
 
 public class LevelInterface {
-    //private static BitmapFont bFont = new BitmapFont();
-    private static SpriteBatch spriteBatchHandle;
-    private static OrthographicCamera orthographicCameraCam;
-    private static Array<LevelInterfaceDamageText> arrayDamageText = new Array<LevelInterfaceDamageText>();
+    public Level level;
+    public Array<LevelInterfaceHealthBar> healthBars;
+    public Array<LevelInterfaceDamageText> arrayDamageText;
+
+    LevelInterface(Level level) {
+        this.level = level;
+        arrayDamageText = new Array<LevelInterfaceDamageText>();
+        healthBars = new Array<LevelInterfaceHealthBar>();
+        for (Hero player : level.players) {
+            healthBars.add(new LevelInterfaceHealthBar(player));
+        }
+    }
 
     public void update() {
-        for(LevelInterfaceDamageText text : arrayDamageText)
+        for (LevelInterfaceDamageText text : arrayDamageText)
             text.update();
-    };
+        for (LevelInterfaceHealthBar healthBar : healthBars)
+            healthBar.update();
+    }
 
     public void draw(Batch batch) {
-        for(LevelInterfaceDamageText text : arrayDamageText)
+        for (LevelInterfaceDamageText text : arrayDamageText)
             text.draw(batch);
+        for (LevelInterfaceHealthBar healthBar : healthBars)
+            healthBar.draw(batch);
     }
 //    private static Array<Object> updateObjects = new Array<Object>();
 //    private static Array<Object> destroyObjects = new Array<Object>();

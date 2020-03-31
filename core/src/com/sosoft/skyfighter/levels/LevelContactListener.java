@@ -19,11 +19,18 @@ public class LevelContactListener implements ContactListener {
         Object objectA = contact.getFixtureA().getBody().getUserData();
         Object objectB = contact.getFixtureB().getBody().getUserData();
         if (objectA instanceof Hero && objectB instanceof Bullet) {
-
-            ((Hero) objectA).state.health -= ((Bullet) objectB).damage;
+            Hero tempHero = (Hero)objectA;
+            Bullet tempBullet = (Bullet)objectB;
+            tempHero.state.health -= tempBullet.damage;
+            level.levelDrawer.levelInterface.arrayDamageText.add(new LevelInterfaceDamageText(String.valueOf(tempBullet.damage),tempHero.centerPos.add(0, tempHero.sprite.getHeight()/2)));
         }
-        if (objectB instanceof Hero && objectA instanceof Bullet)
-            ((Hero) objectB).state.health -= ((Bullet)objectA).damage;
+        if (objectB instanceof Hero && objectA instanceof Bullet) {
+            Hero tempHero = (Hero)objectB;
+            Bullet tempBullet = (Bullet)objectA;
+            tempHero.state.health -= tempBullet.damage;
+            level.levelDrawer.levelInterface.arrayDamageText.add(new LevelInterfaceDamageText(String.valueOf(tempBullet.damage),tempHero.centerPos.add(0, tempHero.sprite.getHeight()/2)));
+        }
+
         if (objectA instanceof Bullet)
             ((Bullet) objectA).endOfLife = true;
         if (objectB instanceof  Bullet)
@@ -45,3 +52,4 @@ public class LevelContactListener implements ContactListener {
 
     }
 }
+

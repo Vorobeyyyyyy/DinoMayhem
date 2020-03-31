@@ -6,7 +6,7 @@ import com.sosoft.skyfighter.heroes.Hero;
 public class SoilderBullet extends Bullet {
     SoilderBullet(Hero hero) {
         super(hero);
-        damage = 4;
+        damage = 25;
         speed = 20f;
         maxDistance = INFDISTANCE;
         maxTimeAlive = INFTIME;
@@ -16,5 +16,4 @@ public class SoilderBullet extends Bullet {
         scale = 0.4f;
         init();
     }
-
 }

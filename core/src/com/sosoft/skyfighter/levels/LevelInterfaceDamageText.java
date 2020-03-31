@@ -10,24 +10,25 @@ public class LevelInterfaceDamageText {
     private java.lang.CharSequence text;
     private float transparency;
     private float gravity = 0.1f;
-    private Vector2 momentum = new Vector2((float) (Math.random() - 0.5d) * 4, 3);
+    private Vector2 momentum = new Vector2((float) (Math.random() - 0.5d) * 4, 4);
 
     public boolean toDestroy = false;
     public float x;
     public float y;
 
-    public LevelInterfaceDamageText(java.lang.CharSequence msg, float x, float y) {
+    public LevelInterfaceDamageText(java.lang.CharSequence msg, Vector2 pos) {
         this.bFont = new BitmapFont(Gdx.files.internal("Interface/damage.fnt"));
         this.text = msg;
-        this.x = x;
-        this.y = y;
+        this.x = pos.x;
+        this.y = pos.y;
+        bFont.getData().setScale(1.5f);
     }
 
     public void update() {
         x += momentum.x;
         y += momentum.y;
         momentum.y -= gravity;
-        transparency += 0.015f;
+        transparency += 0.01f;
         bFont.setColor(1, 1, 1, 1 - transparency);
         if (transparency >= 1) {
             toDestroy = true;

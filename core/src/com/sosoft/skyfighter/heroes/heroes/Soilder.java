@@ -16,6 +16,7 @@ public class Soilder extends Hero {
         state.maxSpeed = 15;
         state.jumpHeight = 20;
         state.maxHealth = 1000;
+        reset();
     }
 
 

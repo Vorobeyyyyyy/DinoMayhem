@@ -47,6 +47,7 @@ public class LevelController {
         if (isKeyboard) {
             int n = random.nextInt(spawnPoints.size);
             level.players.add(new Soilder(this, spawnPoints.get(n).x, spawnPoints.get(n).y, null, i++));
+            level.players.add(new Soilder(this, spawnPoints.get(n).x, spawnPoints.get(n).y, null, i++));
         }
         for (Controller controller : controllers) {
             int n = random.nextInt(spawnPoints.size);

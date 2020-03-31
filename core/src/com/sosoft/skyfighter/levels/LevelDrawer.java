@@ -33,6 +33,7 @@ public class LevelDrawer {
         sprite = new Sprite(texture);
         sprite.setScale(30, 5);
         sprite.setOrigin(0, 0);
+        levelInterface = new LevelInterface(level);
         this.level = level;
         this.debug = debug;
     }
