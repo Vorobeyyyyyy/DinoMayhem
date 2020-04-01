@@ -196,7 +196,7 @@ public class Menu implements Screen {
         menuMusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Hyper.mp3"));
         menuMusic.setVolume(0.4f);
         menuMusic.setLooping(true);
-        menuMusic.play();
+       // menuMusic.play();
     }
 
     public void update(float delta) {

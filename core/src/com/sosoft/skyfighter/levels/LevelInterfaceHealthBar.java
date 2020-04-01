@@ -18,8 +18,8 @@ public class LevelInterfaceHealthBar {
 
     LevelInterfaceHealthBar(Hero hero) {
         this.hero = hero;
-        textureCurHealth = new Texture("Heroes/CurHealth.png");
-        textureMaxHealth = new Texture("Heroes/MaxHealth.png");
+        textureCurHealth = new Texture("Heroes/CurHealth_0.png");
+        textureMaxHealth = new Texture("Heroes/MaxHealth_0.png");
         spriteCurHealth = new Sprite(textureCurHealth);
         spriteMaxHealth = new Sprite(textureMaxHealth);
         spriteCurHealth.setPosition(hero.centerPos.x - spriteMaxHealth.getWidth() / 2, hero.pos.y + hero.sprite.getHeight() + height);
@@ -30,6 +30,8 @@ public class LevelInterfaceHealthBar {
         spriteCurHealth.setPosition(hero.centerPos.x - spriteMaxHealth.getWidth() / 2, hero.pos.y + hero.sprite.getHeight() + height);
         if (hero.state.health >= 0)
             spriteCurHealth.setSize((float) hero.state.health / hero.state.maxHealth * spriteMaxHealth.getWidth(), spriteMaxHealth.getHeight());
+        else
+            spriteCurHealth.setSize(0f, spriteMaxHealth.getHeight());
         spriteMaxHealth.setPosition(hero.centerPos.x - spriteMaxHealth.getWidth() / 2, hero.pos.y + hero.sprite.getHeight() + height);
     }
 

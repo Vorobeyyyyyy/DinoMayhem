@@ -15,6 +15,7 @@ import java.util.Objects;
 
 public class LevelInterface {
     public Level level;
+    public LevelInterfaceTeams levelInterfaceTeams;
     public Array<LevelInterfaceHealthBar> healthBars;
     public Array<LevelInterfaceDamageText> arrayDamageText;
 
@@ -22,6 +23,7 @@ public class LevelInterface {
         this.level = level;
         arrayDamageText = new Array<LevelInterfaceDamageText>();
         healthBars = new Array<LevelInterfaceHealthBar>();
+        levelInterfaceTeams = new LevelInterfaceTeams(5);
         for (Hero player : level.players) {
             healthBars.add(new LevelInterfaceHealthBar(player));
         }
@@ -39,32 +41,7 @@ public class LevelInterface {
             text.draw(batch);
         for (LevelInterfaceHealthBar healthBar : healthBars)
             healthBar.draw(batch);
+        levelInterfaceTeams.draw();
     }
-//    private static Array<Object> updateObjects = new Array<Object>();
-//    private static Array<Object> destroyObjects = new Array<Object>();
-
-//    public static void addToUpdate(Object object) {
-//        objects.add(object);
-//        updateObjects.add(object);
-//    };
-//
-//    public static void setToDestroy(Object object) {
-//        objects.removeValue(object, true);
-//        updateObjects.removeValue(object, true);
-//        destroyObjects.add(object);
-//    }
-//
-//    public static void update(World world) {
-//        for(Object object : destroyObjects) {
-//        }
-//
-//    }
-//
-//    public static void draw(Batch batch) {
-//        for(Object object : objects) {
-//            object.draw(batch);
-//        }
-//
-//    }
 }
 
