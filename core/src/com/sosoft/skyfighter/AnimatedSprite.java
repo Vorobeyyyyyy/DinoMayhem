@@ -13,8 +13,8 @@ public class AnimatedSprite {
     int currentFrame;
     Array<Texture> textureArray;
     Array<Sprite> spriteArray;
-    boolean isReflected;
     float direction;
+    Sprite currentSprite;
 
     public AnimatedSprite(String baseName, int frameCount, float duration, float scale) {
         textureArray = new Array<Texture>();
@@ -30,7 +30,6 @@ public class AnimatedSprite {
         this.frameCount = frameCount;
         this.duration = duration;
         currentTime = 0;
-        isReflected = false;
         direction = 0;
     }
 
@@ -41,10 +40,14 @@ public class AnimatedSprite {
         currentFrame = (int) (currentTime / (duration / frameCount));
     }
 
-    public void draw(Batch batch, Vector2 pos) {
-        Sprite currentSprite = spriteArray.get(currentFrame);
+    public void draw(Batch batch, Vector2 pos, boolean flipX, boolean flipY, boolean reverse) {
+        if (reverse)
+            currentSprite = spriteArray.get(frameCount - currentFrame - 1);
+        else
+            currentSprite = spriteArray.get(currentFrame);
+
         currentSprite.setRotation(direction);
-        currentSprite.setFlip(false, isReflected);
+        currentSprite.setFlip(flipX, flipY);
         currentSprite.setPosition(pos.x, pos.y);
         currentSprite.draw(batch);
     }
