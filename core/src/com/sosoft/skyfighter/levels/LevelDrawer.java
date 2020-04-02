@@ -23,7 +23,7 @@ public class LevelDrawer {
     Level level;
     Texture texture;
     Sprite sprite;
-    LevelInterface levelInterface;
+    public LevelInterface levelInterface;
 
     LevelDrawer(Level level, TiledMap tiledMap, boolean debug) {
         renderer = new OrthogonalTiledMapRenderer(tiledMap);
