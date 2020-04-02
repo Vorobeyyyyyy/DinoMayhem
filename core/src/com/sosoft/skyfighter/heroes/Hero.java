@@ -27,7 +27,7 @@ public class Hero {
     public Vector2 size;
 
     public Hero(LevelController levelController, float posX, float posY, Controller controller, int number) {
-        size = new Vector2(95,100);
+        size = new Vector2(95, 100);
         world = levelController.world;
         this.levelController = levelController;
         this.number = number;
@@ -60,7 +60,8 @@ public class Hero {
 
         animation = new Animation();
         animation.addAnimation("wait", new AnimatedSprite("Heroes/dino/wait/wait_", 4, 0.2f, 6));
-        animation.setAnimation("wait");
+        animation.addAnimation("walk", new AnimatedSprite("Heroes/dino/walk/walk_", 4, 0.4f, 6));
+        animation.setAnimation("walk");
     }
 
     public void update(float delta) {
@@ -73,7 +74,7 @@ public class Hero {
 
         updateState(delta);
         updateMov();
-        animation.update(delta);
+        updateAnimation(delta);
     }
 
     int i = 10;
@@ -94,13 +95,38 @@ public class Hero {
         }
     }
 
-    public void updateAnimation() {
+    public void updateAnimation(float delta) {
+        boolean lookLeft;
+        if (state.aimAngle > 270 || state.aimAngle < 90) {
+            animation.flipX = false;
+            lookLeft = false;
+        }
+        else {
+            animation.flipX = true;
+            lookLeft = true;
+        }
+
         if (state.grounded) {
-
+            if (state.right) {
+                animation.setAnimation("walk");
+                if (lookLeft)
+                    animation.reverse = true;
+                else
+                    animation.reverse = false;
+            } else if (state.left) {
+                animation.setAnimation("walk");
+                if (lookLeft)
+                    animation.reverse = false;
+                else
+                    animation.reverse = true;
+            } else {
+                animation.setAnimation("wait");
+            }
+        } else {
+            animation.setAnimation("wait");
         }
-        if (state.right) {
 
-        }
+        animation.update(delta);
     }
 
     public void updateAbilities(float delta) {
@@ -174,7 +200,7 @@ public class Hero {
     }
 
     public void draw(Batch batch) {
-        animation.draw(batch, pos.add(-23,0));
+        animation.draw(batch, pos.add(-23, 0));
     }
 
     public void firstAbility() {

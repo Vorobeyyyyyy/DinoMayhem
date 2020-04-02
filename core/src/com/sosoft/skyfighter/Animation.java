@@ -8,6 +8,7 @@ import java.util.HashMap;
 public class Animation {
     HashMap<String, AnimatedSprite> animations;
     AnimatedSprite currentAnimation;
+    public boolean flipX = false, flipY = false, reverse = false;
 
     public Animation() {
         animations = new HashMap<String, AnimatedSprite>();
@@ -21,12 +22,11 @@ public class Animation {
         currentAnimation = animations.get(name);
     }
 
-    public void update(float delta)
-    {
+    public void update(float delta) {
         currentAnimation.update(delta);
     }
 
     public void draw(Batch batch, Vector2 pos) {
-        currentAnimation.draw(batch, pos);
+        currentAnimation.draw(batch, pos, flipX, flipY, reverse);
     }
 }
