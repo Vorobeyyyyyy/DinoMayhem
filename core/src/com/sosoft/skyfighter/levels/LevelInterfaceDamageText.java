@@ -1,6 +1,5 @@
 package com.sosoft.skyfighter.levels;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
@@ -16,12 +15,12 @@ public class LevelInterfaceDamageText {
     public float x;
     public float y;
 
-    public LevelInterfaceDamageText(java.lang.CharSequence msg, Vector2 pos) {
-        this.bFont = new BitmapFont(Gdx.files.internal("Interface/damage.fnt"));
+    public LevelInterfaceDamageText(String msg, Vector2 pos) {
+        this.bFont = new BitmapFont();
         this.text = msg;
         this.x = pos.x;
         this.y = pos.y;
-        bFont.getData().setScale(1.5f);
+        bFont.getData().setScale(2);
     }
 
     public void update() {

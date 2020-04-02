@@ -2,14 +2,11 @@ package com.sosoft.skyfighter.heroes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.controllers.Controller;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.utils.Array;
+import com.sosoft.skyfighter.AnimatedSprite;
 import com.sosoft.skyfighter.Animation;
 import com.sosoft.skyfighter.levels.LevelController;
 
@@ -19,23 +16,21 @@ import static java.lang.Math.pow;
 
 public class Hero {
     public HeroInputProcessor inputProcessor = null;
-    public Sprite sprite;
     public LevelController levelController;
     public World world;
-    public Texture texture;
     public Vector2 pos = new Vector2();
     public Vector2 centerPos = new Vector2();
     public Body body;
     public HeroState state = new HeroState();
     public int number;
-    public HeroAnimation heroAnim;
+    public Animation animation;
+    public Vector2 size;
 
     public Hero(LevelController levelController, float posX, float posY, Controller controller, int number) {
+        size = new Vector2(95,100);
         world = levelController.world;
         this.levelController = levelController;
         this.number = number;
-        texture = new Texture("Heroes/Agent/Idle_0.png");
-        sprite = new Sprite(texture);
         BodyDef def = new BodyDef();
         def.type = BodyDef.BodyType.DynamicBody;
         def.position.set(posX / PPM, posY / PPM);
@@ -43,8 +38,7 @@ public class Hero {
         def.fixedRotation = true;
 
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(sprite.getWidth() / 2 / PPM, sprite.getHeight() / 2 / PPM);
-
+        shape.setAsBox(size.x / 2 / PPM, size.y / 2 / PPM);
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
         fixtureDef.density = 0f;
@@ -63,21 +57,26 @@ public class Hero {
             inputProcessor = new HeroInputProcessor(this);
             Gdx.input.setInputProcessor(inputProcessor);
         }
+
+        animation = new Animation();
+        animation.addAnimation("wait", new AnimatedSprite("Heroes/dino/wait/wait_", 4, 0.2f, 6));
+        animation.setAnimation("wait");
     }
 
     public void update(float delta) {
         if (inputProcessor != null)
             Gdx.input.setInputProcessor(inputProcessor);
-        pos.x = (body.getPosition().x - sprite.getWidth() / 2 / PPM) * PPM;
-        pos.y = (body.getPosition().y - sprite.getHeight() / 2 / PPM) * PPM;
+        pos.x = (body.getPosition().x - size.x / 2 / PPM) * PPM;
+        pos.y = (body.getPosition().y - size.y / 2 / PPM) * PPM;
         centerPos.x = body.getPosition().x * PPM;
         centerPos.y = body.getPosition().y * PPM;
 
-        sprite.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
         updateState(delta);
         updateMov();
+        animation.update(delta);
     }
 
+    int i = 10;
 
     public void updateMov() {
         if (state.jump && state.grounded) {
@@ -93,14 +92,13 @@ public class Hero {
             if (state.right && body.getLinearVelocity().x < state.maxSpeed)
                 body.applyForceToCenter(state.maxSpeed * body.getMass() * 10, 0, false);
         }
-
     }
 
     public void updateAnimation() {
-        if(state.grounded) {
+        if (state.grounded) {
 
         }
-        if(state.right) {
+        if (state.right) {
 
         }
     }
@@ -172,11 +170,11 @@ public class Hero {
     public void reset() {
         state.dead = false;
         state.health = state.maxHealth;
+        body.setLinearVelocity(0f, 0f);
     }
 
     public void draw(Batch batch) {
-        sprite.setPosition(pos.x, pos.y);
-        sprite.draw(batch);
+        animation.draw(batch, pos.add(-23,0));
     }
 
     public void firstAbility() {
@@ -195,6 +193,6 @@ public class Hero {
     ;
 
     public void dispose() {
-        texture.dispose();
+
     }
 }

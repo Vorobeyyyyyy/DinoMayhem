@@ -22,13 +22,13 @@ public class LevelContactListener implements ContactListener {
             Hero tempHero = (Hero)objectA;
             Bullet tempBullet = (Bullet)objectB;
             tempHero.state.health -= tempBullet.damage;
-            level.levelDrawer.levelInterface.arrayDamageText.add(new LevelInterfaceDamageText(String.valueOf(tempBullet.damage),tempHero.centerPos.add(0, tempHero.sprite.getHeight()/2)));
+            level.levelDrawer.levelInterface.arrayDamageText.add(new LevelInterfaceDamageText(String.valueOf(tempBullet.damage),tempHero.centerPos.add(0,tempHero.size.x/2)));
         }
         if (objectB instanceof Hero && objectA instanceof Bullet) {
             Hero tempHero = (Hero)objectB;
             Bullet tempBullet = (Bullet)objectA;
             tempHero.state.health -= tempBullet.damage;
-            level.levelDrawer.levelInterface.arrayDamageText.add(new LevelInterfaceDamageText(String.valueOf(tempBullet.damage),tempHero.centerPos.add(0, tempHero.sprite.getHeight()/2)));
+            level.levelDrawer.levelInterface.arrayDamageText.add(new LevelInterfaceDamageText(String.valueOf(tempBullet.damage),tempHero.centerPos.add(0, tempHero.size.y/2)));
         }
 
         if (objectA instanceof Bullet)

@@ -27,8 +27,8 @@ public class LevelCamera extends OrthographicCamera {
         int heroCount = 0;
         float zoomAim, screenWidth = Gdx.graphics.getWidth(), screenHeight = Gdx.graphics.getHeight();
 
-        Vector2 maxPos = new Vector2(heroes.get(0).pos.x, heroes.get(0).pos.y),
-                minPos = new Vector2(heroes.get(0).pos.x, heroes.get(0).pos.y),
+        Vector2 maxPos = new Vector2(Float.MIN_VALUE, Float.MIN_VALUE),
+                minPos = new Vector2(Float.MAX_VALUE, Float.MAX_VALUE),
                 posAim = new Vector2(0, 0);
         for (Hero hero : heroes)
             if (!hero.state.dead) {

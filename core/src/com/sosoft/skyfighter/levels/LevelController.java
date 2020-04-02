@@ -20,6 +20,7 @@ public class LevelController {
     public Level level;
     public World world;
     public LevelContactListener levelContactListener;
+
     RandomXS128 random = new RandomXS128();
 
     LevelController(Level level, boolean isKeyboard, Array<Controller> controllers) {
@@ -46,7 +47,6 @@ public class LevelController {
         int i = 1;
         if (isKeyboard) {
             int n = random.nextInt(spawnPoints.size);
-            level.players.add(new Soilder(this, spawnPoints.get(n).x, spawnPoints.get(n).y, null, i++));
             level.players.add(new Soilder(this, spawnPoints.get(n).x, spawnPoints.get(n).y, null, i++));
         }
         for (Controller controller : controllers) {
