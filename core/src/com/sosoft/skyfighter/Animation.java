@@ -7,7 +7,11 @@ import java.util.HashMap;
 
 public class Animation {
     HashMap<String, AnimatedSprite> animations;
-    AnimatedSprite currentAnimation;
+    public AnimatedSprite currentAnimation;
+    AnimatedSprite previousAnimation;
+    boolean looped = true;
+    public float direction = 0;
+    public Vector2 pos = new Vector2();
     public boolean flipX = false, flipY = false, reverse = false;
 
     public Animation() {
@@ -19,14 +23,27 @@ public class Animation {
     }
 
     public void setAnimation(String name) {
+        looped = true;
         currentAnimation = animations.get(name);
     }
 
-    public void update(float delta) {
-        currentAnimation.update(delta);
+    public void playAmination(String name) {
+        looped = false;
+        previousAnimation = currentAnimation;
+        currentAnimation = animations.get(name);
+        currentAnimation.currentTime = 0f;
     }
 
-    public void draw(Batch batch, Vector2 pos) {
-        currentAnimation.draw(batch, pos, flipX, flipY, reverse);
+    public void update(float delta) {
+        float tempCurrentTime = currentAnimation.currentTime;
+        currentAnimation.update(delta);
+        if (!looped && tempCurrentTime > currentAnimation.currentTime) {
+            currentAnimation = previousAnimation;
+            looped = true;
+        }
+    }
+
+    public void draw(Batch batch) {
+        currentAnimation.draw(batch, pos, flipX, flipY, reverse, direction);
     }
 }

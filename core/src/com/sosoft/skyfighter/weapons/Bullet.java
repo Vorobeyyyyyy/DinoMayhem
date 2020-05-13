@@ -1,12 +1,14 @@
-package com.sosoft.skyfighter.heroes;
+package com.sosoft.skyfighter.weapons;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.sosoft.skyfighter.heroes.Hero;
 
 import static com.sosoft.skyfighter.levels.Constants.PPM;
+import static com.sosoft.skyfighter.levels.Constants.random;
 import static java.lang.Math.pow;
 
 public class Bullet {
@@ -35,13 +37,23 @@ public class Bullet {
     public boolean endOfLife;
     Hero hero;
 
-    public Bullet(Hero hero) {
+    public Bullet(Hero hero, BulletDef bulletDef) {
         this.hero = hero;
+        damage = bulletDef.damage;
+        speed = bulletDef.speed;
+        maxDistance = bulletDef.maxDistance;
+        maxTimeAlive = bulletDef.maxTimeAlive;
+        canBounce = bulletDef.canBounce;
+        accyuracy = bulletDef.accyuracy;
+        spriteName = bulletDef.spriteName;
+        scale = bulletDef.scale;
+        init();
     }
 
     public void init() {
         this.world = hero.world;
-        startPos = hero.centerPos;
+        startPos = new Vector2(hero.centerPos);
+        startPos.add(hero.weapon.posOffset);
         if (maxDistance != INFDISTANCE)
             this.maxDistance = maxDistance * maxDistance;
         else
@@ -58,8 +70,8 @@ public class Bullet {
         bodyDef.bullet = true;
         bodyDef.fixedRotation = false;
         bodyDef.gravityScale = 0;
-        bodyDef.angle = hero.state.aimAngle;
-        bodyDef.linearVelocity.set(new Vector2(speed, speed).setAngle(hero.state.aimAngle));
+        bodyDef.angle = hero.state.aimAngle + (random.nextFloat() - 0.5f) * 180f * (1f - accyuracy);
+        bodyDef.linearVelocity.set(new Vector2(speed, speed).setAngle(bodyDef.angle));
 
         CircleShape circleShape = new CircleShape();
         circleShape.setRadius(0.3f);

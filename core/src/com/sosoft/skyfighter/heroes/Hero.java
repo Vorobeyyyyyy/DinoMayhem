@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.sosoft.skyfighter.AnimatedSprite;
 import com.sosoft.skyfighter.Animation;
 import com.sosoft.skyfighter.levels.LevelController;
+import com.sosoft.skyfighter.weapons.Weapon;
 
 import static com.sosoft.skyfighter.levels.Constants.PPM;
 import static com.sosoft.skyfighter.levels.Constants.RESPAWN_TIME;
@@ -25,6 +26,8 @@ public class Hero {
     public int number;
     public Animation animation;
     public Vector2 size;
+    public String name;
+    public Weapon weapon;
 
     public Hero(LevelController levelController, float posX, float posY, Controller controller, int number) {
         size = new Vector2(95, 100);
@@ -59,8 +62,8 @@ public class Hero {
         }
 
         animation = new Animation();
-        animation.addAnimation("wait", new AnimatedSprite("Heroes/dino/wait/wait_", 4, 0.2f, 6));
-        animation.addAnimation("walk", new AnimatedSprite("Heroes/dino/walk/walk_", 4, 0.4f, 6));
+        animation.addAnimation("wait", new AnimatedSprite("Heroes/dino/wait/wait_", 4, 1f, 6));
+        animation.addAnimation("walk", new AnimatedSprite("Heroes/dino/walk/walk_", 6, 0.4f, 6));
         animation.setAnimation("walk");
     }
 
@@ -75,9 +78,8 @@ public class Hero {
         updateState(delta);
         updateMov();
         updateAnimation(delta);
+        updateWeapon(delta);
     }
-
-    int i = 10;
 
     public void updateMov() {
         if (state.jump && state.grounded) {
@@ -95,48 +97,38 @@ public class Hero {
         }
     }
 
+    public void updateWeapon(float delta) {
+        weapon.direction = state.aimAngle;
+        weapon.animation.direction = state.aimAngle;
+        weapon.animation.pos.set(centerPos);
+        weapon.animation.flipY = state.lookLeft;
+        weapon.update(delta);
+    }
+
     public void updateAnimation(float delta) {
-        boolean lookLeft;
-        if (state.aimAngle > 270 || state.aimAngle < 90) {
-            animation.flipX = false;
-            lookLeft = false;
-        }
-        else {
-            animation.flipX = true;
-            lookLeft = true;
-        }
+        animation.flipX = state.lookLeft;
 
         if (state.grounded) {
             if (state.right) {
                 animation.setAnimation("walk");
-                if (lookLeft)
-                    animation.reverse = true;
-                else
-                    animation.reverse = false;
+                animation.reverse = state.lookLeft;
             } else if (state.left) {
                 animation.setAnimation("walk");
-                if (lookLeft)
-                    animation.reverse = false;
-                else
-                    animation.reverse = true;
+                animation.reverse = !state.lookLeft;
             } else {
                 animation.setAnimation("wait");
             }
         } else {
             animation.setAnimation("wait");
         }
-
+        animation.pos = new Vector2(pos.x - 23, pos.y);
         animation.update(delta);
     }
 
     public void updateAbilities(float delta) {
-        if (state.firstAbilityCurrentCooldown <= 0) {
-            if (state.firstAbility) {
-                firstAbility();
-                state.firstAbilityCurrentCooldown = state.firstAbilityCooldown;
-            }
-        } else
-            state.firstAbilityCurrentCooldown -= delta;
+        if (state.firstAbility)
+            firstAbility();
+
 
         if (state.secondAbilityCurrentCooldown <= 0) {
             if (state.secondAbility) {
@@ -183,6 +175,8 @@ public class Hero {
             isGrounded();
             updateAbilities(delta);
         }
+
+        state.lookLeft = !(state.aimAngle > 270) && !(state.aimAngle < 90);
     }
 
     private void updateAimAngle() {
@@ -200,23 +194,19 @@ public class Hero {
     }
 
     public void draw(Batch batch) {
-        animation.draw(batch, pos.add(-23, 0));
+        animation.draw(batch);
+        weapon.draw(batch);
     }
 
     public void firstAbility() {
-    }
 
-    ;
+    }
 
     public void secondAbility() {
     }
 
-    ;
-
     public void thirdAbility() {
     }
-
-    ;
 
     public void dispose() {
 

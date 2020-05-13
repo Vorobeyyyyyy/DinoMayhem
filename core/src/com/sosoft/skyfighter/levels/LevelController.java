@@ -7,9 +7,9 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.sosoft.skyfighter.TilemapCollisionParser;
 import com.sosoft.skyfighter.TilemapSpawnpointParser;
-import com.sosoft.skyfighter.heroes.Bullet;
 import com.sosoft.skyfighter.heroes.Hero;
 import com.sosoft.skyfighter.heroes.heroes.Soilder;
+import com.sosoft.skyfighter.weapons.Bullet;
 
 import static com.sosoft.skyfighter.levels.Constants.PPM;
 
@@ -47,6 +47,7 @@ public class LevelController {
         int i = 1;
         if (isKeyboard) {
             int n = random.nextInt(spawnPoints.size);
+            level.players.add(new Soilder(this, spawnPoints.get(n).x, spawnPoints.get(n).y, null, i++));
             level.players.add(new Soilder(this, spawnPoints.get(n).x, spawnPoints.get(n).y, null, i++));
         }
         for (Controller controller : controllers) {

@@ -4,8 +4,8 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import com.sosoft.skyfighter.heroes.Bullet;
 import com.sosoft.skyfighter.heroes.Hero;
+import com.sosoft.skyfighter.weapons.Bullet;
 
 public class LevelContactListener implements ContactListener {
     Level level;
