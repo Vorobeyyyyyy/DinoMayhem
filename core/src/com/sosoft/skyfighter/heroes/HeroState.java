@@ -5,7 +5,6 @@ public class HeroState {
     public float maxSpeed;
     public int maxHealth;
     public float jumpHeight;
-    public float firstAbilityCooldown;
     public float secondAbilityCooldown;
     public float thirdAbilityCooldown;
 
@@ -32,4 +31,5 @@ public class HeroState {
     public boolean dead;
     boolean grounded;
     boolean groundedChanged;
+    boolean lookLeft;
 }

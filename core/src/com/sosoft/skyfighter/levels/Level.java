@@ -7,9 +7,9 @@ import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.utils.Array;
-import com.sosoft.skyfighter.heroes.Bullet;
 import com.sosoft.skyfighter.heroes.Hero;
 import com.sosoft.skyfighter.skyFighter;
+import com.sosoft.skyfighter.weapons.Bullet;
 
 
 public class Level implements Screen {
