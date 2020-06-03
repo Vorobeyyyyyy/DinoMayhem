@@ -34,11 +34,6 @@ public class AK_47 extends Weapon {
     }
 
     @Override
-    public void fire() {
-        super.fire();
-    }
-
-    @Override
     void initBullet() {
         super.initBullet();
         bulletDef.damage = 123;

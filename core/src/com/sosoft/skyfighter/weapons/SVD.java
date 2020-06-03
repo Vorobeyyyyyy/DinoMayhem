@@ -11,10 +11,15 @@ import static com.sosoft.skyfighter.weapons.Bullet.INFTIME;
 public class SVD extends Weapon {
     public SVD(Hero hero) {
         super(hero);
+        init();
+    }
+
+    @Override
+    public void init() {
         initBullet();
-        posOffset = new Vector2(0,-5);
-        animation.addAnimation("idle", new AnimatedSprite("Weapons/SVD/idle_",1,1,1.5f, posOffset));
-        animation.addAnimation("fire", new AnimatedSprite("Weapons/SVD/fire/fire_",11,1/10f,1.5f, posOffset));
+        posOffset = new Vector2(0, -5);
+        animation.addAnimation("idle", new AnimatedSprite("Weapons/SVD/idle_", 1, 1, 1.5f, posOffset));
+        animation.addAnimation("fire", new AnimatedSprite("Weapons/SVD/fire/fire_", 11, 1 / 10f, 1.5f, posOffset));
         animation.setAnimation("idle");
 
         fireSound = Gdx.audio.newSound(Gdx.files.internal("Weapons/SVD/Sound/fire.mp3"));
@@ -24,11 +29,7 @@ public class SVD extends Weapon {
         shotsPerSec = 2;
         accuracy = 1f;
         reloadTime = 3.5f;
-    }
-
-    @Override
-    public void fire() {
-        super.fire();
+        super.init();
     }
 
     @Override

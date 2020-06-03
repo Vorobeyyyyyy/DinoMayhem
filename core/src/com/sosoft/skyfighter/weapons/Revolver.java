@@ -11,10 +11,15 @@ import static com.sosoft.skyfighter.weapons.Bullet.INFTIME;
 public class Revolver extends Weapon {
     public Revolver(Hero hero) {
         super(hero);
+        init();
+    }
+
+    @Override
+    public void init() {
         initBullet();
-        posOffset = new Vector2(0,-10);
-        animation.addAnimation("idle",new AnimatedSprite("Weapons/Revolver/idle_",1,1,1.5f, posOffset));
-        animation.addAnimation("fire",new AnimatedSprite("Weapons/Revolver/fire/fire_",6,1/10f,1.5f, posOffset));
+        posOffset = new Vector2(0, -10);
+        animation.addAnimation("idle", new AnimatedSprite("Weapons/Revolver/idle_", 1, 1, 1.5f, posOffset));
+        animation.addAnimation("fire", new AnimatedSprite("Weapons/Revolver/fire/fire_", 6, 1 / 10f, 1.5f, posOffset));
         animation.setAnimation("idle");
 
         fireSound = Gdx.audio.newSound(Gdx.files.internal("Weapons/Revolver/Sound/fire.mp3"));
@@ -24,11 +29,7 @@ public class Revolver extends Weapon {
         shotsPerSec = 6;
         accuracy = 0.95f;
         reloadTime = 3.5f;
-    }
-
-    @Override
-    public void fire() {
-        super.fire();
+        super.init();
     }
 
     @Override
