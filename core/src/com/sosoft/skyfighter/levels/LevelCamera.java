@@ -25,7 +25,7 @@ public class LevelCamera extends OrthographicCamera {
     @Override
     public void update() {
         float zoomAim, screenWidth = Gdx.graphics.getWidth(), screenHeight = Gdx.graphics.getHeight();
-
+        int heroCount = 0;
         Vector2 maxPos = new Vector2(Float.MIN_VALUE, Float.MIN_VALUE),
                 minPos = new Vector2(Float.MAX_VALUE, Float.MAX_VALUE),
                 posAim = new Vector2(0, 0);
@@ -39,8 +39,9 @@ public class LevelCamera extends OrthographicCamera {
                     minPos.y = hero.centerPos.y;
                 if (hero.centerPos.y > maxPos.y)
                     maxPos.y = hero.centerPos.y;
+                heroCount++;
             }
-        if (heroes.size != 0) {
+        if (heroCount != 0) {
             //posAim.x /= heroCount;
             //posAim.y /= heroCount;
             posAim.x = (maxPos.x + minPos.x) / 2;
@@ -53,7 +54,7 @@ public class LevelCamera extends OrthographicCamera {
             minPos.x = 0;
             minPos.y = 0;
         }
-
+        //System.out.println(posAim.x);
 
         viewportHeight = screenHeight;
         viewportWidth = screenWidth;

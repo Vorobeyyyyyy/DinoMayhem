@@ -38,7 +38,7 @@ public class LevelDrawer {
         sprite = new Sprite(texture);
 
         Array<Integer> speeds = new Array<Integer>();
-        speeds.add(10, -20,30);
+        speeds.add(10, -20, 30);
         speeds.add(40, 50);
         levelBackground = new LevelBackground(this, "Backgrounds/mountains/", speeds);
         sprite.setScale(30, 5);
