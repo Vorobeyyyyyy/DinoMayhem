@@ -24,7 +24,6 @@ public class LevelCamera extends OrthographicCamera {
 
     @Override
     public void update() {
-        int heroCount = 0;
         float zoomAim, screenWidth = Gdx.graphics.getWidth(), screenHeight = Gdx.graphics.getHeight();
 
         Vector2 maxPos = new Vector2(Float.MIN_VALUE, Float.MIN_VALUE),
@@ -40,18 +39,17 @@ public class LevelCamera extends OrthographicCamera {
                     minPos.y = hero.centerPos.y;
                 if (hero.centerPos.y > maxPos.y)
                     maxPos.y = hero.centerPos.y;
-                posAim.x += hero.centerPos.x;
-                posAim.y += hero.centerPos.y;
-                heroCount++;
             }
-        if (heroCount != 0) {
-            posAim.x /= heroCount;
-            posAim.y /= heroCount;
+        if (heroes.size != 0) {
+            //posAim.x /= heroCount;
+            //posAim.y /= heroCount;
+            posAim.x = (maxPos.x + minPos.x) / 2;
+            posAim.y = (maxPos.y + minPos.y) / 2;
         } else {
             posAim.x = mapWidth / 2f;
             posAim.y = mapHeight / 2f;
-            maxPos.x = mapHeight;
-            maxPos.y = mapWidth;
+            maxPos.x = mapWidth;
+            maxPos.y = mapHeight;
             minPos.x = 0;
             minPos.y = 0;
         }
@@ -60,7 +58,7 @@ public class LevelCamera extends OrthographicCamera {
         viewportHeight = screenHeight;
         viewportWidth = screenWidth;
 
-        if ((maxPos.x - minPos.x) / screenWidth / screenHeight > maxPos.y - minPos.y)
+        if ((maxPos.x - minPos.x) / screenWidth  > (maxPos.y - minPos.y) / screenHeight)
             zoomAim = (maxPos.x - minPos.x) / viewportWidth;
         else
             zoomAim = (maxPos.y - minPos.y) / viewportHeight;
@@ -72,7 +70,6 @@ public class LevelCamera extends OrthographicCamera {
         position.x -= (position.x - posAim.x) / CAMERASLOW;
         position.y -= (position.y - posAim.y) / CAMERASLOW;
 
-        //position.set(posAim.x, posAim.y, 0);
 
 
         super.update();

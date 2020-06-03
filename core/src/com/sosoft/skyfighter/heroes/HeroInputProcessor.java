@@ -20,8 +20,12 @@ public class HeroInputProcessor extends InputAdapter {
 
     @Override
     public boolean keyDown(int keycode) {
-        if (keycode == JUMP_KEY)
+        if (keycode == JUMP_KEY) {
             hero.state.jump = true;
+            if (!hero.state.grounded) {
+                hero.state.airJump = true;
+            }
+        }
         if (keycode == LEFT_KEY)
             hero.state.left = true;
         if (keycode == RIGHT_KEY)
@@ -40,8 +44,10 @@ public class HeroInputProcessor extends InputAdapter {
 
     @Override
     public boolean keyUp(int keycode) {
-        if (keycode == JUMP_KEY)
+        if (keycode == JUMP_KEY) {
             hero.state.jump = false;
+            hero.state.airJump = false;
+        }
         if (keycode == LEFT_KEY)
             hero.state.left = false;
         if (keycode == RIGHT_KEY)

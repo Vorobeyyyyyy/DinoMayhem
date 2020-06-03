@@ -58,13 +58,16 @@ public class LevelController {
     }
 
     public void respawnHeroes() {
-        for (Hero hero : level.players)
+        for (Hero hero : level.players) {
+            if (hero.state.dead)
+                hero.body.setTransform(-1000,-1000,0);
             if (hero.state.respawnTime < 0) {
                 float x = spawnPoints.get(random.nextInt(spawnPoints.size)).x / PPM;
                 float y = spawnPoints.get(random.nextInt(spawnPoints.size)).y / PPM;
                 hero.body.setTransform(x, y, 0);
                 hero.reset();
             }
+        }
     }
 
     public void deleteBullets() {

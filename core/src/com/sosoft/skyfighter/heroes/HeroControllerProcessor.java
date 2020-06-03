@@ -8,11 +8,11 @@ import com.badlogic.gdx.math.Vector2;
 
 public class HeroControllerProcessor extends ControllerAdapter {
     Hero hero;
-    private final int JUMP_KEY = Xbox.A;
+    private final int JUMP_KEY = Xbox.L_BUMPER;
     private final int LEFT_KEY = Xbox.DPAD_LEFT;
     private final int RIGHT_KEY = Xbox.DPAD_RIGHT;
     private final int DUCK_KEY = Xbox.DPAD_DOWN;
-    private final int SPELL1_KEY = Xbox.B;
+    private final int SPELL1_KEY = Xbox.R_BUMPER;
     private final int SPELL2_KEY = Xbox.X;
     private final int SPELL3_KEY = Xbox.Y;
 
@@ -22,8 +22,12 @@ public class HeroControllerProcessor extends ControllerAdapter {
 
     @Override
     public boolean buttonDown(Controller controller, int buttonIndex) {
-        if (buttonIndex == JUMP_KEY)
+        if (buttonIndex == JUMP_KEY) {
             hero.state.jump = true;
+            if (!hero.state.grounded) {
+                hero.state.airJump = true;
+            }
+        }
         if (buttonIndex == LEFT_KEY)
             hero.state.left = true;
         if (buttonIndex == RIGHT_KEY)
@@ -42,8 +46,10 @@ public class HeroControllerProcessor extends ControllerAdapter {
 
     @Override
     public boolean buttonUp(Controller controller, int buttonIndex) {
-        if (buttonIndex == JUMP_KEY)
+        if (buttonIndex == JUMP_KEY) {
+            hero.state.airJump = false;
             hero.state.jump = false;
+        }
         if (buttonIndex == LEFT_KEY)
             hero.state.left = false;
         if (buttonIndex == RIGHT_KEY)

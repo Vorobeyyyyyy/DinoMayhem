@@ -4,6 +4,7 @@ public class HeroState {
     // STATIC HERO CHARACTERISTICS
     public float maxSpeed;
     public int maxHealth;
+    public int maxAirJumps;
     public float jumpHeight;
     public float secondAbilityCooldown;
     public float thirdAbilityCooldown;
@@ -17,6 +18,7 @@ public class HeroState {
     // Input states
     public float aimAngle;
     public boolean jump;
+    public boolean airJump;
     public boolean left;
     public boolean right;
     public boolean duck;
@@ -26,10 +28,11 @@ public class HeroState {
 
     // OTHER
     public int health;
-    public int score;
-    public int lives;
+    public int kills;
+    public int deaths;
+    public int streak;
     public boolean dead;
     boolean grounded;
-    boolean groundedChanged;
+    public int airJumpsRemain;
     boolean lookLeft;
 }

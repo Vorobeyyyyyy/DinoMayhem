@@ -7,7 +7,7 @@ import com.sosoft.skyfighter.heroes.Hero;
 
 abstract public class Weapon {
     // Characteristics
-    String name;
+    public String name;
     int maxAmmo;
     int shotsPerSec;
     float accuracy;
@@ -32,8 +32,6 @@ abstract public class Weapon {
             cooldown -= delta;
         else
             cooldown = 0f;
-        animation.pos.x -= animation.currentAnimation.size.x / 2;
-        animation.pos.y -= animation.currentAnimation.size.y / 2;
         animation.update(delta);
     }
 
@@ -42,11 +40,13 @@ abstract public class Weapon {
             cooldown = 1f / (float) shotsPerSec;
             currentAmmo -= 1;
             animation.playAmination("fire");
-            hero.levelController.level.bullets.add(new Bullet(hero, bulletDef));
+            hero.levelController.level.bullets.add(new Bullet(this, bulletDef));
         }
     }
 
     public void draw(Batch batch) {
+        animation.pos.x -= animation.currentAnimation.size.x / 2;
+        animation.pos.y -= animation.currentAnimation.size.y / 2;
         animation.draw(batch);
     }
 

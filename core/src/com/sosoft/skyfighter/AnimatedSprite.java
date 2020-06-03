@@ -44,7 +44,7 @@ public class AnimatedSprite {
 
     public void update(float delta) {
         currentTime += delta;
-        if (currentTime > duration)
+        if (currentTime >= duration)
             currentTime = 0;
         currentFrame = (int) (currentTime / (duration / frameCount));
     }

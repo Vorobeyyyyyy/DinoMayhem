@@ -12,8 +12,9 @@ public class Soilder extends Hero {
     public Soilder(LevelController levelController, float posX, float posY, Controller controller, int number) {
         super(levelController, posX, posY, controller, number);
         state.maxSpeed = 15;
-        state.jumpHeight = 20;
+        state.jumpHeight = 15;
         state.maxHealth = 1000;
+        state.maxAirJumps = 2;
 
         weapon = new AK_47(this);
         reset();
