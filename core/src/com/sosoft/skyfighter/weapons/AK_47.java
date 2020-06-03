@@ -1,5 +1,6 @@
 package com.sosoft.skyfighter.weapons;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.sosoft.skyfighter.AnimatedSprite;
 import com.sosoft.skyfighter.heroes.Hero;
@@ -17,10 +18,13 @@ public class AK_47 extends Weapon {
         animation.addAnimation("fire",new AnimatedSprite("Weapons/AK-47/fire/fire_",5,1/10f,1.5f, posOffset));
         animation.setAnimation("idle");
 
+        fireSound = Gdx.audio.newSound(Gdx.files.internal("Weapons/AK-47/Sound/fire.mp3"));
+
         name = "AK-47";
         maxAmmo = 30;
         shotsPerSec = 10;
         accuracy = 8/10f;
+        reloadTime = 3.5f;
     }
 
     @Override
