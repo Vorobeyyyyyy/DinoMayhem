@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.sosoft.skyfighter.heroes.Hero;
 import com.sosoft.skyfighter.levels.LevelController;
 import com.sosoft.skyfighter.weapons.AK_47;
+import com.sosoft.skyfighter.weapons.AWP;
 import com.sosoft.skyfighter.weapons.Revolver;
 import com.sosoft.skyfighter.weapons.SVD;
 
@@ -21,6 +22,7 @@ public class Soilder extends Hero {
         weapons.add(new AK_47(this));
         weapons.add(new Revolver(this));
         weapons.add(new SVD(this));
+        weapons.add(new AWP(this));
 
         weapon = weapons.first();
 

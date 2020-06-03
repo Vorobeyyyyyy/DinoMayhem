@@ -11,8 +11,8 @@ public class HeroInputProcessor extends InputAdapter {
     int DUCK_KEY = Input.Keys.S;
     int FIRE_KEY = Input.Buttons.LEFT;
     int RELOAD_KEY = Input.Keys.R;
-    int NEXT_WEAPON_KEY = Input.Keys.E;
-    int PREV_WEAPON_KEY = Input.Keys.Q;
+    int NEXT_WEAPON_KEY = Input.Buttons.FORWARD;
+    int PREV_WEAPON_KEY = Input.Buttons.BACK;
 
 
     public HeroInputProcessor(Hero hero_) {
@@ -72,6 +72,10 @@ public class HeroInputProcessor extends InputAdapter {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if (button == FIRE_KEY)
             hero.state.fire = true;
+        if (button == NEXT_WEAPON_KEY)
+            hero.state.nextWeapon = true;
+        if (button == PREV_WEAPON_KEY)
+            hero.state.prevWeapon = true;
         return super.touchDown(screenX, screenY, pointer, button);
     }
 
@@ -79,6 +83,10 @@ public class HeroInputProcessor extends InputAdapter {
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         if (button == FIRE_KEY)
             hero.state.fire = false;
+        if (button == NEXT_WEAPON_KEY)
+            hero.state.nextWeapon = false;
+        if (button == PREV_WEAPON_KEY)
+            hero.state.prevWeapon = false;
         return super.touchUp(screenX, screenY, pointer, button);
     }
 }
