@@ -53,7 +53,8 @@ public class LevelDrawer {
         camera.update();
         renderer.setView(camera);
         levelInterface.update();
-        levelBackground.update(1/12f);
+        if (!level.isPaused)
+            levelBackground.update(1/12f);
     }
 
     public void updateAndRender() {
