@@ -33,11 +33,10 @@ public class AnimatedSprite {
         this.size.x = spriteArray.first().getWidth();
         this.size.y = spriteArray.first().getHeight();
         currentTime = 0;
-        posOffset = new Vector2(0,0);
+        posOffset = new Vector2(0, 0);
     }
 
-    public AnimatedSprite(String baseName, int frameCount, float duration, float scale, Vector2 posOffset)
-    {
+    public AnimatedSprite(String baseName, int frameCount, float duration, float scale, Vector2 posOffset) {
         this(baseName, frameCount, duration, scale);
         this.posOffset = posOffset;
     }
@@ -59,6 +58,11 @@ public class AnimatedSprite {
         currentSprite.setFlip(flipX, flipY);
         currentSprite.setPosition(pos.x + posOffset.x, pos.y + posOffset.y);
         currentSprite.draw(batch);
+    }
+
+    public void dispose() {
+        for (Texture texture : textureArray)
+            texture.dispose();
     }
 
 }

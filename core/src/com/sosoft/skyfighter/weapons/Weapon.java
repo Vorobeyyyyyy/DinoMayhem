@@ -29,7 +29,6 @@ abstract public class Weapon {
     Sound takeSound;
 
     Weapon(Hero hero) {
-        currentAmmo = maxAmmo;
         animation = new Animation();
         this.hero = hero;
     }
@@ -54,7 +53,7 @@ abstract public class Weapon {
             cooldown = 1f / (float) shotsPerSec;
             currentAmmo -= 1;
             animation.playAmination("fire");
-            fireSound.play(0.2f);
+            fireSound.play(0.02f);
             hero.levelController.level.bullets.add(new Bullet(this, bulletDef));
         }
     }
@@ -65,6 +64,16 @@ abstract public class Weapon {
 
     void initBullet() {
         bulletDef = new BulletDef();
+    }
+
+    public void init() {
+        currentAmmo = maxAmmo;
+    }
+
+    public void dispose() {
+        fireSound.dispose();
+        takeSound.dispose();
+        animation.dispose();
     }
 
 }

@@ -28,6 +28,7 @@ public class Hero {
     public Vector2 size;
     public String name;
     public Weapon weapon;
+    public Array<Weapon> weapons;
 
     public Hero(LevelController levelController, float posX, float posY, Controller controller, int number) {
         name = "Player" + number;
@@ -235,6 +236,7 @@ public class Hero {
     }
 
     public void dispose() {
-
+        for (Weapon weapon : weapons)
+            weapon.dispose();
     }
 }
