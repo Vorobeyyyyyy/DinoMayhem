@@ -7,8 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.sosoft.skyfighter.heroes.Hero;
 
-import static com.sosoft.skyfighter.levels.Constants.PPM;
-import static com.sosoft.skyfighter.levels.Constants.random;
+import static com.sosoft.skyfighter.levels.Constants.*;
 import static java.lang.Math.pow;
 
 public class Bullet {
@@ -42,7 +41,7 @@ public class Bullet {
     public Bullet(Weapon weapon, BulletDef bulletDef) {
         hero = weapon.hero;
         this.weapon = weapon;
-        damage = bulletDef.damage;
+        damage = (int)((float)bulletDef.damage * (random.nextFloat() * DAMAGE_SCATTER_RANGE * 2 + (1 - DAMAGE_SCATTER_RANGE)));
         speed = bulletDef.speed;
         maxDistance = bulletDef.maxDistance;
         maxTimeAlive = bulletDef.maxTimeAlive;

@@ -40,7 +40,7 @@ public class AWP extends Weapon {
     @Override
     void initBullet() {
         super.initBullet();
-        bulletDef.damage = 1337;
+        bulletDef.damage = 950;
         bulletDef.speed = 160f;
         bulletDef.maxDistance = INFDISTANCE;
         bulletDef.maxTimeAlive = INFTIME;

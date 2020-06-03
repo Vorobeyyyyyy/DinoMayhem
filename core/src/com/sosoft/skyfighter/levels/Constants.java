@@ -13,6 +13,6 @@ public class Constants {
     public final static float MINCAMERAZOOM = 2f;
 
     public final static int MAXMESSAGECTOUTN = 5;
-
+    public final static float DAMAGE_SCATTER_RANGE = 0.15f;
     public final  static RandomXS128 random = new RandomXS128();
 }
