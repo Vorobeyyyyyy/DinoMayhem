@@ -28,9 +28,13 @@ abstract public class Weapon {
     Sound reloadSound;
     Sound takeSound;
 
+    //Other
+    boolean reloading;
+
     Weapon(Hero hero) {
         animation = new Animation();
         this.hero = hero;
+        reloading = false;
     }
 
 
@@ -39,10 +43,8 @@ abstract public class Weapon {
             cooldown -= delta;
         else
             cooldown = 0f;
-        if (currentAmmo <= 0) {
-            cooldown = reloadTime;
-            currentAmmo = maxAmmo;
-        }
+        if (currentAmmo <= 0 && !reloading)
+            reload();
         animation.update(delta);
         animation.pos.x -= animation.currentAnimation.size.x / 2;
         animation.pos.y -= animation.currentAnimation.size.y / 2;
@@ -70,10 +72,16 @@ abstract public class Weapon {
         currentAmmo = maxAmmo;
     }
 
+    public void reload() {
+        cooldown = reloadTime;
+        currentAmmo = maxAmmo;
+    }
+
     public void dispose() {
         fireSound.dispose();
         takeSound.dispose();
         animation.dispose();
     }
+
 
 }

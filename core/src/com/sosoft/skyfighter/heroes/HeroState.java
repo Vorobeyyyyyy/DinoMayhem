@@ -22,9 +22,10 @@ public class HeroState {
     public boolean left;
     public boolean right;
     public boolean duck;
-    public boolean firstAbility;
-    public boolean secondAbility;
-    public boolean thirdAbility;
+    public boolean fire;
+    public boolean reload;
+    public boolean nextWeapon;
+    public boolean prevWeapon;
 
     // OTHER
     public int health;

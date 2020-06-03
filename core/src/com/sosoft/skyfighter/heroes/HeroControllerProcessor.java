@@ -12,9 +12,8 @@ public class HeroControllerProcessor extends ControllerAdapter {
     private final int LEFT_KEY = Xbox.DPAD_LEFT;
     private final int RIGHT_KEY = Xbox.DPAD_RIGHT;
     private final int DUCK_KEY = Xbox.DPAD_DOWN;
-    private final int SPELL1_KEY = Xbox.R_BUMPER;
-    private final int SPELL2_KEY = Xbox.X;
-    private final int SPELL3_KEY = Xbox.Y;
+    private final int FIRE_KEY = Xbox.R_BUMPER;
+    private final int RELOAD_KEY = Xbox.X;
 
     HeroControllerProcessor(Hero hero_) {
         hero = hero_;
@@ -34,12 +33,10 @@ public class HeroControllerProcessor extends ControllerAdapter {
             hero.state.right = true;
         if (buttonIndex == DUCK_KEY)
             hero.state.duck = true;
-        if (buttonIndex == SPELL1_KEY)
-            hero.state.firstAbility = true;
-        if (buttonIndex == SPELL2_KEY)
-            hero.state.secondAbility = true;
-        if (buttonIndex == SPELL3_KEY)
-            hero.state.thirdAbility = true;
+        if (buttonIndex == FIRE_KEY)
+            hero.state.fire = true;
+        if (buttonIndex == RELOAD_KEY)
+            hero.state.reload = true;
 
         return super.buttonDown(controller, buttonIndex);
     }
@@ -56,46 +53,19 @@ public class HeroControllerProcessor extends ControllerAdapter {
             hero.state.right = false;
         if (buttonIndex == DUCK_KEY)
             hero.state.duck = false;
-        if (buttonIndex == SPELL1_KEY)
-            hero.state.firstAbility = false;
-        if (buttonIndex == SPELL2_KEY)
-            hero.state.secondAbility = false;
-        if (buttonIndex == SPELL3_KEY)
-            hero.state.thirdAbility = false;
+        if (buttonIndex == FIRE_KEY)
+            hero.state.fire = false;
+        if (buttonIndex == RELOAD_KEY)
+            hero.state.reload = false;
         return super.buttonUp(controller, buttonIndex);
     }
 
     @Override
     public boolean povMoved(Controller controller, int povIndex, PovDirection value) {
-        hero.state.left = false;
-        hero.state.right = false;
-        hero.state.jump = false;
-        hero.state.duck = false;
         if (value == PovDirection.east)
-            hero.state.right = true;
-        if (value == PovDirection.north)
-            hero.state.jump = true;
+            hero.state.prevWeapon = true;
         if (value == PovDirection.west)
-            hero.state.left = true;
-        if (value == PovDirection.south)
-            hero.state.duck = true;
-
-        if (value == PovDirection.northEast) {
-            hero.state.jump = true;
-            hero.state.right = true;
-        }
-        if (value == PovDirection.northWest) {
-            hero.state.jump = true;
-            hero.state.left = true;
-        }
-        if (value == PovDirection.southEast) {
-            hero.state.duck = true;
-            hero.state.right = true;
-        }
-        if (value == PovDirection.southWest) {
-            hero.state.duck = true;
-            hero.state.left = true;
-        }
+            hero.state.nextWeapon = true;
         return super.povMoved(controller, povIndex, value);
     }
 

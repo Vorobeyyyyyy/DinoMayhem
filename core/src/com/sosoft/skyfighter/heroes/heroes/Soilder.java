@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.sosoft.skyfighter.heroes.Hero;
 import com.sosoft.skyfighter.levels.LevelController;
 import com.sosoft.skyfighter.weapons.AK_47;
+import com.sosoft.skyfighter.weapons.Revolver;
+import com.sosoft.skyfighter.weapons.SVD;
 
 public class Soilder extends Hero {
 
@@ -16,7 +18,12 @@ public class Soilder extends Hero {
         state.maxHealth = 1000;
         state.maxAirJumps = 2;
 
-        weapon = new AK_47(this);
+        weapons.add(new AK_47(this));
+        weapons.add(new Revolver(this));
+        weapons.add(new SVD(this));
+
+        weapon = weapons.first();
+
         reset();
     }
 
@@ -31,18 +38,4 @@ public class Soilder extends Hero {
         super.draw(batch);
     }
 
-    @Override
-    public void firstAbility() {
-        weapon.fire();
-    }
-
-    @Override
-    public void secondAbility() {
-
-    }
-
-    @Override
-    public void thirdAbility() {
-
-    }
 }

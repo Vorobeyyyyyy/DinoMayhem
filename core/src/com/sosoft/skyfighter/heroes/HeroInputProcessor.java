@@ -9,9 +9,10 @@ public class HeroInputProcessor extends InputAdapter {
     int LEFT_KEY = Input.Keys.A;
     int RIGHT_KEY = Input.Keys.D;
     int DUCK_KEY = Input.Keys.S;
-    int SPELL1_KEY = Input.Keys.SPACE;
-    int SPELL2_KEY = Input.Keys.CONTROL_LEFT;
-    int SPELL3_KEY = Input.Keys.SHIFT_LEFT;
+    int FIRE_KEY = Input.Buttons.LEFT;
+    int RELOAD_KEY = Input.Keys.R;
+    int NEXT_WEAPON_KEY = Input.Keys.E;
+    int PREV_WEAPON_KEY = Input.Keys.Q;
 
 
     public HeroInputProcessor(Hero hero_) {
@@ -32,12 +33,14 @@ public class HeroInputProcessor extends InputAdapter {
             hero.state.right = true;
         if (keycode == DUCK_KEY)
             hero.state.duck = true;
-        if (keycode == SPELL1_KEY)
-            hero.state.firstAbility = true;
-        if (keycode == SPELL2_KEY)
-            hero.state.secondAbility = true;
-        if (keycode == SPELL3_KEY)
-            hero.state.thirdAbility = true;
+        if (keycode == FIRE_KEY)
+            hero.state.fire = true;
+        if (keycode == RELOAD_KEY)
+            hero.state.reload = true;
+        if (keycode == NEXT_WEAPON_KEY)
+            hero.state.nextWeapon = true;
+        if (keycode == PREV_WEAPON_KEY)
+            hero.state.prevWeapon = true;
 
         return super.keyDown(keycode);
     }
@@ -54,12 +57,28 @@ public class HeroInputProcessor extends InputAdapter {
             hero.state.right = false;
         if (keycode == DUCK_KEY)
             hero.state.duck = false;
-        if (keycode == SPELL1_KEY)
-            hero.state.firstAbility = false;
-        if (keycode == SPELL2_KEY)
-            hero.state.secondAbility = false;
-        if (keycode == SPELL3_KEY)
-            hero.state.thirdAbility = false;
+        if (keycode == FIRE_KEY)
+            hero.state.fire = false;
+        if (keycode == RELOAD_KEY)
+            hero.state.reload = false;
+        if (keycode == NEXT_WEAPON_KEY)
+            hero.state.nextWeapon = false;
+        if (keycode == PREV_WEAPON_KEY)
+            hero.state.prevWeapon = false;
         return super.keyUp(keycode);
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        if (button == FIRE_KEY)
+            hero.state.fire = true;
+        return super.touchDown(screenX, screenY, pointer, button);
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        if (button == FIRE_KEY)
+            hero.state.fire = false;
+        return super.touchUp(screenX, screenY, pointer, button);
     }
 }

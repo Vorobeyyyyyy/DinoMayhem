@@ -67,6 +67,8 @@ public class Hero {
         animation.addAnimation("wait", new AnimatedSprite("Heroes/dino/wait/wait_", 4, 1f, 6));
         animation.addAnimation("walk", new AnimatedSprite("Heroes/dino/walk/walk_", 6, 0.4f, 6));
         animation.setAnimation("walk");
+
+        weapons = new Array<Weapon>();
     }
 
     public void update(float delta) {
@@ -110,10 +112,33 @@ public class Hero {
     }
 
     public void updateWeapon(float delta) {
+        int weaponIndex = weapons.indexOf(weapon, true);
+        if (state.nextWeapon) {
+            if (weaponIndex < weapons.size - 1)
+                weapon = weapons.get(weaponIndex + 1);
+            else
+                weapon = weapons.get(0);
+            state.nextWeapon = false;
+        }
+        if (state.prevWeapon) {
+            if (weaponIndex != 0)
+                weapon = weapons.get(weaponIndex - 1);
+            else
+                weapon = weapons.get(weapons.size - 1);
+            state.prevWeapon = false;
+        }
+
         weapon.direction = state.aimAngle;
         weapon.animation.direction = state.aimAngle;
         weapon.animation.pos.set(centerPos);
         weapon.animation.flipY = state.lookLeft;
+
+        if (state.fire)
+            weapon.fire();
+        if (state.reload) {
+            weapon.reload();
+            state.reload = false;
+        }
         weapon.update(delta);
     }
 
@@ -137,27 +162,6 @@ public class Hero {
         animation.update(delta);
     }
 
-    public void updateAbilities(float delta) {
-        if (state.firstAbility)
-            firstAbility();
-
-
-        if (state.secondAbilityCurrentCooldown <= 0) {
-            if (state.secondAbility) {
-                secondAbility();
-                state.secondAbilityCurrentCooldown = state.secondAbilityCooldown;
-            }
-        } else
-            state.secondAbilityCurrentCooldown -= delta;
-
-        if (state.thirdAbilityCurrentCooldown <= 0) {
-            if (state.thirdAbility) {
-                thirdAbility();
-                state.thirdAbilityCurrentCooldown = state.thirdAbilityCooldown;
-            }
-        } else
-            state.thirdAbilityCurrentCooldown -= delta;
-    }
 
     private void isGrounded() {
         for (int i = 0; i < world.getContactCount(); i++) {
@@ -184,7 +188,6 @@ public class Hero {
             state.respawnTime = RESPAWN_TIME;
             updateAimAngle();
             isGrounded();
-            updateAbilities(delta);
         }
 
         state.lookLeft = !(state.aimAngle > 270) && !(state.aimAngle < 90);
@@ -223,16 +226,6 @@ public class Hero {
     public void draw(Batch batch) {
         animation.draw(batch);
         weapon.draw(batch);
-    }
-
-    public void firstAbility() {
-
-    }
-
-    public void secondAbility() {
-    }
-
-    public void thirdAbility() {
     }
 
     public void dispose() {

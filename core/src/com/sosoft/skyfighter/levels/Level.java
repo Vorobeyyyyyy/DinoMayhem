@@ -30,7 +30,7 @@ public class Level implements Screen {
         tiledMap = new TmxMapLoader().load("Tilemaps/Map1.tmx");
 
         levelController = new LevelController(this, isKeyboard, controllers);
-        levelDrawer = new LevelDrawer(this, tiledMap, true);
+        levelDrawer = new LevelDrawer(this, tiledMap, false);
     }
 
     @Override
