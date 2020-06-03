@@ -25,6 +25,7 @@ public class Bullet {
     public float accyuracy;
     public String spriteName;
     public float scale;
+    public float density;
 
     float timeAlive;
     float distance;
@@ -35,10 +36,12 @@ public class Bullet {
     Sprite sprite;
     World world;
     public boolean endOfLife;
-    Hero hero;
+    public Hero hero;
+    public Weapon weapon;
 
-    public Bullet(Hero hero, BulletDef bulletDef) {
-        this.hero = hero;
+    public Bullet(Weapon weapon, BulletDef bulletDef) {
+        hero = weapon.hero;
+        this.weapon = weapon;
         damage = bulletDef.damage;
         speed = bulletDef.speed;
         maxDistance = bulletDef.maxDistance;
@@ -47,6 +50,7 @@ public class Bullet {
         accyuracy = bulletDef.accyuracy;
         spriteName = bulletDef.spriteName;
         scale = bulletDef.scale;
+        density = bulletDef.density;
         init();
     }
 
@@ -77,7 +81,7 @@ public class Bullet {
         circleShape.setRadius(0.3f);
 
         FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.density = 1f;
+        fixtureDef.density = density;
         if (canBounce)
             fixtureDef.restitution = 0.9f;
         else

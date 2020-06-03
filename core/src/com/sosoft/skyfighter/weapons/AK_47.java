@@ -31,13 +31,14 @@ public class AK_47 extends Weapon {
     @Override
     void initBullet() {
         super.initBullet();
-        bulletDef.damage = 25;
-        bulletDef.speed = 20f;
+        bulletDef.damage = 123;
+        bulletDef.speed = 40f;
         bulletDef.maxDistance = INFDISTANCE;
         bulletDef.maxTimeAlive = INFTIME;
         bulletDef.canBounce = false;
         bulletDef.accyuracy = 0.9f;
         bulletDef.spriteName = "Heroes/Soilder/bullet.png";
         bulletDef.scale = 0.4f;
+        bulletDef.density = 3f;
     }
 }

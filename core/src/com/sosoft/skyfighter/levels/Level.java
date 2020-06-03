@@ -28,6 +28,7 @@ public class Level implements Screen {
         this.app = app;
         levelPause = new LevelPause(app, this);
         tiledMap = new TmxMapLoader().load("Tilemaps/Map1.tmx");
+
         levelController = new LevelController(this, isKeyboard, controllers);
         levelDrawer = new LevelDrawer(this, tiledMap, true);
     }

@@ -9,6 +9,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.utils.Array;
 import com.sosoft.skyfighter.heroes.Hero;
 import com.sosoft.skyfighter.weapons.Bullet;
 
@@ -24,6 +25,10 @@ public class LevelDrawer {
     Texture texture;
     Sprite sprite;
     public LevelInterface levelInterface;
+    LevelBackground levelBackground;
+
+    Texture tex = new Texture("badlogic.jpg");
+    Texture tex2 = new Texture("badlogic.jpg");
 
     LevelDrawer(Level level, TiledMap tiledMap, boolean debug) {
         renderer = new OrthogonalTiledMapRenderer(tiledMap);
@@ -31,23 +36,33 @@ public class LevelDrawer {
         box2DDebugRenderer = new Box2DDebugRenderer();
         texture = new Texture("Heroes/Lazer.png");
         sprite = new Sprite(texture);
+
+        Array<Integer> speeds = new Array<Integer>();
+        speeds.add(10, -20,30);
+        speeds.add(40, 50);
+        levelBackground = new LevelBackground(this, "Backgrounds/mountains/", speeds);
         sprite.setScale(30, 5);
         sprite.setOrigin(0, 0);
         levelInterface = new LevelInterface(level);
         this.level = level;
         this.debug = debug;
+
     }
 
     private void update() {
         camera.update();
         renderer.setView(camera);
         levelInterface.update();
+        levelBackground.update(1/12f);
     }
 
     public void updateAndRender() {
         update();
         Gdx.gl.glClearColor(0.1f, 0.5f, 0.5f, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        renderer.getBatch().begin();
+        levelBackground.draw(renderer.getBatch());
+        renderer.getBatch().end();
         renderer.render();
         renderer.getBatch().begin();
         if (debug)
@@ -67,9 +82,6 @@ public class LevelDrawer {
         if (debug)
             box2DDebugRenderer.render(level.levelController.world, camera.combined.scl(PPM));
     }
-
-
-    Texture tex = new Texture("badlogic.jpg");
 
     private void renderContactPoints() {
         for (int i = 0; i < level.levelController.world.getContactCount(); i++) {

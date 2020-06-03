@@ -30,6 +30,7 @@ public class Hero {
     public Weapon weapon;
 
     public Hero(LevelController levelController, float posX, float posY, Controller controller, int number) {
+        name = "Player" + number;
         size = new Vector2(95, 100);
         world = levelController.world;
         this.levelController = levelController;
@@ -44,7 +45,7 @@ public class Hero {
         shape.setAsBox(size.x / 2 / PPM, size.y / 2 / PPM);
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
-        fixtureDef.density = 0f;
+        fixtureDef.density = 1f;
         fixtureDef.friction = 0f;
         fixtureDef.restitution = 0f;
         fixtureDef.filter.categoryBits = (short) pow(2, number);
@@ -70,24 +71,34 @@ public class Hero {
     public void update(float delta) {
         if (inputProcessor != null)
             Gdx.input.setInputProcessor(inputProcessor);
-        pos.x = (body.getPosition().x - size.x / 2 / PPM) * PPM;
-        pos.y = (body.getPosition().y - size.y / 2 / PPM) * PPM;
-        centerPos.x = body.getPosition().x * PPM;
-        centerPos.y = body.getPosition().y * PPM;
-
+        updatePos();
         updateState(delta);
         updateMov();
         updateAnimation(delta);
         updateWeapon(delta);
     }
 
+    public void updatePos() {
+        pos.x = (body.getPosition().x - size.x / 2 / PPM) * PPM;
+        pos.y = (body.getPosition().y - size.y / 2 / PPM) * PPM;
+        centerPos.x = body.getPosition().x * PPM;
+        centerPos.y = body.getPosition().y * PPM;
+    }
+
     public void updateMov() {
-        if (state.jump && state.grounded) {
+        if ((state.jump && state.grounded) || (state.airJump && state.airJumpsRemain > 0)) {
+            if (state.airJump) {
+                state.airJumpsRemain--;
+                state.airJump = false;
+            }
             body.setLinearVelocity(body.getLinearVelocity().x, 0);
             body.applyForceToCenter(0, 100 * state.jumpHeight * body.getMass(), true);
         }
-        if (state.grounded)
+
+        if (state.grounded) {
             body.setLinearVelocity(body.getLinearVelocity().x * 0.9f, body.getLinearVelocity().y);
+            state.airJumpsRemain = state.maxAirJumps;
+        }
         if (!(state.left && state.right)) {
             if (state.left && body.getLinearVelocity().x > -state.maxSpeed)
                 body.applyForceToCenter(-state.maxSpeed * body.getMass() * 10, 0, false);
@@ -164,7 +175,7 @@ public class Hero {
     }
 
     public void updateState(float delta) {
-        if (pos.y < -200)
+        if (pos.y < -200 || state.health <= 0)
             state.dead = true;
         if (state.dead)
             state.respawnTime -= delta;
@@ -191,6 +202,7 @@ public class Hero {
         state.dead = false;
         state.health = state.maxHealth;
         body.setLinearVelocity(0f, 0f);
+        updatePos();
     }
 
     public void draw(Batch batch) {

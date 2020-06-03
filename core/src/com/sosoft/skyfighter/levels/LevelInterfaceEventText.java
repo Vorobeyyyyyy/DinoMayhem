@@ -39,7 +39,7 @@ public class LevelInterfaceEventText {
         batch = new SpriteBatch();
     }
 
-    public void add_message(String msg, Color color) {
+    public void addMessage(String msg, Color color) {
         messages.addFirst(new EventMessage(msg, color));
         if (messages.size > MAXMESSAGECTOUTN)
             messages.removeIndex(MAXMESSAGECTOUTN);
@@ -53,10 +53,10 @@ public class LevelInterfaceEventText {
 
     public void draw() {
         batch.begin();
-        int yOffset = 0;
+        int yOffset = 3;
         for (EventMessage eventMessage : messages) {
             bitmapFont.setColor(eventMessage.color.r,eventMessage.color.g,eventMessage.color.b,eventMessage.transparency);
-            bitmapFont.draw(batch, eventMessage.message, 0, Gdx.graphics.getHeight() - bitmapFont.getData().lineHeight * 4 + yOffset, Gdx.graphics.getWidth() - 5, Align.right, false);
+            bitmapFont.draw(batch, eventMessage.message, 0, Gdx.graphics.getHeight() - yOffset, Gdx.graphics.getWidth() - 5, Align.right, false);
             yOffset += bitmapFont.getData().lineHeight;
         }
         batch.end();
