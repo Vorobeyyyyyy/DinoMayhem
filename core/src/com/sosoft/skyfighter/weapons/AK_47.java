@@ -23,6 +23,7 @@ public class AK_47 extends Weapon {
         animation.setAnimation("idle");
 
         fireSound = Gdx.audio.newSound(Gdx.files.internal("Weapons/AK-47/Sound/fire.mp3"));
+        takeSound = Gdx.audio.newSound(Gdx.files.internal("Weapons/AK-47/Sound/take.mp3"));
 
         name = "AK-47";
         maxAmmo = 30;

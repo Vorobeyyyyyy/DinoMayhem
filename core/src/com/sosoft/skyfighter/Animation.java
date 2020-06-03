@@ -46,4 +46,9 @@ public class Animation {
     public void draw(Batch batch) {
         currentAnimation.draw(batch, pos, flipX, flipY, reverse, direction);
     }
+
+    public void dispose() {
+        for (AnimatedSprite sprite : animations.values())
+            sprite.dispose();
+    }
 }

@@ -70,4 +70,10 @@ abstract public class Weapon {
         currentAmmo = maxAmmo;
     }
 
+    public void dispose() {
+        fireSound.dispose();
+        takeSound.dispose();
+        animation.dispose();
+    }
+
 }
