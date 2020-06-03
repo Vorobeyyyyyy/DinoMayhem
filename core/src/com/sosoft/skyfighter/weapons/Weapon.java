@@ -33,6 +33,8 @@ abstract public class Weapon {
         else
             cooldown = 0f;
         animation.update(delta);
+        animation.pos.x -= animation.currentAnimation.size.x / 2;
+        animation.pos.y -= animation.currentAnimation.size.y / 2;
     }
 
     public void fire() {
@@ -45,8 +47,6 @@ abstract public class Weapon {
     }
 
     public void draw(Batch batch) {
-        animation.pos.x -= animation.currentAnimation.size.x / 2;
-        animation.pos.y -= animation.currentAnimation.size.y / 2;
         animation.draw(batch);
     }
 
