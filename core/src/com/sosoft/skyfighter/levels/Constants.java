@@ -6,6 +6,8 @@ public class Constants {
     public final static float PPM = 32;
 
     public final static float RESPAWN_TIME = 3;
+    public final static float AIMASSIST_ANGLE = 30;
+    public final static boolean AIMASSIST_ON = true;
 
     public final static float CAMERASLOW = 10f;
     public final static float MINCAMERAZOOM = 2f;

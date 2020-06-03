@@ -6,13 +6,13 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.Array;
 import com.sosoft.skyfighter.AnimatedSprite;
 import com.sosoft.skyfighter.Animation;
 import com.sosoft.skyfighter.levels.LevelController;
 import com.sosoft.skyfighter.weapons.Weapon;
 
-import static com.sosoft.skyfighter.levels.Constants.PPM;
-import static com.sosoft.skyfighter.levels.Constants.RESPAWN_TIME;
+import static com.sosoft.skyfighter.levels.Constants.*;
 import static java.lang.Math.pow;
 
 public class Hero {
@@ -181,21 +181,35 @@ public class Hero {
             state.respawnTime -= delta;
         else {
             state.respawnTime = RESPAWN_TIME;
-            if (inputProcessor != null)
-                updateAimAngle();
+            updateAimAngle();
             isGrounded();
             updateAbilities(delta);
         }
 
         state.lookLeft = !(state.aimAngle > 270) && !(state.aimAngle < 90);
+
     }
 
-    private void updateAimAngle() {
-        int screenX = Gdx.input.getX();
-        int screenY = Gdx.input.getY();
-        Vector3 pos = new Vector3(screenX, screenY, 0);
-        levelController.level.levelDrawer.camera.unproject(pos);
-        state.aimAngle = new Vector2(pos.x - centerPos.x, pos.y - centerPos.y).angle();
+    public void updateAimAngle() {
+        if (inputProcessor != null) {
+            int screenX = Gdx.input.getX();
+            int screenY = Gdx.input.getY();
+            Vector3 pos = new Vector3(screenX, screenY, 0);
+            levelController.level.levelDrawer.camera.unproject(pos);
+            state.aimAngle = new Vector2(pos.x - centerPos.x, pos.y - centerPos.y).angle();
+        } else {
+            if (inputProcessor == null && AIMASSIST_ON) {
+                Array<Hero> players = levelController.level.players;
+                Array<Float> angles = new Array<Float>();
+                for (int i = 0; i < players.size; i++)
+                    if (players.get(i) != this)
+                        angles.add(new Vector2(players.get(i).centerPos.x - centerPos.x, players.get(i).centerPos.y - centerPos.y).angle());
+                for (Float angle : angles)
+                    if (Math.abs(state.aimAngle - angle) <= AIMASSIST_ANGLE || 360 - state.aimAngle + angle <= AIMASSIST_ANGLE || 360 - angle + state.aimAngle <= AIMASSIST_ANGLE)
+                        state.aimAngle = angle;
+            }
+        }
+
     }
 
     public void reset() {
