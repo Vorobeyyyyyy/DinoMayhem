@@ -119,10 +119,14 @@ public class HeroControllerProcessor extends ControllerAdapter {
                     hero.state.left = false;
                 break;
             case 2:
-                hero.state.aimAngle = new Vector2(controller.getAxis(3), -value).angle();
-                break;
             case 3:
-                hero.state.aimAngle = new Vector2(value, -controller.getAxis(2)).angle();
+                float axisX = controller.getAxis(3);
+                float axisY = controller.getAxis(2);
+                if (Math.abs(axisX) < 0.05) axisX = 0;
+                if (Math.abs(axisY) < 0.05) axisY = 0;
+                if (Math.abs(axisX) > 0.2 || Math.abs(axisY) > 0.2)
+                    hero.state.aimAngle = new Vector2(axisX, -axisY).angle();
+                hero.updateAimAngle();
                 break;
             case 4:
                 break;
