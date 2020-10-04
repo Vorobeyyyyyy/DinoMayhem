@@ -39,7 +39,7 @@
 * [LibGdx](https://libgdx.badlogicgames.com/) - фреймворк для разработки игры на языке Java. Он позволяет писать кроссплатформенные игры и приложения используя один код.
 * [Webmoney API](https://www.webmoney.ru/rus/developers/api.shtml) -  API для реализации внутриигровых покупок.
 #### 2.2. Интерфейс пользователя <a name="2.2"></a>
-Графический интерфейс проекта представлен с помощью мокапов [Главного меню](https://github.com/vectordiman/TRITPO/blob/master/documentation/mockups/main.pdf), [Окна выбора персонажей](https://github.com/vectordiman/TRITPO/blob/master/documentation/mockups/details.pdf) и [Игрового окна](https://github.com/vectordiman/TRITPO/blob/master/documentation/mockups/5days.pdf).
+Графический интерфейс проекта представлен с помощью мокапов [Главного меню](https://github.com/Vorobeyyyyyy/DinoMayhem/blob/master/documentation/mockups/MainMenu.pdf), [Окна выбора персонажей](https://github.com/Vorobeyyyyyy/DinoMayhem/blob/master/documentation/mockups/HeroSelect.pdf), [Окна выбора уровня](https://github.com/Vorobeyyyyyy/DinoMayhem/blob/master/documentation/mockups/LevelSelect.pdf) и [Игрового окна](https://github.com/Vorobeyyyyyy/DinoMayhem/blob/master/documentation/mockups/Battle.pdf).
 #### 2.3. Характеристики пользователей <a name="2.3"></a>
 Целевой аудиторией являются пользователи операционной системы Windows, нуждающиеся в интересном шутере с видом сбоку.
 #### 2.4. Предположения и зависимости <a name="2.4"></a>
