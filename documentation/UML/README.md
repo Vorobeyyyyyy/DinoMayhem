@@ -67,6 +67,6 @@ Webmoney API|API для работы с сервисом оплаты WebMoney, 
 
 ### 3. Диаграмма последовательности<a name="3"></a>
 Диаграммы последовательности вариантов использования представляют из себя следующие диаграммы:
-![Sequence Diagram](https://github.com/Vorobeyyyyyy/DinoMayhem/blob/master/documentation/UML/Sequence/ActivityDiag.png)
-![Sequence Diagram](https://github.com/Vorobeyyyyyy/DinoMayhem/blob/master/documentation/UML/Sequence/ActivityDiag2.png)
-![Sequence Diagram](https://github.com/Vorobeyyyyyy/DinoMayhem/blob/master/documentation/UML/Sequence/ActivityDiag3.png)
+![Sequence Diagram](https://github.com/Vorobeyyyyyy/DinoMayhem/blob/master/documentation/UML/ActivityDiags/ActivityDiag.png)
+![Sequence Diagram](https://github.com/Vorobeyyyyyy/DinoMayhem/blob/master/documentation/UML/ActivityDiags/ActivityDiag2.png)
+![Sequence Diagram](https://github.com/Vorobeyyyyyy/DinoMayhem/blob/master/documentation/UML/ActivityDiags/ActivityDiag3.png)
