@@ -74,10 +74,10 @@ Webmoney API|API для работы с сервисом оплаты WebMoney, 
 Диаграмма классов доступна по [ссылке](https://github.com/Vorobeyyyyyy/DinoMayhem/blob/master/documentation/UML/ClassDiagramm/classDiag.png)
 
 ### 5. Диаграмма состояний
-Диаграммы состояний представляют собой следующие диаграммы:
+Диаграммы состояний представляют собой следующие диаграммы:<br>
 ![State Diagram](https://github.com/Vorobeyyyyyy/DinoMayhem/blob/master/documentation/UML/State/State1.png)
 ![State Diagram](https://github.com/Vorobeyyyyyy/DinoMayhem/blob/master/documentation/UML/State/State2.png)
 
 ### 6. Диаграмма развертывания и компонентов
-Диаграмма развертывания и компонентов представляют собой следующую диаграммы:
+Диаграмма развертывания и компонентов представляют собой следующую диаграммы:<br>
 ![Deployment-Component](https://github.com/Vorobeyyyyyy/DinoMayhem/blob/master/documentation/UML/Deployment/Depl.png)
