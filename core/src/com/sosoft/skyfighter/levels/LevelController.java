@@ -8,9 +8,12 @@ import com.badlogic.gdx.utils.Array;
 import com.sosoft.skyfighter.TilemapCollisionParser;
 import com.sosoft.skyfighter.TilemapSpawnpointParser;
 import com.sosoft.skyfighter.heroes.Hero;
+import com.sosoft.skyfighter.heroes.heroes.Dino;
 import com.sosoft.skyfighter.heroes.heroes.Imposter;
-import com.sosoft.skyfighter.heroes.heroes.Soilder;
+import com.sosoft.skyfighter.menu.HeroSelectWidget;
 import com.sosoft.skyfighter.weapons.Bullet;
+
+import java.util.Map;
 
 import static com.sosoft.skyfighter.levels.Constants.PPM;
 
@@ -24,14 +27,14 @@ public class LevelController {
 
     RandomXS128 random = new RandomXS128();
 
-    LevelController(Level level, boolean isKeyboard, Array<Controller> controllers) {
+    LevelController(Level level,Map<Controller, HeroSelectWidget> controllers) {
         this.level = level;
         world = new World(new Vector2(0, -10), false);
         levelContactListener = new LevelContactListener(level);
         world.setContactListener(levelContactListener);
         TilemapCollisionParser.parseCollisionLayer(world, level.tiledMap.getLayers().get("collision-layer").getObjects());
         TilemapSpawnpointParser.ParseSpawnpoints(spawnPoints, level.tiledMap);
-        spawnHeroes(isKeyboard, controllers);
+        spawnHeroes(controllers);
     }
 
     public void update(float delta) {
@@ -44,18 +47,24 @@ public class LevelController {
         deleteBullets();
     }
 
-    public void spawnHeroes(boolean isKeyboard, Array<Controller> controllers) {
+    public void spawnHeroes(Map<Controller, HeroSelectWidget> controllers) {
         int i = 1;
-        if (isKeyboard) {
-            int n = random.nextInt(spawnPoints.size);
-            level.players.add(new Imposter(this, spawnPoints.get(n).x, spawnPoints.get(n).y, null, i++));
-            level.players.add(new Imposter(this, spawnPoints.get(n).x, spawnPoints.get(n).y, null, i++));
+        for (Controller controller : controllers.keySet()) {
+            String heroName = controllers.get(controller).getCurrentHeroName();
+            spawnHero(heroName, controller, i++);
         }
-        for (Controller controller : controllers) {
-            int n = random.nextInt(spawnPoints.size);
-            level.players.add(new Soilder(this, spawnPoints.get(n).x, spawnPoints.get(n).y, controller, i++));
+    }
+
+    public void spawnHero(String heroName, Controller controller, int number)
+    {
+        int n = random.nextInt(spawnPoints.size);
+        if  (heroName.equals("Dino")) {
+            level.players.add(new Dino(this, spawnPoints.get(n).x, spawnPoints.get(n).y, controller, number));
         }
-        //level.players.get(0);
+        if (heroName.equals("Imposter")) {
+            level.players.add(new Imposter(this, spawnPoints.get(n).x, spawnPoints.get(n).y, controller, number));
+    }
+
     }
 
     public void respawnHeroes() {

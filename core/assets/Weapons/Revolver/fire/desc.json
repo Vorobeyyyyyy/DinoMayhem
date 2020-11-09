@@ -1,0 +1,15 @@
+{
+  "frameCount" : 6,
+  "frames": [
+    "Weapons/Revolver/fire/fire_0.png",
+    "Weapons/Revolver/fire/fire_1.png",
+    "Weapons/Revolver/fire/fire_2.png",
+    "Weapons/Revolver/fire/fire_3.png",
+    "Weapons/Revolver/fire/fire_4.png",
+    "Weapons/Revolver/fire/fire_5.png"
+  ],
+  "duration" : 0.1,
+  "scale" : 1.5,
+  "xOffset" : 0,
+  "yOffset" : -10
+}

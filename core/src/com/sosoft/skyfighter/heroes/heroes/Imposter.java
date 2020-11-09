@@ -7,6 +7,8 @@ import com.sosoft.skyfighter.levels.LevelController;
 import com.sosoft.skyfighter.weapons.Weapon;
 
 public class Imposter extends Hero {
+    public static final String WAIT_PATH = "Heroes/imposter/wait/desc.json";
+    public static final String WALK_PATH = "Heroes/imposter/walk/desc.json";
 
     public Imposter(LevelController levelController, float posX, float posY, Controller controller, int number) {
         super(levelController, posX, posY, controller, number);
@@ -17,11 +19,13 @@ public class Imposter extends Hero {
 
         weapons.add(new Weapon(this, "AK-47"));
         weapons.add(new Weapon(this, "AWP"));
+        weapons.add(new Weapon(this, "Revolver"));
+        weapons.add(new Weapon(this, "SVD"));
         weapon = weapons.first();
 
 
-        animation.addAnimation("wait", new AnimatedSprite("Heroes/imposter/wait/desc.json"));
-        animation.addAnimation("walk", new AnimatedSprite("Heroes/imposter/walk/desc.json"));
+        animation.addAnimation("wait", new AnimatedSprite(WAIT_PATH));
+        animation.addAnimation("walk", new AnimatedSprite(WALK_PATH));
         animation.setAnimation("walk");
     }
 }

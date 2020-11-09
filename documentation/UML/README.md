@@ -70,3 +70,5 @@ Webmoney API|API для работы с сервисом оплаты WebMoney, 
 ![Sequence Diagram](https://github.com/Vorobeyyyyyy/DinoMayhem/blob/master/documentation/UML/ActivityDiags/ActivityDiag.png)
 ![Sequence Diagram](https://github.com/Vorobeyyyyyy/DinoMayhem/blob/master/documentation/UML/ActivityDiags/ActivityDiag2.png)
 ![Sequence Diagram](https://github.com/Vorobeyyyyyy/DinoMayhem/blob/master/documentation/UML/ActivityDiags/ActivityDiag3.png)
+### 4. Диаграмма классов
+Диаграмма классов доступна по [ссылке]()

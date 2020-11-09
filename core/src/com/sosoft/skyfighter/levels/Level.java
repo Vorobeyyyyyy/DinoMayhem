@@ -10,7 +10,10 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonValue;
 import com.sosoft.skyfighter.SkyFighter;
 import com.sosoft.skyfighter.heroes.Hero;
+import com.sosoft.skyfighter.menu.HeroSelectWidget;
 import com.sosoft.skyfighter.weapons.Bullet;
+
+import java.util.Map;
 
 
 public class Level implements Screen {
@@ -27,12 +30,12 @@ public class Level implements Screen {
     public LevelController levelController;
     public LevelDrawer levelDrawer;
 
-    public Level(SkyFighter app, JsonValue levelDesc1, boolean isKeyboard, Array<Controller> controllers) {
+    public Level(SkyFighter app, JsonValue levelDesc1, Map<Controller, HeroSelectWidget> controllers) {
         this.app = app;
         levelDesc = levelDesc1;
         levelPause = new LevelPause(app, this);
         tiledMap = new TmxMapLoader().load(levelDesc.getString("TmxPath"));
-        levelController = new LevelController(this, isKeyboard, controllers);
+        levelController = new LevelController(this, controllers);
         levelDrawer = new LevelDrawer(this, false);
     }
 

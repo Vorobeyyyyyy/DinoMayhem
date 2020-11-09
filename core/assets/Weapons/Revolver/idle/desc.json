@@ -1,0 +1,10 @@
+{
+  "frameCount" : 1,
+  "frames": [
+    "Weapons/Revolver/idle/idle_0.png"
+  ],
+  "duration" : 1,
+  "scale" : 1.5,
+  "xOffset" : 0,
+  "yOffset" : -10
+}

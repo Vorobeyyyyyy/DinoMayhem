@@ -1,0 +1,21 @@
+{
+  "name": "SVD",
+  "maxAmmo": 10,
+  "shotsPerSec": 2,
+  "reloadTime": 3.5,
+  "damage": 330,
+  "bulletSpeed": 80,
+  "maxDistance": -1,
+  "maxTimeAlive": -1,
+  "canBounce": false,
+  "accuracy": 1,
+  "bulletSprite": "Heroes/Soilder/bullet.png",
+  "bulletSpriteScale": 0.4,
+  "density": 7,
+  "fireAnimation": "Weapons/SVD/fire/desc.json",
+  "idleAnimation": "Weapons/SVD/idle/desc.json",
+  "fireSound": "Weapons/SVD/sound/fire.mp3",
+  "takeSound": "Weapons/SVD/sound/take.mp3",
+  "xOffset": 0,
+  "yOffset": -5
+}

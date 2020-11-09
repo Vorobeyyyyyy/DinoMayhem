@@ -14,8 +14,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonValue;
-import com.sosoft.skyfighter.ContentManager;
 import com.sosoft.skyfighter.SkyFighter;
+import com.sosoft.skyfighter.content.ContentManager;
+import com.sosoft.skyfighter.content.HeroContent;
 import com.sosoft.skyfighter.levels.Level;
 
 import java.util.HashMap;
@@ -31,16 +32,16 @@ public class ControllersSelectMenu implements Screen {
     private final Map<Controller, HeroSelectWidget> controllers;
     JsonValue mapDescription;
     final Table mainTable;
-    Array<JsonValue> heroWaitAnimations;
+    Array<HeroContent> heroContentArray;
 
     public ControllersSelectMenu(final SkyFighter game, JsonValue mapDesc) {
         mapDescription = mapDesc;
         stage = new Stage();
-        stage.setDebugAll(true);
-        controllers = new HashMap<Controller, HeroSelectWidget>();
+        stage.setDebugAll(false);
+        controllers = new HashMap<>();
         skyFighter = game;
         skin = new Skin(files.internal("Interface/craftacular/skin/craftacular-ui.json"));
-        heroWaitAnimations = ContentManager.getAllHeroes();
+        heroContentArray = ContentManager.getAllHeroes();
 
         mainTable = new Table();
         mainTable.setFillParent(true);
@@ -51,7 +52,7 @@ public class ControllersSelectMenu implements Screen {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
                 if (!controllers.containsKey(null)) {
-                    HeroSelectWidget kbHeroSelectWidget = new HeroSelectWidget("Player1", skin, (Gdx.graphics.getWidth() - 60) / 4,heroWaitAnimations);
+                    HeroSelectWidget kbHeroSelectWidget = new HeroSelectWidget("Player1", skin, (Gdx.graphics.getWidth() - 60) / 4, heroContentArray);
                     mainTable.add(kbHeroSelectWidget).pad(20f);
                     controllers.put(null, kbHeroSelectWidget);
                 }
@@ -64,7 +65,7 @@ public class ControllersSelectMenu implements Screen {
                 @Override
                 public boolean buttonDown(Controller controller, int buttonIndex) {
                     if (!controllers.containsKey(controller)) {
-                        HeroSelectWidget heroSelectWidget = new HeroSelectWidget("Player1", skin, (Gdx.graphics.getWidth() - 60) / 4,heroWaitAnimations);
+                        HeroSelectWidget heroSelectWidget = new HeroSelectWidget("Player1", skin, (Gdx.graphics.getWidth() - 60) / 4, heroContentArray);
                         mainTable.add(heroSelectWidget);
                         controllers.put(controller, heroSelectWidget);
                     }
@@ -108,13 +109,8 @@ public class ControllersSelectMenu implements Screen {
         }
 
         if (allReady && !controllers.isEmpty()) {
-            Array<Controller> controllerArray = new Array<Controller>();
-            for (Controller controller : controllers.keySet())
-                if (controller != null)
-                    controllerArray.add(controller);
-                boolean isKeyboard = controllers.containsKey(null);
-                skyFighter.setScreen(new Level(skyFighter, mapDescription, isKeyboard, controllerArray));
-            }
+            skyFighter.setScreen(new Level(skyFighter, mapDescription, controllers));
+        }
 
     }
 

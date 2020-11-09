@@ -6,5 +6,6 @@
     "Heroes/dino/wait/wait_2.png",
     "Heroes/dino/wait/wait_3.png"
   ],
-  "duration" : 1
+  "duration": 1,
+  "scale":  6
 }

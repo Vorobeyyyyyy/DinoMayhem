@@ -1,0 +1,21 @@
+{
+  "name": "Revolver",
+  "maxAmmo": 6,
+  "shotsPerSec": 6,
+  "reloadTime": 3.5,
+  "damage": 230,
+  "bulletSpeed": 60,
+  "maxDistance": -1,
+  "maxTimeAlive": -1,
+  "canBounce": false,
+  "accuracy": 0.9,
+  "bulletSprite": "Heroes/Soilder/bullet.png",
+  "bulletSpriteScale": 0.4,
+  "density": 4,
+  "fireAnimation": "Weapons/Revolver/fire/desc.json",
+  "idleAnimation": "Weapons/Revolver/idle/desc.json",
+  "fireSound": "Weapons/Revolver/sound/fire.mp3",
+  "takeSound": "Weapons/Revolver/sound/take.mp3",
+  "xOffset": 0,
+  "yOffset": -10
+}

@@ -35,12 +35,6 @@ public class Weapon {
     //Other
     boolean reloading;
 
-    Weapon (Hero h)
-    {
-        animation = new Animation();
-        this.hero = hero;
-    }
-
     public Weapon(Hero hero, String name) {
         animation = new Animation();
         this.hero = hero;
@@ -76,14 +70,6 @@ public class Weapon {
     public void draw(Batch batch) {
         animation.draw(batch);
     }
-
-    void initBullet() {
-        bulletDef = new BulletDef();
-
-    }
-    public void init(){
-        initBullet();
-    };
 
     public void init(JsonValue description) {
         initBullet(description);

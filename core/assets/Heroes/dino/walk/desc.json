@@ -8,5 +8,6 @@
     "Heroes/dino/walk/walk_4.png",
     "Heroes/dino/walk/walk_5.png",
   ],
-  "duration" : 0.4
+  "duration": 0.4,
+  "scale": 6
 }

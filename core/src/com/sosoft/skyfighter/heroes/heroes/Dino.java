@@ -6,9 +6,12 @@ import com.sosoft.skyfighter.heroes.Hero;
 import com.sosoft.skyfighter.levels.LevelController;
 import com.sosoft.skyfighter.weapons.Weapon;
 
-public class Soilder extends Hero {
+public class Dino extends Hero {
+    public static final String WAIT_PATH = "Heroes/dino/wait/desc.json";
+    public static final String WALK_PATH = "Heroes/dino/walk/desc.json";
 
-    public Soilder(LevelController levelController, float posX, float posY, Controller controller, int number) {
+
+    public Dino(LevelController levelController, float posX, float posY, Controller controller, int number) {
         super(levelController, posX, posY, controller, number);
         state.maxSpeed = 15;
         state.jumpHeight = 15;
@@ -19,8 +22,8 @@ public class Soilder extends Hero {
         weapon = weapons.first();
 
 
-        animation.addAnimation("wait", new AnimatedSprite("Heroes/dino/walk/desc.json"));
-        animation.addAnimation("walk", new AnimatedSprite("Heroes/dino/walk/desc.json"));
+        animation.addAnimation("wait", new AnimatedSprite(WAIT_PATH));
+        animation.addAnimation("walk", new AnimatedSprite(WALK_PATH));
         animation.setAnimation("walk");
     }
 }
