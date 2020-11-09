@@ -79,6 +79,5 @@ Webmoney API|API для работы с сервисом оплаты WebMoney, 
 ![State Diagram](https://github.com/Vorobeyyyyyy/DinoMayhem/blob/master/documentation/UML/State/State2.png)
 
 ### 6. Диаграмма развертывания и компонентов
-
-Диаграммы состояний представляют собой следующие диаграммы:
+Диаграмма развертывания и компонентов представляют собой следующую диаграммы:
 ![Deployment-Component](https://github.com/Vorobeyyyyyy/DinoMayhem/blob/master/documentation/UML/Deployment/Depl.png)
