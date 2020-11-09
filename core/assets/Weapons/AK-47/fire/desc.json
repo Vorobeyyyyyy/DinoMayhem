@@ -1,0 +1,15 @@
+{
+  "frameCount" : 6,
+  "frames": [
+    "Weapons/AK-47/Fire/fire_0.png",
+    "Weapons/AK-47/Fire/fire_1.png",
+    "Weapons/AK-47/Fire/fire_2.png",
+    "Weapons/AK-47/Fire/fire_3.png",
+    "Weapons/AK-47/Fire/fire_4.png",
+    "Weapons/AK-47/Fire/fire_5.png"
+  ],
+  "duration" : 0.1,
+  "scale" : 1.5,
+  "xOffset" : 0,
+  "yOffset" : -15
+}

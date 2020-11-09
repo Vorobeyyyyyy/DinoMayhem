@@ -1,0 +1,29 @@
+{
+  "frameCount": 22,
+  "frames": [
+    "Heroes/ori/walk/0.png",
+    "Heroes/ori/walk/1.png",
+    "Heroes/ori/walk/2.png",
+    "Heroes/ori/walk/3.png",
+    "Heroes/ori/walk/4.png",
+    "Heroes/ori/walk/5.png",
+    "Heroes/ori/walk/6.png",
+    "Heroes/ori/walk/7.png",
+    "Heroes/ori/walk/8.png",
+    "Heroes/ori/walk/9.png",
+    "Heroes/ori/walk/10.png",
+    "Heroes/ori/walk/11.png",
+    "Heroes/ori/walk/12.png",
+    "Heroes/ori/walk/13.png",
+    "Heroes/ori/walk/14.png",
+    "Heroes/ori/walk/15.png",
+    "Heroes/ori/walk/16.png",
+    "Heroes/ori/walk/17.png",
+    "Heroes/ori/walk/18.png",
+    "Heroes/ori/walk/19.png",
+    "Heroes/ori/walk/20.png",
+    "Heroes/ori/walk/21.png"
+  ],
+  "duration": 0.5,
+  "scale" : 1
+}

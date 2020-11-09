@@ -8,14 +8,15 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.sosoft.skyfighter.skyFighter;
+import com.sosoft.skyfighter.SkyFighter;
+import com.sosoft.skyfighter.menu.Menu;
 
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.alpha;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sizeBy;
 
 public class LevelPause {
-    private final skyFighter app;
+    private final SkyFighter app;
     public SpriteBatch batch;
     private Stage stage;
 
@@ -33,7 +34,7 @@ public class LevelPause {
     private Image exitImageMenu;
 
 
-    public LevelPause(final skyFighter mainWindow,final Level level) {
+    public LevelPause(final SkyFighter mainWindow, final Level level) {
         app = mainWindow;
         batch = new SpriteBatch();
         stage = new Stage();

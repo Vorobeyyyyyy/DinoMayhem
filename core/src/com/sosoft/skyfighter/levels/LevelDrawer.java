@@ -4,12 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Contact;
-import com.badlogic.gdx.utils.Array;
 import com.sosoft.skyfighter.heroes.Hero;
 import com.sosoft.skyfighter.weapons.Bullet;
 
@@ -28,19 +26,15 @@ public class LevelDrawer {
     LevelBackground levelBackground;
 
     Texture tex = new Texture("badlogic.jpg");
-    Texture tex2 = new Texture("badlogic.jpg");
 
-    LevelDrawer(Level level, TiledMap tiledMap, boolean debug) {
-        renderer = new OrthogonalTiledMapRenderer(tiledMap);
-        camera = new LevelCamera(level.players, tiledMap);
+    LevelDrawer(Level level, boolean debug) {
+        renderer = new OrthogonalTiledMapRenderer(level.tiledMap);
+        camera = new LevelCamera(level.players, level.tiledMap);
         box2DDebugRenderer = new Box2DDebugRenderer();
         texture = new Texture("Heroes/Lazer.png");
         sprite = new Sprite(texture);
 
-        Array<Integer> speeds = new Array<Integer>();
-        speeds.add(10, -20, 30);
-        speeds.add(40, 50);
-        levelBackground = new LevelBackground(this, "Backgrounds/mountains/", speeds);
+        levelBackground = new LevelBackground(this, level.levelDesc.getString("backgroundPath"));
         sprite.setScale(30, 5);
         sprite.setOrigin(0, 0);
         levelInterface = new LevelInterface(level);

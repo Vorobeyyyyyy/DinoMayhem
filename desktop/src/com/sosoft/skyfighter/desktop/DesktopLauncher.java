@@ -2,7 +2,7 @@ package com.sosoft.skyfighter.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.sosoft.skyfighter.skyFighter;
+import com.sosoft.skyfighter.SkyFighter;
 
 import java.awt.*;
 
@@ -15,7 +15,7 @@ public class DesktopLauncher {
 		//config.width = (int)s.getWidth();
 		//config.height = (int)s.getHeight();
 		//config.fullscreen = true;
-		new LwjglApplication(new skyFighter(), config);
+		new LwjglApplication(new SkyFighter(), config);
 	}
 }
 

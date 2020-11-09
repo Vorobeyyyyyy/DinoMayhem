@@ -1,0 +1,20 @@
+{
+  "frameCount": 11,
+  "frames": [
+    "Heroes/imposter/walk/0.png",
+    "Heroes/imposter/walk/1.png",
+    "Heroes/imposter/walk/2.png",
+    "Heroes/imposter/walk/3.png",
+    "Heroes/imposter/walk/4.png",
+    "Heroes/imposter/walk/5.png",
+    "Heroes/imposter/walk/6.png",
+    "Heroes/imposter/walk/7.png",
+    "Heroes/imposter/walk/8.png",
+    "Heroes/imposter/walk/9.png",
+    "Heroes/imposter/walk/10.png"
+  ],
+  "duration": 0.7,
+  "scale": 1,
+  "xOffset": -60,
+  "yOffset": -50
+}

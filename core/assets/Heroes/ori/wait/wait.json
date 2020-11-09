@@ -1,0 +1,10 @@
+{
+  "frameCount" : 4,
+  "frames": [
+    "Heroes/dino/wait/wait_0.png",
+    "Heroes/dino/wait/wait_1.png",
+    "Heroes/dino/wait/wait_2.png",
+    "Heroes/dino/wait/wait_3.png"
+  ],
+  "duration" : 1
+}

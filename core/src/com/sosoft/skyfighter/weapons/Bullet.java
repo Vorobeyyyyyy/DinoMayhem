@@ -46,7 +46,7 @@ public class Bullet {
         maxDistance = bulletDef.maxDistance;
         maxTimeAlive = bulletDef.maxTimeAlive;
         canBounce = bulletDef.canBounce;
-        accyuracy = bulletDef.accyuracy;
+        accyuracy = bulletDef.accuracy;
         spriteName = bulletDef.spriteName;
         scale = bulletDef.scale;
         density = bulletDef.density;

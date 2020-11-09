@@ -1,0 +1,6 @@
+{
+  "name" : "Sky islands",
+  "tmxPath" : "Tilemaps/SkyIslands.tmx",
+  "backgroundPath" : "Backgrounds/mountains",
+  "previewPath" : "Maps/SkyIslands.png"
+}

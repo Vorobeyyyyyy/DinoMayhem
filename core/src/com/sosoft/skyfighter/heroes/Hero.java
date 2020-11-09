@@ -7,7 +7,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
-import com.sosoft.skyfighter.AnimatedSprite;
 import com.sosoft.skyfighter.Animation;
 import com.sosoft.skyfighter.levels.LevelController;
 import com.sosoft.skyfighter.weapons.Weapon;
@@ -64,11 +63,9 @@ public class Hero {
         }
 
         animation = new Animation();
-        animation.addAnimation("wait", new AnimatedSprite("Heroes/dino/wait/wait_", 4, 1f, 6));
-        animation.addAnimation("walk", new AnimatedSprite("Heroes/dino/walk/walk_", 6, 0.4f, 6));
-        animation.setAnimation("walk");
-
         weapons = new Array<Weapon>();
+
+        reset();
     }
 
     public void update(float delta) {
@@ -113,19 +110,26 @@ public class Hero {
 
     public void updateWeapon(float delta) {
         int weaponIndex = weapons.indexOf(weapon, true);
+
+        Weapon weaponToTake = weapon;
         if (state.nextWeapon) {
             if (weaponIndex < weapons.size - 1)
-                weapon = weapons.get(weaponIndex + 1);
+                weaponToTake = weapons.get(weaponIndex + 1);
             else
-                weapon = weapons.get(0);
+                weaponToTake = weapons.get(0);
             state.nextWeapon = false;
         }
         if (state.prevWeapon) {
             if (weaponIndex != 0)
-                weapon = weapons.get(weaponIndex - 1);
+                weaponToTake = weapons.get(weaponIndex - 1);
             else
-                weapon = weapons.get(weapons.size - 1);
+                weaponToTake = weapons.get(weapons.size - 1);
             state.prevWeapon = false;
+        }
+        if (weaponToTake != weapon) {
+            weapon.hide();
+            weapon = weaponToTake;
+            weapon.take();
         }
 
         weapon.direction = state.aimAngle;
@@ -133,9 +137,9 @@ public class Hero {
         weapon.animation.pos.set(centerPos);
         weapon.animation.flipY = state.lookLeft;
 
-        if (state.fire)
+        if (state.fire && !state.dead)
             weapon.fire();
-        if (state.reload) {
+        if (state.reload && !state.dead) {
             weapon.reload();
             state.reload = false;
         }

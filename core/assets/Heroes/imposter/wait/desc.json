@@ -1,0 +1,10 @@
+{
+  "frameCount" : 1,
+  "frames": [
+    "Heroes/imposter/wait/wait.png"
+  ],
+  "duration" : 1,
+  "scale": 1,
+  "xOffset": -60,
+  "yOffset": -50
+}

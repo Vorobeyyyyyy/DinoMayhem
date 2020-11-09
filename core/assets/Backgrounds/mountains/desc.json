@@ -1,0 +1,12 @@
+{
+  "layerCount" : 5,
+  "layers" :
+  [
+    "sky.png",
+    "mountains.png",
+    "grass2.png",
+    "grass1.png",
+    "clouds.png"
+  ],
+  "speeds" : [10, 20, 30, 40, 50]
+}

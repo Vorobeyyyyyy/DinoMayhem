@@ -1,0 +1,21 @@
+{
+  "name" : "AK-47",
+  "maxAmmo" : 30,
+  "shotsPerSec" : 10,
+  "reloadTime" : 3.5,
+  "damage" : 123,
+  "bulletSpeed" : 60,
+  "maxDistance" : -1,
+  "maxTimeAlive" : -1,
+  "canBounce" : false,
+  "accuracy" : 0.9,
+  "bulletSprite" : "Heroes/Soilder/bullet.png",
+  "bulletSpriteScale" : 0.4,
+  "density" : 3,
+  "fireAnimation" : "Weapons/AK-47/Fire/desc.json",
+  "idleAnimation" : "Weapons/AK-47/Idle/desc.json",
+  "fireSound" : "Weapons/AK-47/Sound/fire.mp3",
+  "takeSound": "Weapons/AK-47/Sound/take.mp3",
+  "yOffset" : -15,
+  "xOffset" : 0
+}

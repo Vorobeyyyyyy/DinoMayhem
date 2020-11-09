@@ -1,0 +1,10 @@
+{
+  "frameCount" : 1,
+  "frames": [
+    "Weapons/AK-47/Idle/idle_0.png"
+  ],
+  "duration" : 1,
+  "scale" : 1.5,
+  "xOffset" : 0,
+  "yOffset" : -15
+}

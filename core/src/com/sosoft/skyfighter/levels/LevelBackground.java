@@ -1,11 +1,15 @@
 package com.sosoft.skyfighter.levels;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.JsonValue;
 
 public class LevelBackground {
+    int layerCount;
     Texture topTexture;
     Texture bottomTexture;
     Array<Texture> textures;
@@ -17,21 +21,29 @@ public class LevelBackground {
     float scale;
     float width;
 
-    public LevelBackground(LevelDrawer levelDrawer, String path, Array<Integer> speed) {
+    JsonValue desc;
+
+    public LevelBackground(LevelDrawer levelDrawer, String path) {
         textures = new Array<Texture>();
         positions = new Array<Float>();
         layers = new Array<TextureRegion>();
-        for (int i = 0; i < speed.size; i++)
-            textures.add(new Texture(path + String.valueOf(i) + ".png"));
+        speeds = new Array<Integer>();
 
-        this.speeds = speed;
+        desc = new JsonReader().parse(Gdx.files.internal(path + "/desc.json"));
+
+        layerCount = desc.getInt("layerCount");
+        for (String layerName : desc.get("layers").asStringArray())
+            textures.add(new Texture(path + '/' + layerName));
+        for (int speed : desc.get("speeds").asIntArray())
+            speeds.add(speed);
+
         this.levelDrawer = levelDrawer;
 
         scale = (float) levelDrawer.camera.mapHeight / textures.first().getHeight();
         width = textures.first().getWidth() * scale;
         copyCount = (int)Math.ceil(levelDrawer.camera.mapWidth / (textures.first().getWidth() * scale)) * 2;
 
-        for (int i = 0; i < speed.size; i++)
+        for (int i = 0; i < layerCount; i++)
             positions.add(-width * copyCount / 4);
 
         for (Texture texture : textures) {
@@ -39,8 +51,8 @@ public class LevelBackground {
             layers.add(new TextureRegion(texture,0,0, texture.getWidth() * copyCount,texture.getHeight()));
         }
 
-        topTexture = new Texture(path + "top.png");
-        bottomTexture = new Texture(path + "bot.png");
+        topTexture = new Texture(path + "/top.png");
+        bottomTexture = new Texture(path + "/bot.png");
     }
 
     public void update(float delta) {

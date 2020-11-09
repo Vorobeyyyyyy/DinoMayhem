@@ -1,24 +1,22 @@
-package com.sosoft.skyfighter.levels;
+package com.sosoft.skyfighter.menu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.sosoft.skyfighter.skyFighter;
+import com.sosoft.skyfighter.SkyFighter;
 
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sizeBy;
 
 public class Menu implements Screen {
-    private final skyFighter app;
+    private final SkyFighter app;
 
     private Stage stage;
 
@@ -38,7 +36,7 @@ public class Menu implements Screen {
     private Music menuMusic;
 
 
-    public Menu(final skyFighter mainWindow) {
+    public Menu(final SkyFighter mainWindow) {
         app = mainWindow;
 
         stage = new Stage();
@@ -62,8 +60,10 @@ public class Menu implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 menuMusic.pause();
-                app.setScreen(new Level(app, "Tilemaps/Map1.tmx", true, Controllers.getControllers()));
+                //app.setScreen(new Level(app, "Maps/SkyIslands.json", true, Controllers.getControllers()));
                 //app.setScreen(new SettingsScreen());
+                app.setScreen(new LevelSelectMenu(mainWindow));
+                //app.setScreen(new ControllersSelectMenu(mainWindow));
             }
 
             @Override
@@ -146,11 +146,8 @@ public class Menu implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0f, 0f, 0f, 0f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
         update(delta);
-
         stage.draw();
     }
 

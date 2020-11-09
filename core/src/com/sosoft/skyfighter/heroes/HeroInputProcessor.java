@@ -11,8 +11,11 @@ public class HeroInputProcessor extends InputAdapter {
     int DUCK_KEY = Input.Keys.S;
     int FIRE_KEY = Input.Buttons.LEFT;
     int RELOAD_KEY = Input.Keys.R;
-    int NEXT_WEAPON_KEY = Input.Buttons.FORWARD;
-    int PREV_WEAPON_KEY = Input.Buttons.BACK;
+    //int NEXT_WEAPON_KEY = Input.Buttons.FORWARD;
+    int NEXT_WEAPON_KEY = Input.Keys.E;
+    //int PREV_WEAPON_KEY = Input.Buttons.BACK;
+    int PREV_WEAPON_KEY = Input.Keys.Q;
+
 
 
     public HeroInputProcessor(Hero hero_) {

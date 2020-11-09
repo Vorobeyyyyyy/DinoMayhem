@@ -1,0 +1,21 @@
+{
+  "name": "AWP",
+  "maxAmmo": 10,
+  "shotsPerSec": 1,
+  "reloadTime": 3.5,
+  "damage": 950,
+  "bulletSpeed": 160,
+  "maxDistance": -1,
+  "maxTimeAlive": -1,
+  "canBounce": false,
+  "accuracy": 1,
+  "bulletSprite": "Heroes/Soilder/bullet.png",
+  "bulletSpriteScale": 0.4,
+  "density": 9,
+  "fireAnimation": "Weapons/AWP/fire/desc.json",
+  "idleAnimation": "Weapons/AWP/idle/desc.json",
+  "fireSound": "Weapons/AWP/sound/fire.mp3",
+  "takeSound": "Weapons/AWP/sound/take.mp3",
+  "xOffset": 0,
+  "yOffset": 2
+}

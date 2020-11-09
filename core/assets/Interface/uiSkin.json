@@ -1,0 +1,21 @@
+{
+  com.badlogic.gdx.graphics.g2d.BitmapFont:
+  {
+    default-font:
+    {
+      file: damage.fnt
+    }
+  },
+  com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle:
+  {
+    default:
+    {
+      up: button
+      over: button-hover
+      disabled: button-disabled
+    },
+  },
+  com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
+    default:  {        titleFont: default-font       }
+  }
+}

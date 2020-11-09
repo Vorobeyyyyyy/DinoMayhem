@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.Array;
 import com.sosoft.skyfighter.TilemapCollisionParser;
 import com.sosoft.skyfighter.TilemapSpawnpointParser;
 import com.sosoft.skyfighter.heroes.Hero;
+import com.sosoft.skyfighter.heroes.heroes.Imposter;
 import com.sosoft.skyfighter.heroes.heroes.Soilder;
 import com.sosoft.skyfighter.weapons.Bullet;
 
@@ -47,14 +48,14 @@ public class LevelController {
         int i = 1;
         if (isKeyboard) {
             int n = random.nextInt(spawnPoints.size);
-            level.players.add(new Soilder(this, spawnPoints.get(n).x, spawnPoints.get(n).y, null, i++));
-            //level.players.add(new Soilder(this, spawnPoints.get(n).x, spawnPoints.get(n).y, null, i++));
+            level.players.add(new Imposter(this, spawnPoints.get(n).x, spawnPoints.get(n).y, null, i++));
+            level.players.add(new Imposter(this, spawnPoints.get(n).x, spawnPoints.get(n).y, null, i++));
         }
         for (Controller controller : controllers) {
             int n = random.nextInt(spawnPoints.size);
             level.players.add(new Soilder(this, spawnPoints.get(n).x, spawnPoints.get(n).y, controller, i++));
         }
-        level.players.get(0);
+        //level.players.get(0);
     }
 
     public void respawnHeroes() {

@@ -7,7 +7,7 @@ public class BulletDef {
     public float maxDistance;
     public float maxTimeAlive;
     public boolean canBounce;
-    public float accyuracy;
+    public float accuracy;
     public String spriteName;
     public float scale;
 }

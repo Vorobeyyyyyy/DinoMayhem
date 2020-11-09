@@ -1,10 +1,13 @@
 package com.sosoft.skyfighter;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.JsonValue;
 
 public class AnimatedSprite {
     float duration;
@@ -16,6 +19,36 @@ public class AnimatedSprite {
     Array<Sprite> spriteArray;
     public Sprite currentSprite;
     public Vector2 size = new Vector2();
+
+
+    public AnimatedSprite(String jsonPath)
+    {
+        textureArray = new Array<Texture>();
+        spriteArray = new Array<Sprite>();
+        JsonValue description = new JsonReader().parse(Gdx.files.internal(jsonPath));
+        frameCount = description.getInt("frameCount");
+        duration = description.getFloat("duration");
+        if (description.has("xOffset")) {
+                posOffset = new Vector2(description.getFloat("xOffset"), description.getFloat("yOffset"));
+        }
+        else
+            posOffset = new Vector2(0,0);
+        float scale = description.getFloat("scale");
+        currentTime = 0;
+
+        for (String frameName : description.get("frames").asStringArray())
+        {
+            Texture texture = new Texture(frameName);
+            textureArray.add(texture);
+            spriteArray.add(new Sprite(texture));
+        }
+        for (Sprite sprite : spriteArray) {
+            sprite.setSize(sprite.getWidth() * scale, sprite.getHeight() * scale);
+            sprite.setOriginCenter();
+        }
+        this.size.x = spriteArray.first().getWidth();
+        this.size.y = spriteArray.first().getHeight();
+    }
 
     public AnimatedSprite(String baseName, int frameCount, float duration, float scale) {
         textureArray = new Array<Texture>();

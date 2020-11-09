@@ -40,7 +40,7 @@ public class Revolver extends Weapon {
         bulletDef.maxDistance = INFDISTANCE;
         bulletDef.maxTimeAlive = INFTIME;
         bulletDef.canBounce = false;
-        bulletDef.accyuracy = 0.9f;
+        bulletDef.accuracy = 0.9f;
         bulletDef.spriteName = "Heroes/Soilder/bullet.png";
         bulletDef.scale = 0.4f;
         bulletDef.density = 3f;

@@ -1,0 +1,19 @@
+{
+  "frameCount" : 10,
+  "frames": [
+    "Weapons/AWP/fire/fire_0.png",
+    "Weapons/AWP/fire/fire_1.png",
+    "Weapons/AWP/fire/fire_2.png",
+    "Weapons/AWP/fire/fire_3.png",
+    "Weapons/AWP/fire/fire_4.png",
+    "Weapons/AWP/fire/fire_5.png",
+    "Weapons/AWP/fire/fire_6.png",
+    "Weapons/AWP/fire/fire_7.png",
+    "Weapons/AWP/fire/fire_8.png",
+    "Weapons/AWP/fire/fire_9.png"
+  ],
+  "duration" : 0.2,
+  "scale" : 1.7,
+  "xOffset" : 0,
+  "yOffset" : 2
+}

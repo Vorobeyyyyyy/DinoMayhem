@@ -28,7 +28,7 @@ public class AK_47 extends Weapon {
         name = "AK-47";
         maxAmmo = 30;
         shotsPerSec = 10;
-        accuracy = 8 / 10f;
+        //accuracy = 8 / 10f;
         reloadTime = 3.5f;
         super.init();
     }
@@ -41,7 +41,7 @@ public class AK_47 extends Weapon {
         bulletDef.maxDistance = INFDISTANCE;
         bulletDef.maxTimeAlive = INFTIME;
         bulletDef.canBounce = false;
-        bulletDef.accyuracy = 0.9f;
+        bulletDef.accuracy = 0.9f;
         bulletDef.spriteName = "Heroes/Soilder/bullet.png";
         bulletDef.scale = 0.4f;
         bulletDef.density = 3f;
